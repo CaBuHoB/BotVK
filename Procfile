@@ -1,0 +1,1 @@
+worket: python3 MainBot/Main.py
