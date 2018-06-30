@@ -1,1 +1,1 @@
-worket: python3 MainBot/Main.py
+worket: python3 Bot/Basis/Main.py
