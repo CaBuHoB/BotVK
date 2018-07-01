@@ -1,40 +1,45 @@
 # -*- coding: utf-8 -*-
 
 from threading import Thread
+import os
+import importlib
+from Bot.Basis.command_system import command_list
 
 
-def send_msg(vk, user_id, msg):
-    vk.method('messages.send', {'user_id': user_id, 'message': msg})
+def send_msg(vk, user_id, msg, attachment=None, keyboard=None):
+    vk.messages.send(user_id=user_id, message=msg, attachment=attachment, keyboard=keyboard)
+
+
+def load_modules():
+    files = os.listdir("Commands")
+    modules = filter(lambda x: x.endswith('.py'), files)
+    for m in modules:
+        importlib.import_module("Commands." + m[0:-3])
+
+
+def get_answer(item, vkApi):
+    # message = "Прости, не понимаю тебя. Напиши 'помощь', чтобы узнать мои команды"
+    message = item['body']
+    if 'payload' in item:
+        message = item['payload']
+    body = message.lower().split(" ")
+    attachment = None
+    key = None
+    for c in command_list:
+        if body[0] in c.keys:
+            message, attachment, key = c.process(vkApi, item)
+            break
+    return message, attachment, key
+
 
 class MessageReplay(Thread):
 
-    def __init__(self, vk, item):
+    def __init__(self, vkApi, item):
         Thread.__init__(self)
-        self.vk = vk
+        self.vkApi = vkApi
         self.item = item
 
     def run(self):
-        mess = self.item['body']
-        help = 'Пока я умею только:\n' \
-                '1) Отвечать на сообщение \"Hi\"\n' \
-                '2) Пересылать твои сообщения\n' \
-                '3) Строить таблицу. '
-        krouk = 'Если у тебя есть уравнение вида x^2=a (mod p)\n' \
-                'Чтобы получить готовую таблицу тебе надо отправить мне сообщение вида \"Крук a p n\", ' \
-                'где n - число образующее квадратичный невычет с модулем L(n, p)=-1\nПример: Крук 14 193 5'
-
-        if mess == 'Hi':
-            send_msg(self.vk, self.item['user_id'], 'Привет!')
-        elif mess == '/start':
-            send_msg(self.vk, self.item['user_id'], 'Узнай, что я умею, вызвав /help')
-        elif mess == '/help':
-            send_msg(self.vk, self.item['user_id'], help + krouk)
-        elif mess == 'Test':
-            send_msg(self.vk, self.item['user_id'], 'Test')
-        else:
-            split = mess.split(" ")
-            if (split[0] == 'Крук') & (len(split) == 4):
-                send_msg(self.vk, self.item['user_id'], 'Здесь должна быть таблица!!!!!!!!!')
-            else:
-                send_msg(self.vk, self.item['user_id'], mess)
-
+        load_modules()
+        message, attachment, key = get_answer(self.item, self.vkApi)
+        send_msg(self.vkApi.get_api(), self.item['user_id'], message, attachment, key)

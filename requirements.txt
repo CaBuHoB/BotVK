@@ -1,2 +1,3 @@
 vk_api
 py-postgresql
+reportlab
