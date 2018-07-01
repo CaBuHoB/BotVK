@@ -16,6 +16,6 @@ while True:
     if response['items']:
         values['last_message_id'] = response['items'][0]['id']
     for item in response['items']:
-        my_thread = MessageReplay(vkApi, item)
+        my_thread = MessageReplay.MessageReplay(vkApi, item)
         my_thread.start()
     time.sleep(1)
