@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from inspect import getframeinfo, currentframe
 from threading import Thread
 import os
 import importlib
@@ -11,7 +11,9 @@ def send_msg(vk, user_id, msg, attachment=None, keyboard=None):
 
 
 def load_modules():
-    files = os.listdir("Commands")
+    filename = getframeinfo(currentframe()).filename
+    filename = filename[:filename.rfind('/') + 1]
+    files = os.listdir(filename + "Commands")
     modules = filter(lambda x: x.endswith('.py'), files)
     for m in modules:
         importlib.import_module("Commands." + m[0:-3])
