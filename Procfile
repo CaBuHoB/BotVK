@@ -1,1 +1,1 @@
-worket: python3 Bot/Basis/Main.py
+worket: export PYTHONPATH=$PWD && python3 Bot/Basis/Main.py
