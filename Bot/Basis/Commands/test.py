@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 from Bot.Basis import command_system
-import json
 
+from Bot.Basis.Keyboards.GetButtons import getTestButtons
 
 def test(vkApi, item=None):
     message = 'Test'
-    key = json.loads(open('Keyboards/keyboard.json').read())
-    return message, None, key
+    return message, None, getTestButtons()
 
 
 hello_command = command_system.Command()
