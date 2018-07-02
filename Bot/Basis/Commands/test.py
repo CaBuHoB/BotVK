@@ -3,7 +3,7 @@ from Bot.Basis import command_system
 
 from Bot.Basis.Keyboards.GetButtons import getTestButtons
 
-def test(vkApi, item=None):
+def test(vkApi, message=None, item=None):
     message = 'Test'
     return message, None, getTestButtons()
 

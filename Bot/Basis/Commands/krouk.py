@@ -8,7 +8,7 @@ import vk_api
 typeFile = {1: 'doc'}
 
 
-def krouk(vkApi, item):
+def krouk(vkApi, message=None, item=None):
     message = 'Здесь должна быть таблица!!!!!\n' + item['body']
     filepath = tableKr.getFile(item['body'])
     upload = vk_api.VkUpload(vkApi)

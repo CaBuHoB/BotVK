@@ -2,7 +2,7 @@
 from Bot.Basis import command_system
 
 
-def hello(vkApi, item=None):
+def hello(vkApi, message=None, item=None):
     message = 'Привет, друг!\nЯ новый чат-бот.'
     return message, None, None
 

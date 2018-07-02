@@ -3,3 +3,4 @@ py-postgresql
 reportlab
 requests
 googletrans
+wolframalpha

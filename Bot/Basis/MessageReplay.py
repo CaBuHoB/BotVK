@@ -32,6 +32,7 @@ def get_answer(item, vkApi):
         message = item['payload']
 
     if 'attachments' in item:
+        message = 'Я не понимаю, что ты от меня хочешь'
         if item['attachments'][0]['doc']['ext'] == 'ogg':
             url = item['attachments'][0]['doc']['url']
             message = voice_processing(url)
@@ -41,7 +42,7 @@ def get_answer(item, vkApi):
     key = None
     for c in command_list:
         if body[0] in c.keys:
-            message, attachment, key = c.process(vkApi, item)
+            message, attachment, key = c.process(vkApi, message, item)
             break
     return message, attachment, key
 

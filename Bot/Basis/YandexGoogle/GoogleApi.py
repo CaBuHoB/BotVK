@@ -3,4 +3,5 @@ from googletrans import Translator
 
 def getTranslatedText(message):
     translator = Translator()
-    return translator.translate(message).text
+    text = translator.translate(message).text
+    return text

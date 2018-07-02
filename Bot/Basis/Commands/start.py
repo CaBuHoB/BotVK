@@ -2,7 +2,7 @@
 from Bot.Basis import command_system
 
 
-def start(vkApi, item=None):
+def start(vkApi, message=None, item=None):
     message = 'Узнай, что я умею, вызвав help'
     return message, None, None
 

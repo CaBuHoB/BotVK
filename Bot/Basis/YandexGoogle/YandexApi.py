@@ -21,7 +21,7 @@ def voice_processing(file):
 
         if int(xml.attrib['success']) == 1:
             max_confidence = - float("inf")
-            text = '?'
+            text = 'Что то пошло не так и я не распознал твой голос'
 
             for child in xml:
                 if float(child.attrib['confidence']) > max_confidence:
