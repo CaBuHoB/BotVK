@@ -11,7 +11,7 @@ from Bot.Basis.command_system import command_list
 
 
 def uploadFile(filePath, peer_id, title, vkApi):
-    typeFile = {1: 'doc'}
+    typeFile = {1: 'doc', 4: 'photo', 6: 'video'}
 
     upload = vk_api.VkUpload(vkApi)
     fileInfo = upload.document_message(filePath, title=title, peer_id=peer_id)

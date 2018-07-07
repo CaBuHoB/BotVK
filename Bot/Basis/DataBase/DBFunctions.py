@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 
-# здесь должны быть функции для работы с бд
-from Bot.Basis.DataBase.DBWorker import getConnect
 
-
-def getAllUsers():
-    connect = getConnect()
+def getAllUsers(connect):
     cursor = connect.cursor()
     cursor.execute('SELECT * FROM users')
 
@@ -18,13 +14,7 @@ def getAllUsers():
             'group': fetchone[3]
         })
     cursor.close()
-    connect.close()
 
     return users
 
-
-users = getAllUsers()
-print(users)
-for user in users:
-    if 'Maxim' == user['name']:
-        print(user)
+# TODO здесь нужно созддать все методы для работы с БД

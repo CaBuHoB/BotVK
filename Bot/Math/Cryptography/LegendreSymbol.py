@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+
 def isPrime(a):
     return all(a % i for i in range(2, int(a)))
 

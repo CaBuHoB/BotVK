@@ -20,5 +20,5 @@ def wolfram(values):
 command = command_system.Command()
 
 command.keys = ['wolfram', 'вольфрам', 'волфрам']
-command.description = 'Просто учусь создавать кнопки. Это полная жесть'
+command.description = 'Обработка заданий с помощью wolfram'
 command.process = wolfram

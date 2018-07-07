@@ -10,5 +10,5 @@ def start(values):
 command = command_system.Command()
 
 command.keys = ['start', 'начало']
-command.description = 'Тут надо будет поаботать с регестрацией пользователей'
+command.description = 'Возможно это лишнее'
 command.process = start

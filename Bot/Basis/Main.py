@@ -2,7 +2,6 @@
 from argparse import Namespace
 
 import vk_api
-import time
 
 from Bot.Basis import MessageReplay
 from Bot.Basis.DataBase.DBWorker import getConnect
@@ -13,7 +12,8 @@ vkApi = vk_api.VkApi(token=api_token)
 vk = vkApi.get_api()
 
 connect = getConnect()
-users = [{'id': 38081883, 'name': 'Максим', 'surname': 'Савинов', 'group': 5621}]  # getAllUsers
+users = [{'id': 38081883, 'name': 'Максим', 'surname': 'Савинов', 'group': 5621}]
+# TODO создать функцию getAllUsers из БД
 user_ids = [user['id'] for user in users]
 
 while True:

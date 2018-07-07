@@ -20,18 +20,8 @@ def getButton(label, payload, color=Color.WHITE):
     }
 
 
-def getTestButtons():
-    return json.dumps({
-        "one_time": True,
-        "buttons": [
-            [
-                getButton('Нажми на меня', 'Тестируем кнопки', Color.RED)
-            ]
-        ]
-    }, ensure_ascii=False)
-
-
 def getButtonsForRegistration():
+    # TODO переписать кнопки для регистрации. Максимвльный размер 4х10. Придется разделять еще на группы
     return json.dumps({
         "one_time": True,
         "buttons": [
@@ -40,3 +30,5 @@ def getButtonsForRegistration():
             ]
         ]
     }, ensure_ascii=False)
+
+# TODO здесь создать все нужные кнопки

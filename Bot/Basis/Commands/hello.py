@@ -10,5 +10,5 @@ def hello(values):
 command = command_system.Command()
 
 command.keys = ['привет', 'hello', 'Hi', 'здравствуй', 'здравствуйте']
-command.description = 'Поприветствую тебя'
+command.description = 'Приветствие пользователя'
 command.process = hello

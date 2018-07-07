@@ -3,7 +3,7 @@ from Bot.Basis import command_system
 
 
 def setNewUser(values):
-    # конечно же здесь все по другому
+    # TODO конечно же здесь все надо переделать. Добовлять всю информацию пользователя в БД и в список локальный
     message = 'Поздравляю, ты зарегистрирован!'
     values.user_ids.append(values.item['user_id'])
     return message, None, None

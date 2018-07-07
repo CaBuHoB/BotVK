@@ -5,7 +5,7 @@ from Bot.Basis import command_system
 
 
 def wiki(values):
-    newMessage = 'Я не нашел такого в wiki'
+    newMessage = 'Я не нашел такого в wiki'  # TODO возможно надо поработать с обработкой текста, взятого с wiki
     wiki_wiki = wikipediaapi.Wikipedia('ru')
     page_py = wiki_wiki.page(values.message[values.message.find(' '):])
     if page_py.exists():
