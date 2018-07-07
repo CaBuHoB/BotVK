@@ -55,7 +55,7 @@ def get_answer(values):
             message, attachment, key = c.process(values)
             break
 
-    if (not values.item['user_id'] in values.user_ids) & (body[0] != 'регистрация'):
+    if (not values.item['user_id'] in values.users) & (body[0] != 'регистрация'):
         message, attachment, key = 'Тебе нужно зарегистрироваться! Просто напиши мне слово "Регистрация"', None, None
 
     return message, attachment, key

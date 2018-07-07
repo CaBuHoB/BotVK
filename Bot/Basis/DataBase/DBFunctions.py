@@ -15,6 +15,7 @@ def getAllUsers(connect):
         })
     cursor.close()
 
+    # TODO изменить метод, переменная users имеет другой формат(смотри Main)
     return users
 
 # TODO здесь нужно созддать все методы для работы с БД

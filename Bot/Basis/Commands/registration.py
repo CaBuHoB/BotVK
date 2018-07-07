@@ -4,7 +4,7 @@ from Bot.Basis.Keyboards.GetButtons import getButtonsForRegistration
 
 
 def registration(values):
-    if values.item['user_id'] in values.user_ids:
+    if values.item['user_id'] in values.users:
         return 'Ты уже зарегистрирован, расслабься🙃', None, None
     message = 'Выбери'
     return message, None, getButtonsForRegistration()

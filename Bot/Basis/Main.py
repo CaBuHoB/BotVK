@@ -12,9 +12,8 @@ vkApi = vk_api.VkApi(token=api_token)
 vk = vkApi.get_api()
 
 connect = getConnect()
-users = [{'id': 38081883, 'name': 'Максим', 'surname': 'Савинов', 'group': 5621}]
+users = {38081883: {'name': 'Максим', 'surname': 'Савинов', 'group': 5621}}
 # TODO создать функцию getAllUsers из БД
-user_ids = [user['id'] for user in users]
 
 while True:
     conversations = vkApi.method('messages.getConversations', {'filter': 'unread'})
@@ -25,7 +24,7 @@ while True:
         messages = vkApi.method('messages.getHistory', {'user_id': user_id, 'count': count})
         vkApi.method('messages.markAsRead', {'peer_id': user_id})
         for message in messages['items']:
-            values = Namespace(vkApi=vkApi, item=message, connect=connect, users=users, user_ids=user_ids)
+            values = Namespace(vkApi=vkApi, item=message, connect=connect, users=users)
             my_thread = MessageReplay.MessageReplay(values)
             my_thread.start()
     # time.sleep(200)
