@@ -1,15 +1,23 @@
 import json
+from enum import Enum
 
 
-def getButton(label, payload, color='default', one_time=True):
+class Color(Enum):
+    RED = 'negative'
+    GREEN = 'positive'
+    WHITE = 'default'
+    BLUE = 'primary'
+
+
+def getButton(label, payload, color=Color.WHITE):
     return {
-                "action": {
-                    "type": "text",
-                    "payload": json.dumps(payload, ensure_ascii=False),
-                    "label": label
-                },
-                "color": color
-            }
+        "action": {
+            "type": "text",
+            "payload": json.dumps(payload),
+            "label": label
+        },
+        "color": color.value
+    }
 
 
 def getTestButtons():
@@ -17,7 +25,18 @@ def getTestButtons():
         "one_time": True,
         "buttons": [
             [
-                getButton('Нажми на меня', 'Testing')
+                getButton('Нажми на меня', 'Тестируем кнопки', Color.RED)
+            ]
+        ]
+    }, ensure_ascii=False)
+
+
+def getButtonsForRegistration():
+    return json.dumps({
+        "one_time": True,
+        "buttons": [
+            [
+                getButton('Зарегистрироваться', 'setNewUser', Color.RED)
             ]
         ]
     }, ensure_ascii=False)

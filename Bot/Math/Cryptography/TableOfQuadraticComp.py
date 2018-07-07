@@ -33,8 +33,8 @@ def powMinusFirst(a, mod):
     return int(res)
 
 
-def createPDFFile(data):
-    doc = SimpleDocTemplate("/tmp/hello.pdf", pagesize=letter,
+def createPDFFile(data, userId):
+    doc = SimpleDocTemplate("/tmp/krouk" + userId +".pdf", pagesize=letter,
                             rightMargin=72, leftMargin=72,
                             topMargin=72, bottomMargin=18)
     Story = []
@@ -58,7 +58,7 @@ def createPDFFile(data):
     return doc.filename
 
 
-def getFile(task):
+def getFile(task, userId):
     task = task.split(" ")
     if len(task) != 3:
         return 'Чет не так с данными', None, None
@@ -103,4 +103,4 @@ def getFile(task):
     # print(x)
     # print(data)
 
-    return createPDFFile(data)
+    return createPDFFile(data, userId)

@@ -2,7 +2,7 @@
 from Bot.Basis import command_system
 
 
-def help(vkApi, message=None, item=None):
+def help(values):
     message = 'Пока я умею только:\n' \
               '1) Отвечать на сообщение \"Hi\"\n' \
               '2) Пересылать твои сообщения\n' \
@@ -13,8 +13,8 @@ def help(vkApi, message=None, item=None):
     return message, None, None
 
 
-hello_command = command_system.Command()
+command = command_system.Command()
 
-hello_command.keys = ['/help', 'help', 'Помощь', 'помощь']
-hello_command.description = 'Помогу тебе'
-hello_command.process = help
+command.keys = ['/help', 'help', 'Помощь', 'помощь']
+command.description = 'Помогу тебе'
+command.process = help

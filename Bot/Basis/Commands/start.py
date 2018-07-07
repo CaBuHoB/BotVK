@@ -2,13 +2,13 @@
 from Bot.Basis import command_system
 
 
-def start(vkApi, message=None, item=None):
+def start(values):
     message = 'Узнай, что я умею, вызвав help'
     return message, None, None
 
 
-hello_command = command_system.Command()
+command = command_system.Command()
 
-hello_command.keys = ['start', 'начало']
-hello_command.description = 'Тут надо будет поаботать с регестрацией пользователей'
-hello_command.process = start
+command.keys = ['start', 'начало']
+command.description = 'Тут надо будет поаботать с регестрацией пользователей'
+command.process = start

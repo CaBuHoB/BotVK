@@ -3,13 +3,13 @@ from Bot.Basis import command_system
 
 from Bot.Basis.Keyboards.GetButtons import getTestButtons
 
-def test(vkApi, message=None, item=None):
-    message = 'Test'
-    return message, None, getTestButtons()
+
+def test(values):
+    return values.message, None, getTestButtons()
 
 
-hello_command = command_system.Command()
+command = command_system.Command()
 
-hello_command.keys = ['Test']
-hello_command.description = 'Просто учусь создавать кнопки. Это полная жесть'
-hello_command.process = test
+command.keys = ['Test']
+command.description = 'Просто учусь создавать кнопки. Это полная жесть'
+command.process = test
