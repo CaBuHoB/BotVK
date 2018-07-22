@@ -58,6 +58,7 @@ def get_answer(values):
 
     if (not values.item['user_id'] in values.users) and\
             (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
+        # TODO не забыть исправить после того, как будет написаны функции для работы с БД
         message, attachment, key = \
             'Пока пусть будет пропуск регистрации, а то просто так в гугл обращается при каждом тесте', \
                                 None, getDefaultScreenButtons()

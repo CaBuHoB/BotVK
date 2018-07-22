@@ -12,7 +12,7 @@ vkApi = vk_api.VkApi(token=api_token)
 vk = vkApi.get_api()
 
 connect = getConnect()
-users = {} # {38081883: {'name': 'Максим', 'surname': 'Савинов', 'group': 5621}}
+users = {}  # {38081883: {'name': 'Максим', 'surname': 'Савинов', 'group': 5621}}
 # TODO создать функцию getAllUsers из БД
 
 while True:

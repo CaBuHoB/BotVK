@@ -8,3 +8,5 @@ weather-api
 Wikipedia-API
 psycopg2
 psycopg2-binary
+gspread
+oauth2client
