@@ -6,6 +6,7 @@ import importlib
 
 import vk_api
 
+from Bot.Basis.Keyboards.GetButtons import getButtonsWithGroups, getDefaultScreenButtons
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
@@ -55,9 +56,14 @@ def get_answer(values):
             message, attachment, key = c.process(values)
             break
 
-    if (not values.item['user_id'] in values.users) & (body[0] != 'регистрация'):
-        message, attachment, key = 'Тебе нужно зарегистрироваться! Просто напиши мне слово "Регистрация"', None, None
-
+    if (not values.item['user_id'] in values.users) and\
+            (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
+        message, attachment, key = \
+            'Пока пусть будет пропуск регистрации, а то просто так в гугл обращается при каждом тесте', \
+                                None, getDefaultScreenButtons()
+        id = values.item['user_id']
+        values.users.setdefault(id, ' ')
+            # 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, getButtonsWithGroups()
     return message, attachment, key
 
 
