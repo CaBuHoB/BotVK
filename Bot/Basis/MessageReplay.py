@@ -56,14 +56,14 @@ def get_answer(values):
             message, attachment, key = c.process(values)
             break
 
-    if (not values.item['user_id'] in values.users) and\
-            (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
+    #if (not values.item['user_id'] in values.users) and\
+         #   (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
         # TODO не забыть исправить после того, как будет написаны функции для работы с БД
-        message, attachment, key = \
-            'Пока пусть будет пропуск регистрации, а то просто так в гугл обращается при каждом тесте', \
-                                None, getDefaultScreenButtons()
-        id = values.item['user_id']
-        values.users.setdefault(id, ' ')
+       # message, attachment, key = \
+        #    'Пока пусть будет пропуск регистрации, а то просто так в гугл обращается при каждом тесте', \
+       #                         None, getDefaultScreenButtons()
+       # id = values.item['user_id']
+       # values.users.setdefault(id, ' ')
             # 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, getButtonsWithGroups()
     return message, attachment, key
 
