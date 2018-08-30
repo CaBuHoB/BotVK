@@ -37,11 +37,11 @@ def load_modules():
 
 
 def get_answer(values):
-    message = values.item['body']
+    message = values.item['text']
     if 'payload' in values.item:
         message = values.item['payload'].replace("\"", "")
 
-    if 'attachments' in values.item:
+    if len(values.item['attachments']) > 0:
         message = 'Я не понимаю, что ты от меня хочешь'
         if values.item['attachments'][0]['doc']['ext'] == 'ogg':
             url = values.item['attachments'][0]['doc']['url']
@@ -56,13 +56,13 @@ def get_answer(values):
             message, attachment, key = c.process(values)
             break
 
-    if (not values.item['user_id'] in values.users) and\
+    if (not values.item['from_id'] in values.users) and\
             (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
         # TODO не забыть исправить после того, как будет написаны функции для работы с БД
         message, attachment, key = \
             'Пока пусть будет пропуск регистрации, а то просто так в гугл обращается при каждом тесте', \
                                 None, getDefaultScreenButtons()
-        id = values.item['user_id']
+        id = values.item['from_id']
         values.users.setdefault(id, ' ')
             # 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, getButtonsWithGroups()
     return message, attachment, key
@@ -77,4 +77,4 @@ class MessageReplay(Thread):
     def run(self):
         load_modules()
         message, attachment, key = get_answer(self.values)
-        send_msg(self.values.vkApi.get_api(), self.values.item['user_id'], message, attachment, key)
+        send_msg(self.values.vkApi.get_api(), self.values.item['from_id'], message, attachment, key)
