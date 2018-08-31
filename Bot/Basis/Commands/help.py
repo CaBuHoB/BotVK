@@ -4,6 +4,7 @@ from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
 
 
 def help(values):
+    # TODO: написать про yandex
     message = 'Помощь:\n' \
               '• Чтобы перейти к архиву лаб, билетов и конспектов, нажми на кнопку \"Материалы\"\n\n' \
               '• Для открытия решебника алгоритмов нажми на кнопку \"Решение задач\"\n\n' \

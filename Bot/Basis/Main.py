@@ -12,7 +12,7 @@ vkApi = vk_api.VkApi(token=api_token)
 vk = vkApi.get_api()
 
 connect = getConnect()
-users = getAllUsers(connect) #{38081883: {'name': 'Максим', 'surname': 'Савинов', 'group': 5621}}
+users = getAllUsers(connect)
 
 while True:
     conversations = vkApi.method('messages.getConversations', {'filter': 'unread'})

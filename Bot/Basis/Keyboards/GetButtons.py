@@ -79,15 +79,14 @@ def getDefaultScreenButtons():
 
 
 def getQueueButtons(connect, group_number):
-
-    buttonsList = getQueueNames(connect) #возвращает список [] строк с названиями очередей из БД
+    buttonsList = getQueueNames(connect)  # возвращает список [] строк с названиями очередей из БД
     newButtonsList = []
     for button in buttonsList:
         groups = button.split('_')[1]
         groupsList = groups.split(' ')
         for group in groupsList:
-            if group == group_number:
-               newButtonsList.append(button)
+            if int(group) == group_number:
+                newButtonsList.append(button)
 
     if len(newButtonsList) == 0:
         return None
@@ -148,17 +147,17 @@ def getTestButtons():
 
 
 def getMaterialsActionsButtons(values):
+    items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
     materialsList = []
-    docs = values.vkApi.method('docs.search', {'q': '_', 'search_own': 1, 'count': 100})['items']
-    for doc in docs:
-        materialsList.append(doc['title'])
-
+    for doc in items:
+        if doc['owner_id'] == -168366525:  # TODO: заменить id тестовой группы на число основной
+            materialsList.append(doc['title'])
     if len(materialsList) == 0:
         return None
 
     lessonsList = []
     for material in materialsList:
-        lesson = material.split('_')[0]
+        lesson = material.split(' ')[1]
         if not lesson in lessonsList:
             lessonsList.append(lesson)
 
@@ -169,19 +168,21 @@ def getMaterialsActionsButtons(values):
         "buttons": listOfButtons
     }, ensure_ascii=False)
 
+
 def getMaterialsListButtons(lessonName, values):
+    items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
     materialsList = []
-    docs = values.vkApi.method('docs.search', {'q': '_', 'search_own': 1, 'count': 100})['items']
-    for doc in docs:
-        materialsList.append(doc['title'])
+    for doc in items:
+        if doc['owner_id'] == -168366525:  # TODO: заменить id тестовой группы на число основной
+            materialsList.append(doc['title'])
 
     neededMaterialsList = []
     for material in materialsList:
-        lesson = material.split('_')[0]
+        lesson = material.split(' ')[1]
         if lesson == lessonName:
             neededMaterialsList.append(material)
 
-    listOfButtons = [[getButton(material.split('_')[1], 'getFile ' + material, Color.WHITE)]
+    listOfButtons = [[getButton(material.split(' ')[2], 'getFile ' + material, Color.WHITE)] \
                      for material in neededMaterialsList]
     listOfButtons.append([getButton('⟵ в меню материалов', 'materialsMenu', Color.BLUE),
                           getButton('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])

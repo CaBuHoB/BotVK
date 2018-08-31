@@ -34,7 +34,7 @@ def powMinusFirst(a, mod):
 
 
 def createPDFFile(data, userId):
-    doc = SimpleDocTemplate("/tmp/krouk" + userId +".pdf", pagesize=letter,
+    doc = SimpleDocTemplate("/tmp/krouk" + userId + ".pdf", pagesize=letter,
                             rightMargin=72, leftMargin=72,
                             topMargin=72, bottomMargin=18)
     Story = []
