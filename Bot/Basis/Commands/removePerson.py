@@ -18,6 +18,7 @@ def removePerson(values):
     values.users.pop(id)
     setNameUnSelectedToGoogle(fullname, group)
     # TODO: removePersonFromDB(connect, id), думаю, тут не нужны имя и группа
+    # TODO: есть функция для этого removeFromQueueInDB(connect, queue, id)
     # Это если вдруг кто ошибется, чтоб в бд вручную не лезть
     # Чтоб удалить, надо писать боту removePerson Фамилия Имя Группа
     message = 'Пользователь снова незарегистрирован'
