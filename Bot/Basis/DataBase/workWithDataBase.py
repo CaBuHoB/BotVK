@@ -26,14 +26,14 @@ def getAllUsers(connect):
 
     users = {}
     for userData in cursor:
-        users.setdefault({
-            userData[0]:
+        users.setdefault(
+            userData[0],
             {
                 'name': userData[1],
                 'surname': userData[2],
                 'group': userData[3]
             }
-        })
+        )
     cursor.close()
 
     return users

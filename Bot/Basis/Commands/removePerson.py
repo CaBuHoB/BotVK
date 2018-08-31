@@ -4,14 +4,14 @@ from Bot.Basis.YandexGoogle.GoogleTables import setNameUnSelectedToGoogle
 
 
 def removePerson(values):
-    name = values.message.split(' ')[2]
-    surname = values.message.split(' ')[1]
+    name = values.message.split(' ')[1]
+    surname = values.message.split(' ')[2]
     fullname = surname + ' ' + name
     group = values.message.split(' ')[3]
 
     for user in values.users.items():
         first = user[1]
-        if first['name'] == name & first['surname'] == surname:
+        if (first['name'] == name) & (first['surname'] == surname):
             id = user[0]
 
     connect = values.connect
