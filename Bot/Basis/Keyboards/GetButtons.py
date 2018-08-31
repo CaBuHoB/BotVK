@@ -147,16 +147,18 @@ def getTestButtons():
     }, ensure_ascii=False)
 
 
-def getMaterialsActionsButtons():
-    #TODO: список материалов группы (строки)
-    materialsList = [] # getMaterialsList()
-    materialsList = ['Infa 1', 'Kruk 2']
+def getMaterialsActionsButtons(values):
+    materialsList = []
+    docs = values.vkApi.method('docs.search', {'q': '_', 'search_own': 1, 'count': 100})['items']
+    for doc in docs:
+        materialsList.append(doc['title'])
+
     if len(materialsList) == 0:
         return None
 
     lessonsList = []
     for material in materialsList:
-        lesson = material.split(' ')[0]
+        lesson = material.split('_')[0]
         if not lesson in lessonsList:
             lessonsList.append(lesson)
 
@@ -167,17 +169,19 @@ def getMaterialsActionsButtons():
         "buttons": listOfButtons
     }, ensure_ascii=False)
 
-def getMaterialsListButtons(lessonName):
-    materialsList = []  # getMaterialsList()
-    materialsList = ['Infa 1', 'Kruk 2']
+def getMaterialsListButtons(lessonName, values):
+    materialsList = []
+    docs = values.vkApi.method('docs.search', {'q': '_', 'search_own': 1, 'count': 100})['items']
+    for doc in docs:
+        materialsList.append(doc['title'])
 
     neededMaterialsList = []
     for material in materialsList:
-        lesson = material.split(' ')[0]
+        lesson = material.split('_')[0]
         if lesson == lessonName:
             neededMaterialsList.append(material)
 
-    listOfButtons = [[getButton(material.split(' ')[1], 'getFile ' + material, Color.WHITE)]
+    listOfButtons = [[getButton(material.split('_')[1], 'getFile ' + material, Color.WHITE)]
                      for material in neededMaterialsList]
     listOfButtons.append([getButton('⟵ в меню материалов', 'materialsMenu', Color.BLUE),
                           getButton('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])

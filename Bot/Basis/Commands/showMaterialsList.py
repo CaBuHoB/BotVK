@@ -5,7 +5,7 @@ from Bot.Basis.Keyboards.GetButtons import getMaterialsListButtons
 def showMaterialsList(values):
     lesson = values.item['text']
     message = 'Выбери номер лабы и я пришлю тебе файл'
-    keyboard = getMaterialsListButtons(lesson)
+    keyboard = getMaterialsListButtons(lesson, values)
 
     return message, None, keyboard
 

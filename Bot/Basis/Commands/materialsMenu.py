@@ -5,7 +5,7 @@ from Bot.Basis.Keyboards.GetButtons import getTestButtons, getMaterialsActionsBu
 def materialsMenu(values):
     message = 'Вот список предметов, по которым имеются материалы. ' \
               'Если у тебя есть что-то ещё и ты хочешь этим поделиться - напиши админу!)'
-    keyboard = getMaterialsActionsButtons()
+    keyboard = getMaterialsActionsButtons(values)
 
     if keyboard is None:
         message = 'Материалов пока нет =(\n' \

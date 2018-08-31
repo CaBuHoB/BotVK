@@ -1,4 +1,5 @@
 from Bot.Basis import command_system
+from Bot.Basis.DataBase.workWithDataBase import createQueueInBD
 from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
 
 
@@ -6,8 +7,7 @@ from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
 def createQueue(values):
     name = values.message.split(' ')[1]
     connect = values.connect
-    # TODO: createQueueInBD(connect, name) для создания очереди из диалога с ботом
-    # TODO: создал
+    createQueueInBD(connect, name)
     message = 'Очередь создана'
     keyboard = getDefaultScreenButtons()
     return message, None, keyboard
