@@ -6,8 +6,8 @@ from Bot.Basis.MessageReplay import send_msg
 
 def appealToAdmin(values):
     admin_id = 38081883
-    msg_words = values.item['body'].split(' ')[1:]
-    msg = 'Сообщение от ' + str(values.item['user_id']) + ' (Тут должно быть имя по айди из БД)\n\n' + \
+    msg_words = values.item['text'].split(' ')[1:]
+    msg = 'Сообщение от ' + str(values.item['from_id']) + ' (Тут должно быть имя по айди из БД)\n\n' + \
           ' '.join(msg_words)
     send_msg(values.vkApi.get_api(), admin_id, msg, attachment=None, keyboard=None)
     message = 'Сообщение отправлено администратору )'

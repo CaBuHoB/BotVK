@@ -1,6 +1,7 @@
 import json
 from enum import Enum
 
+from Bot.Basis.DataBase.workWithDataBase import getQueueNames
 from Bot.Basis.YandexGoogle.GoogleTables import getNamesListFromGoogle, getGroupNumbersFromGoogle
 
 
@@ -51,6 +52,7 @@ def getButtonsWithNames(group):
 
     buttonsList = [[getButton(button, 'endOfRegistration ' + group, Color.BLUE)
                     for button in twoButtonsList] for twoButtonsList in buttonsList]
+    buttonsList.append([getButton('⟵', 'errorInGroupChoosing', Color.RED)])
 
     return json.dumps({
         "one_time": True,
@@ -76,17 +78,22 @@ def getDefaultScreenButtons():
     }, ensure_ascii=False)
 
 
-def getQueueButtons(user_id):
-    # TODO: getQueueNames(user_id) - возвращает список [] строк с названиями очередей из БД.
-    # Только те очереди, которые доступны человеку определенной группы по user_id
+def getQueueButtons(connect, group_number):
 
-    buttonsList = []  # getQueueNames()
+    buttonsList = getQueueNames(connect) #возвращает список [] строк с названиями очередей из БД
+    newButtonsList = buttonsList #[]
+    #for button in buttonsList:
+    #    groups = button.split('_')[1]
+    #    groupsList = groups.split(' ')
+    #    for group in groupsList:
+    #        if group == group_number:
+    #           newButtonsList.append(button)
 
-    if len(buttonsList) == 0:
+    if len(newButtonsList) == 0:
         return None
 
-    listOfButtons = [[getButton(but, 'queueActions', Color.BLUE)] for but in buttonsList]
-    listOfButtons.append([getButton('⟵', 'backToDefaultKeyboard', Color.WHITE)])
+    listOfButtons = [[getButton(but, 'queueActions', Color.BLUE)] for but in newButtonsList]
+    listOfButtons.append([getButton('⟵ в главное меню', 'backToDefaultKeyboard', Color.WHITE)])
     return json.dumps({
         "one_time": True,
         "buttons": listOfButtons
@@ -102,10 +109,10 @@ def getQueueActionsButtons(queue):
                 getButton('Выйти из очереди', 'removeFromQueue ' + queue, Color.WHITE)
             ],
             [
-                getButton('Показать список', 'showQueue ' + queue, Color.WHITE)
+                getButton('⟵ к списку очередей', 'queuesMenu', Color.BLUE),
             ],
             [
-                getButton('⟵', 'backToDefaultKeyboard', Color.BLUE),
+                getButton('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE),
             ]
         ]
     }, ensure_ascii=False)
@@ -119,7 +126,11 @@ def getAlreadyInQueueButtons(queue):
                 getButton('Встать в конец', 'addToQueue ' + queue, Color.WHITE)
             ],
             [
-                getButton('⟵', 'backToDefaultKeyboard', Color.WHITE)
+                getButton('⟵ в меню этой очереди', 'queueActions ' + queue, Color.BLUE),
+                getButton('⟵ в меню всех очередей', 'queuesMenu', Color.BLUE)
+            ],
+            [
+                getButton('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)
             ]
         ]
     }, ensure_ascii=False)
@@ -136,21 +147,41 @@ def getTestButtons():
     }, ensure_ascii=False)
 
 
-# TODO: Добавить команды showLabList и showConspectsList
-# Это работа с файлами, там не знаю, делать кнопки или текстом людям будет проще написать
-# Пока что вместо этих кнопок используется getTestButtons()
 def getMaterialsActionsButtons():
+    #TODO: список материалов группы (строки)
+    materialsList = [] # getMaterialsList()
+    materialsList = ['Infa 1', 'Kruk 2']
+    if len(materialsList) == 0:
+        return None
+
+    lessonsList = []
+    for material in materialsList:
+        lesson = material.split(' ')[0]
+        if not lesson in lessonsList:
+            lessonsList.append(lesson)
+
+    listOfButtons = [[getButton(lesson, 'showMaterialsList', Color.WHITE)] for lesson in lessonsList]
+    listOfButtons.append([getButton('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
     return json.dumps({
-        "one_time": True,
-        "buttons": [
-            [
-                getButton('Лабы', 'showLabList', Color.WHITE),
-                getButton('Билеты/Конспекты', 'showConspectsList', Color.WHITE)
-            ],
-            [
-                getButton('⟵', 'setStartScreenButtons', Color.WHITE)
-            ]
-        ]
+        "one_time": False,
+        "buttons": listOfButtons
     }, ensure_ascii=False)
 
-# TODO: Сделать выход не только в главное меню, но и на одну клавиатуру назад
+def getMaterialsListButtons(lessonName):
+    materialsList = []  # getMaterialsList()
+    materialsList = ['Infa 1', 'Kruk 2']
+
+    neededMaterialsList = []
+    for material in materialsList:
+        lesson = material.split(' ')[0]
+        if lesson == lessonName:
+            neededMaterialsList.append(material)
+
+    listOfButtons = [[getButton(material.split(' ')[1], 'getFile ' + material, Color.WHITE)]
+                     for material in neededMaterialsList]
+    listOfButtons.append([getButton('⟵ в меню материалов', 'materialsMenu', Color.BLUE),
+                          getButton('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
+    return json.dumps({
+        "one_time": False,
+        "buttons": listOfButtons
+    }, ensure_ascii=False)

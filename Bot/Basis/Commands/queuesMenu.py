@@ -4,12 +4,12 @@ from Bot.Basis.Keyboards.GetButtons import getQueueButtons, getDefaultScreenButt
 
 def queuesMenu(values):
     message = 'Выбери дату и предмет. Если в списке ещё нет нужной очереди, обратись к старосте ' \
-              'или разработчикам для её открытия'
-    id = values.item['user_id']
-    keyboard = getQueueButtons(id)
+              'или разработчику для её открытия'
+    id = values.item['from_id']
+    keyboard = getQueueButtons(values.connect, group)
     if keyboard is None:
-        message = 'Сейчас доступных очередей нет =( \n' \
-                  'Обратись к старосте или разработчикам для открытия новой!'
+        message = 'Сейчас доступных для тебя очередей нет =( \n' \
+                  'Обратись к старосте или разработчику для открытия новой!'
         keyboard = getDefaultScreenButtons()
     return message, None, keyboard
 

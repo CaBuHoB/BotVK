@@ -3,11 +3,13 @@ from Bot.Basis.Keyboards.GetButtons import getButtonsWithNames, getButtonsWithGr
 
 
 def showNamesList(values):
-    message = 'Выбери себя'
-    group = values.item['body']
+    group = values.item['text']
+    message = 'Выбери себя в списке группы' + group + \
+              '\nЕсли это не твоя группа - вернись к началу регистрации!'
     keyboard = getButtonsWithNames(group)
     if keyboard is None:
-        message = 'В этой группе все уже зарегистрированы'
+        message = 'В этой группе все уже зарегистрированы. Если ты точно ' \
+                  'выбрал свою группу и ещё не регистрировался - обратись к администратору'
         keyboard = getButtonsWithGroups()
     return message, None, keyboard
 

@@ -3,7 +3,7 @@ from argparse import Namespace
 
 import vk_api
 
-from Bot.Basis.DataBase.DBWorker import getConnect
+from Bot.Basis.DataBase.workWithDataBase import getConnect, getAllUsers
 from Bot.Basis import MessageReplay
 
 api_token = '890e1e0743f9afdcf2787f6338c1fd0bc73327a2aa398d8cd38d4e6fdb998b08b43f0a26b905bf25ae47b'
@@ -12,8 +12,7 @@ vkApi = vk_api.VkApi(token=api_token)
 vk = vkApi.get_api()
 
 connect = getConnect()
-users = {38081883: {'name': 'Максим', 'surname': 'Савинов', 'group': 5621}}
-# TODO создать функцию getAllUsers из БД
+users = getAllUsers(connect) #{38081883: {'name': 'Максим', 'surname': 'Савинов', 'group': 5621}}
 
 while True:
     conversations = vkApi.method('messages.getConversations', {'filter': 'unread'})

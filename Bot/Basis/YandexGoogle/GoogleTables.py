@@ -45,3 +45,12 @@ def setNameSelectedToGoogle(name, group):
 
     cell = worksheet.find(name)
     worksheet.update_cell(cell.row, cell.col + 1, 'Registrated')
+
+
+def setNameUnSelectedToGoogle(name, group):
+    account = getGoogleAccess()
+    sheets = account.open("Tables")
+    worksheet = sheets.worksheet(group)
+
+    cell = worksheet.find(name)
+    worksheet.update_cell(cell.row, cell.col + 1, '0')

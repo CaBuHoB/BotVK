@@ -1,20 +1,23 @@
 from Bot.Basis import command_system
+from Bot.Basis.DataBase.workWithDataBase import addPersonToDB
 from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
 from Bot.Basis.YandexGoogle.GoogleTables import setNameSelectedToGoogle
 
 
 def endOfRegistration(values):
-    message = 'Ты зарегистрирован!)'
-    fullname = values.item['body']
-    name = fullname.split(' ')[0]
-    surname = fullname.split(' ')[1]
+    fullname = values.item['text']
+    name = fullname.split(' ')[1]
+    surname = fullname.split(' ')[0]
     group = values.message.split(' ')[1]
-    id = values.item['user_id']
+    id = values.item['from_id']
+    connect = values.connect
     values.users.setdefault(id, {'name': name,
                                  'surname': surname,
                                  'group': group})
     setNameSelectedToGoogle(fullname, group)
-    # TODO: addPersonToDB(id, name, surname, group)
+    addPersonToDB(connect, id, name, surname, group)
+    message = 'Ты зарегистрирован как ' + fullname +\
+              '!) Если случайно нажал не туда - напиши администратору!'
     return message, None, getDefaultScreenButtons()
 
 

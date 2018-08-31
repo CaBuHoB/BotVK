@@ -1,19 +1,19 @@
 from Bot.Basis import command_system
+from Bot.Basis.DataBase.workWithDataBase import removeFromQueueInDB
 from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
 
 
 def removeFromQueue(values):
     queue = values.message.split(' ')[1]
-    id = values.item['user_id']
+    id = values.item['from_id']
+    connect = values.connect
 
-    # TODO: boolean выкидывание из очереди в БД. True, если он там был, False, и так не было
-    # removeFromQueue(queue, id)
-    removeFromQueue = True
+    removed = removeFromQueueInDB(connect, queue, id)
 
-    if removeFromQueue:
+    if removed:
         message = 'Теперь тебя нет в этой очереди: ' + queue
     else:
-        message = 'Тебя там и не было =)' # + Показать человеку очередь
+        message = 'Тебя в этой очереди и так не было =)'
     keyboard = getDefaultScreenButtons()
 
     return message, None, keyboard

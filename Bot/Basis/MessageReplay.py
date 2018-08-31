@@ -50,7 +50,7 @@ def get_answer(values):
     values.message = message
     body = message.lower().split(" ")
     attachment = None
-    key = None
+    key = getDefaultScreenButtons()
     for c in command_list:
         if body[0] in c.keys:
             message, attachment, key = c.process(values)
@@ -58,13 +58,8 @@ def get_answer(values):
 
     if (not values.item['from_id'] in values.users) and\
             (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
-        # TODO не забыть исправить после того, как будет написаны функции для работы с БД
-        message, attachment, key = \
-            'Пока пусть будет пропуск регистрации, а то просто так в гугл обращается при каждом тесте', \
-                                None, getDefaultScreenButtons()
-        id = values.item['from_id']
-        values.users.setdefault(id, ' ')
-            # 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, getButtonsWithGroups()
+        message, attachment, key = 'Тебе нужно зарегистрироваться! Выбери свою группу:', \
+                                   None, getButtonsWithGroups()
     return message, attachment, key
 
 
