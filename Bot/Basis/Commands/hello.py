@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from Bot.Basis import command_system
+from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
 
 
 def hello(values):
     message = 'Привет, друг!\nЯ новый чат-бот.'
-    return message, None, None
+    return message, None, getDefaultScreenButtons()
 
 
 command = command_system.Command()

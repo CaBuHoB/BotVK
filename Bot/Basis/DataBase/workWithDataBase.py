@@ -104,5 +104,5 @@ def setToQueue(connect, queue, id, name, addEvenIfAlreadyIn=False):
 
 
 connect = getConnect()
-print(setToQueue(connect, 'test', 1, 'max', True))
-print(getQueueList(connect, "test"))
+#print(setToQueue(connect, 'test', 1, 'max', True))
+#print(getQueueList(connect, "test"))

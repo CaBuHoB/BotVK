@@ -81,13 +81,13 @@ def getDefaultScreenButtons():
 def getQueueButtons(connect, group_number):
 
     buttonsList = getQueueNames(connect) #возвращает список [] строк с названиями очередей из БД
-    newButtonsList = buttonsList #[]
-    #for button in buttonsList:
-    #    groups = button.split('_')[1]
-    #    groupsList = groups.split(' ')
-    #    for group in groupsList:
-    #        if group == group_number:
-    #           newButtonsList.append(button)
+    newButtonsList = []
+    for button in buttonsList:
+        groups = button.split('_')[1]
+        groupsList = groups.split(' ')
+        for group in groupsList:
+            if group == group_number:
+               newButtonsList.append(button)
 
     if len(newButtonsList) == 0:
         return None

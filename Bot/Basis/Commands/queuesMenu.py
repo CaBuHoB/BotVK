@@ -6,7 +6,8 @@ def queuesMenu(values):
     message = 'Выбери дату и предмет. Если в списке ещё нет нужной очереди, обратись к старосте ' \
               'или разработчику для её открытия'
     id = values.item['from_id']
-    group = values.users.items[id]['group']
+    person = values.users[id]
+    group = person['group']
     keyboard = getQueueButtons(values.connect, group)
     if keyboard is None:
         message = 'Сейчас доступных для тебя очередей нет =( \n' \
