@@ -9,7 +9,7 @@ def removeFromQueue(values):
     connect = values.connect
 
     removed = removeFromQueueInDB(connect, queue, id)
-
+    # TODO: removeFromQueueInDB будет немного проблематично возвращать f/t, поэтому лучше сделать одно сообщение
     if removed:
         message = 'Теперь тебя нет в этой очереди: ' + queue
     else:

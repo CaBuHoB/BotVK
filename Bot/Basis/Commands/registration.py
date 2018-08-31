@@ -16,7 +16,7 @@ def endOfRegistration(values):
                                  'group': group})
     setNameSelectedToGoogle(fullname, group)
     addPersonToDB(connect, id, name, surname, group)
-    message = 'Ты зарегистрирован как ' + fullname +\
+    message = 'Ты зарегистрирован как ' + fullname + \
               '!) Если случайно нажал не туда - напиши администратору!'
     return message, None, getDefaultScreenButtons()
 

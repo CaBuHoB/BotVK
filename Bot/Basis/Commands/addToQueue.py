@@ -5,8 +5,8 @@ from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons, getAlreadyIn
 
 def addToQueue(values):
     queue = values.message.split(' ')[1]
-    id = values.item['from_id']
-    name = values.users['id']['name'] + ' ' + values.users['id']['surname']
+    id = int(values.item['from_id'])
+    name = values.users[id]['name'] + ' ' + values.users[id]['surname']
     connect = values.connect
 
     # Если "Встать в очередь", то человек первый раз обращается, тогда не надо пока его перезаписывать

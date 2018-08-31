@@ -11,14 +11,6 @@ from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
 
-def getMaterialsList(values):
-    items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
-    list = []
-    for doc in items:
-        if doc['owner_id'] == -168366525: # TODO: заменить id тестовой группы на число основной
-            list.append(doc['title'])
-    return list
-
 def uploadFile(filePath, peer_id, title, vkApi):
     typeFile = {1: 'doc', 4: 'photo', 6: 'video'}
 

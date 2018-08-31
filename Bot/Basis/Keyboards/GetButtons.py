@@ -79,10 +79,10 @@ def getDefaultScreenButtons():
 
 
 def getQueueButtons(connect, group_number):
-
-    buttonsList = getQueueNames(connect) #возвращает список [] строк с названиями очередей из БД
-    newButtonsList = buttonsList #[]
-    #for button in buttonsList:
+    # TODO: исправить вывод очередей
+    buttonsList = getQueueNames(connect)  # возвращает список [] строк с названиями очередей из БД
+    newButtonsList = buttonsList  # []
+    # for button in buttonsList:
     #    groups = button.split('_')[1]
     #    groupsList = groups.split(' ')
     #    for group in groupsList:
@@ -147,16 +147,18 @@ def getTestButtons():
     }, ensure_ascii=False)
 
 
-def getMaterialsActionsButtons():
-    #TODO: список материалов группы (строки)
-    materialsList = [] # getMaterialsList()
-    materialsList = ['Infa 1', 'Kruk 2']
+def getMaterialsActionsButtons(values):
+    items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
+    materialsList = []
+    for doc in items:
+        if doc['owner_id'] == -168366525:  # TODO: заменить id тестовой группы на число основной
+            materialsList.append(doc['title'])
     if len(materialsList) == 0:
         return None
 
     lessonsList = []
     for material in materialsList:
-        lesson = material.split(' ')[0]
+        lesson = material.split(' ')[1]
         if not lesson in lessonsList:
             lessonsList.append(lesson)
 
@@ -167,17 +169,21 @@ def getMaterialsActionsButtons():
         "buttons": listOfButtons
     }, ensure_ascii=False)
 
-def getMaterialsListButtons(lessonName):
-    materialsList = []  # getMaterialsList()
-    materialsList = ['Infa 1', 'Kruk 2']
+
+def getMaterialsListButtons(lessonName, values):
+    items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
+    materialsList = []
+    for doc in items:
+        if doc['owner_id'] == -168366525:  # TODO: заменить id тестовой группы на число основной
+            materialsList.append(doc['title'])
 
     neededMaterialsList = []
     for material in materialsList:
-        lesson = material.split(' ')[0]
+        lesson = material.split(' ')[1]
         if lesson == lessonName:
             neededMaterialsList.append(material)
 
-    listOfButtons = [[getButton(material.split(' ')[1], 'getFile ' + material, Color.WHITE)]
+    listOfButtons = [[getButton(material.split(' ')[2], 'getFile ' + material, Color.WHITE)] \
                      for material in neededMaterialsList]
     listOfButtons.append([getButton('⟵ в меню материалов', 'materialsMenu', Color.BLUE),
                           getButton('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
