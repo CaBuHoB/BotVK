@@ -11,6 +11,14 @@ from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
 
+def getMaterialsList(values):
+    items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
+    list = []
+    for doc in items:
+        if doc['owner_id'] == -168366525: # TODO: заменить id тестовой группы на число основной
+            list.append(doc['title'])
+    return list
+
 def uploadFile(filePath, peer_id, title, vkApi):
     typeFile = {1: 'doc', 4: 'photo', 6: 'video'}
 
@@ -56,7 +64,7 @@ def get_answer(values):
             message, attachment, key = c.process(values)
             break
 
-    if (not values.item['from_id'] in values.users) and\
+    if (not values.item['from_id'] in values.users) and \
             (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
         message, attachment, key = 'Тебе нужно зарегистрироваться! Выбери свою группу:', \
                                    None, getButtonsWithGroups()

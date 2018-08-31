@@ -7,6 +7,7 @@ def createQueue(values):
     name = values.message.split(' ')[1]
     connect = values.connect
     # TODO: createQueueInBD(connect, name) для создания очереди из диалога с ботом
+    # TODO: создал
     message = 'Очередь создана'
     keyboard = getDefaultScreenButtons()
     return message, None, keyboard
