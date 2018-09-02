@@ -26,4 +26,4 @@ while True:
             values = Namespace(vkApi=vkApi, item=message, connect=connect, users=users)
             my_thread = MessageReplay.MessageReplay(values)
             my_thread.start()
-    # time.sleep(200) 
+    # time.sleep(200)
