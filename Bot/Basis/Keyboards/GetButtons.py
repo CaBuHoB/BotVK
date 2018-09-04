@@ -32,7 +32,7 @@ def getDefaultScreenButtons(values=None, id=None):
     if values is not None:
         user_id = values.item['from_id'] if id is None else id
         surname = values.users[user_id]['surname']
-        if (surname == 'Борисова'): #(surname == 'Савинов') or
+        if (surname == 'Борисова') or (surname == 'Савинов'):
             queueButtons.append(getButton('Создать очередь', 'createQueue', Color.WHITE))
             infoMessageButton = [getButton('Рассылка', 'infoMessage', Color.WHITE)]
 
