@@ -7,7 +7,7 @@ from Bot.Basis.DataBase.workWithDataBase import getConnect, getAllUsers
 from Bot.Basis import MessageReplay
 
 api_token = '890e1e0743f9afdcf2787f6338c1fd0bc73327a2aa398d8cd38d4e6fdb998b08b43f0a26b905bf25ae47b'
-api_token = '07bad0077791b970f09942de845145ae326dc6c6b3d89c03690b1240f4a4a033899cf96e5fa72d6a334bb'  # тестовый
+# api_token = '07bad0077791b970f09942de845145ae326dc6c6b3d89c03690b1240f4a4a033899cf96e5fa72d6a334bb'  # тестовый
 vkApi = vk_api.VkApi(token=api_token)
 vk = vkApi.get_api()
 

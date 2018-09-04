@@ -150,7 +150,7 @@ def getMaterialsActionsButtons(values):
     items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
     materialsList = []
     for doc in items:
-        if doc['owner_id'] == -168366525:  # TODO: заменить id тестовой группы на число основной
+        if doc['owner_id'] == -168330527:  # -168366525:  # TODO: заменить id тестовой группы на число основной
             materialsList.append(doc['title'])
     if len(materialsList) == 0:
         return None
@@ -173,7 +173,7 @@ def getMaterialsListButtons(lessonName, values):
     items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
     materialsList = []
     for doc in items:
-        if doc['owner_id'] == -168366525:  # TODO: заменить id тестовой группы на число основной
+        if doc['owner_id'] == -168330527:  # -168366525:  # TODO: заменить id тестовой группы на число основной
             materialsList.append(doc['title'])
 
     neededMaterialsList = []
