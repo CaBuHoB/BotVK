@@ -54,6 +54,47 @@ def createQueueInBD(connect, name):
     cursor.close()
     connect.commit()
 
+def removeQueueInBD(connect, queue):
+    cursor = connect.cursor()
+
+    cursor.execute('DROP TABLE queue.{}'.format(queue))
+    cursor.close()
+    connect.commit()
+
+
+def removeFromDateDeleted(connect, queue):
+    cursor = connect.cursor()
+
+    cursor.execute('DELETE FROM public."date deleted tables" WHERE name = %s', [queue])
+    cursor.close()
+    connect.commit()
+
+
+def getDateDeletedTables(connect):
+    cursor = connect.cursor()
+
+    cursor.execute('SELECT * FROM public."date deleted tables"')
+    nameDate = [[table[0], table[1], table[2]] for table in cursor]
+    cursor.close()
+
+    return nameDate
+
+
+def addTableInDateDeleteTable(connect, name, date, id):
+    cursor = connect.cursor()
+
+    cursor.execute('INSERT INTO public."date deleted tables" VALUES (%s, %s, %s)', [name, date, id])
+    cursor.close()
+    connect.commit()
+
+
+def updateDateInDateDeleted(connect, queue, newDate):
+    cursor = connect.cursor()
+
+    cursor.execute('UPDATE public."date deleted tables" SET date = %s WHERE name = %s', [newDate, queue])
+    cursor.close()
+    connect.commit()
+
 
 def getQueueNames(connect):
     cursor = connect.cursor()
@@ -75,6 +116,16 @@ def getQueueList(connect, queue):
     return queueList
 
 
+def getSubjects(connect):
+    cursor = connect.cursor()
+
+    cursor.execute('SELECT name FROM public.subjects')
+    subjectsList = [name[0] for name in cursor]
+    cursor.close()
+
+    return subjectsList
+
+
 def removeFromQueueInDB(connect, queue, id):
     cursor = connect.cursor()
 
@@ -83,21 +134,40 @@ def removeFromQueueInDB(connect, queue, id):
     connect.commit()
 
 
-def setToQueue(connect, queue, id, name, addEvenIfAlreadyIn=False):
+def setToQueue(connect, queue, id, name):
     cursor = connect.cursor()
 
     cursor.execute('SELECT * FROM queue.{} WHERE id = {}'.format(queue, id))
-    isWritten = True if len(cursor.fetchall()) != 0 else False
-    if isWritten and not addEvenIfAlreadyIn:
-        return False
-    if isWritten and addEvenIfAlreadyIn:
-        cursor.execute('DELETE FROM queue.{} WHERE id = {}'.format(queue, id))
-        connect.commit()
-        cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [id, name])
-    elif not isWritten:
+    if len(cursor.fetchall()) == 0:
         cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [id, name])
 
     cursor.close()
     connect.commit()
 
     return True
+
+
+def subscribePerson(connect, user_id):
+    cursor = connect.cursor()
+
+    cursor.execute('INSERT INTO public.subscribers VALUES (%s)', [user_id])
+    cursor.close()
+    connect.commit()
+
+
+def unSubscribePerson(connect, user_id):
+    cursor = connect.cursor()
+
+    cursor.execute('DELETE FROM public.subscribers WHERE id = {}'.format(user_id))
+    cursor.close()
+    connect.commit()
+
+
+def getSubscribedUsers(connect):
+    cursor = connect.cursor()
+
+    cursor.execute('SELECT id FROM public.subscribers')
+    subscribers = [id[0] for id in cursor]
+    cursor.close()
+
+    return subscribers

@@ -10,7 +10,7 @@ def materialsMenu(values):
     if keyboard is None:
         message = 'Материалов пока нет =(\n' \
                   'Если хочешь внести свою лепту - напиши админу!)'
-        keyboard = getDefaultScreenButtons()
+        keyboard = getDefaultScreenButtons(values)
 
     return message, None, keyboard
 

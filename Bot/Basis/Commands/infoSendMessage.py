@@ -1,0 +1,34 @@
+# -*- coding: utf-8 -*-
+from Bot.Basis import command_system
+from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
+from Bot.Basis.MessageReplay import send_msg
+
+
+def infoSendMessage(values):
+    from_id = values.item['from_id']
+    groups = values.messageFromAdmin[from_id]['groups']
+    message_for_groups = values.messageFromAdmin[from_id]['message']
+
+    attachments = []
+    for att in message_for_groups['attachments']:
+        type = att['type']
+        attachments.append(type + '-' + str(att[type]['owner_id']) + '_' + str(att[type]['id']))
+
+    for user in values.users:
+        if str(values.users[user]['group']) in groups:
+            send_msg(values.vkApi.get_api(), user, message_for_groups['text'],
+                     attachment=attachments, keyboard=None)
+
+    values.messageFromAdmin.pop(from_id)
+
+    message = 'Сообщения разосланы группам: '
+    for group in groups:
+        message += (' ' + str(group))
+    return message, None, getDefaultScreenButtons(values)
+
+
+command = command_system.Command()
+
+command.keys = ['infoSendMessage']
+command.description = 'Отправка рассылки информации'
+command.process = infoSendMessage

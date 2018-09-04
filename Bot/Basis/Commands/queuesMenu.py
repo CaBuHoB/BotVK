@@ -11,7 +11,7 @@ def queuesMenu(values):
     if keyboard is None:
         message = 'Сейчас доступных для тебя очередей нет =( \n' \
                   'Обратись к старосте или разработчику для открытия новой!'
-        keyboard = getDefaultScreenButtons()
+        keyboard = getDefaultScreenButtons(values)
     return message, None, keyboard
 
 
