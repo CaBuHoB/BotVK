@@ -17,7 +17,7 @@ def getFile(values):
         send_sticker(values.vkApi.get_api(), values.item['user_id'], 8480)
         return 'Ошибочка вышла', None, None
     file = typeFile[doc[0]['type']] + str(doc[0]['owner_id']) + '_' + str(doc[0]['id'])
-    return message, file, getDefaultScreenButtons()
+    return message, file, getDefaultScreenButtons(values)
 
 
 command = command_system.Command()
