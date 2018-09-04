@@ -134,7 +134,7 @@ def removeFromQueueInDB(connect, queue, id):
     connect.commit()
 
 
-def setToQueue(connect, queue, id, name):
+def setToQueue(connect, queue, id, name, addEvenIfAlreadyIn=True):
     cursor = connect.cursor()
 
     cursor.execute('SELECT * FROM queue.{} WHERE id = {}'.format(queue, id))
