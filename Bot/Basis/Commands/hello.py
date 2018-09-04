@@ -5,7 +5,7 @@ from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
 
 def hello(values):
     message = 'Привет, друг!\nЯ новый чат-бот.'
-    return message, None, getDefaultScreenButtons()
+    return message, None, getDefaultScreenButtons(values)
 
 
 command = command_system.Command()

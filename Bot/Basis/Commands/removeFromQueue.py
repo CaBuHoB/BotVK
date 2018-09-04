@@ -4,17 +4,14 @@ from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
 
 
 def removeFromQueue(values):
-    queue = values.message.split(' ')[1]
+    queue = ' '.join(values.message.split(' ')[1:])
     id = values.item['from_id']
     connect = values.connect
 
-    removed = removeFromQueueInDB(connect, queue, id)
-    # TODO: removeFromQueueInDB будет немного проблематично возвращать f/t, поэтому лучше сделать одно сообщение
-    if removed:
-        message = 'Теперь тебя нет в этой очереди: ' + queue
-    else:
-        message = 'Тебя в этой очереди и так не было =)'
-    keyboard = getDefaultScreenButtons()
+    queue_ = '\"' + queue + '\"'
+    removeFromQueueInDB(connect, queue_, id)
+    message = 'Ты вышел из этой очереди: ' + queue
+    keyboard = getDefaultScreenButtons(values)
 
     return message, None, keyboard
 

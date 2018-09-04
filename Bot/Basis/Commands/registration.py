@@ -18,7 +18,7 @@ def endOfRegistration(values):
     addPersonToDB(connect, id, name, surname, group)
     message = 'Ты зарегистрирован как ' + fullname + \
               '!) Если случайно нажал не туда - напиши администратору!'
-    return message, None, getDefaultScreenButtons()
+    return message, None, getDefaultScreenButtons(values)
 
 
 command = command_system.Command()

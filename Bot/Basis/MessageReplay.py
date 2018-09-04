@@ -6,7 +6,7 @@ import importlib
 
 import vk_api
 
-from Bot.Basis.Keyboards.GetButtons import getButtonsWithGroups, getDefaultScreenButtons
+from Bot.Basis.Keyboards.GetButtons import getButtonsWithGroups, getDefaultScreenButtons, getSendOrNoButtons
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
@@ -40,26 +40,39 @@ def get_answer(values):
     message = values.item['text']
     if 'payload' in values.item:
         message = values.item['payload'].replace("\"", "")
+    body = message.lower().split(" ")
 
+    # Пользователь не зарегистрирован
+    from_id = values.item['from_id']
+    if (not from_id in values.users) and \
+            (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
+        return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, getButtonsWithGroups()
+
+    # Сообщение от пользователя отправлено в рассылку
+    if (from_id in values.messageFromAdmin) and (body[0] != 'infosendmessage') and \
+            (body[0] != 'backtodefaultkeyboard') and (body[0] != 'infobygroup'):
+        values.messageFromAdmin[from_id]['message'] = values.item
+        groups = values.messageFromAdmin[from_id]['groups']
+        message = 'Сделать рассылку группам: ' + ' '.join(groups) + '?'
+        return message, None, getSendOrNoButtons()
+
+    # Обработка аудио/вложений
     if len(values.item['attachments']) > 0:
         message = 'Я не понимаю, что ты от меня хочешь'
         if values.item['attachments'][0]['doc']['ext'] == 'ogg':
             url = values.item['attachments'][0]['doc']['url']
             message = voice_processing(url)
 
+    # Обработка команд
     values.message = message
     body = message.lower().split(" ")
     attachment = None
-    key = getDefaultScreenButtons()
+    key = getDefaultScreenButtons(values)
     for c in command_list:
         if body[0] in c.keys:
             message, attachment, key = c.process(values)
             break
 
-    if (not values.item['from_id'] in values.users) and \
-            (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
-        message, attachment, key = 'Тебе нужно зарегистрироваться! Выбери свою группу:', \
-                                   None, getButtonsWithGroups()
     return message, attachment, key
 
 
