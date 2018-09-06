@@ -62,8 +62,11 @@ while True:
             vk.messages.send(user_id=admin_id, message='Удалить очередь ' + queue_name + ' ?', \
                     attachment=None, keyboard=queueDeleteButtons(admin_id))
 
-    # Обработка сообщений
-    conversations = vkApi.method('messages.getConversations', {'filter': 'unread'})
+    # Обработка 
+    try:
+       conversations = vkApi.method('messages.getConversations', {'filter': 'unread'})
+    except ApiHttpError:
+       continue
     for item in conversations['items']:
         user_id = item['conversation']['peer']['id']
         count = item['conversation']['unread_count']
