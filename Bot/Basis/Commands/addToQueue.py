@@ -1,24 +1,25 @@
 from Bot.Basis import command_system
 from Bot.Basis.DataBase.workWithDataBase import setToQueue, getQueueList
-from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons
 
 
 def addToQueue(values):
-    queue = ' '.join(values.message.split(' ')[1:])
-    id = int(values.item['from_id'])
-    name = values.users[id]['name'] + ' ' + values.users[id]['surname']
+    queue = ' '.join(values.message.split()[1:])
+    user_id = int(values.item['from_id'])
+    name = values.users[user_id]['name'] + ' ' + values.users[user_id]['surname']
     connect = values.connect
-    queue_name = '\"' + queue + '\"'
-    setToQueue(connect, queue_name, id, name)
+    queue = '\"' + queue + '\"'
 
-    list = getQueueList(connect, queue_name)
-    stringList = '\nОчередь на данный момент:'
-    for name in list:
-        stringList += '\n'
-        stringList += name
+    setToQueue(connect, queue, user_id, name)
 
-    message = 'Готово!\n' + stringList
-    keyboard = getDefaultScreenButtons(values)
+    message = 'Готово!\nОчередь на данный момент:'
+    for name in getQueueList(connect, queue):
+        message += '\n'
+        if name == (values.users[user_id]['name'] + ' ' + values.users[user_id]['surname']):
+            message += '> '
+        message += name
+
+    keyboard = get_default_buttons(values)
 
     return message, None, keyboard
 

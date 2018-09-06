@@ -1,14 +1,14 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.GetButtons import getSubjectsForQueueButtons
+from Bot.Basis.Keyboards.getButtons import get_subjects_for_queue_creation_buttons
 
 
 def queueByGroup(values):
     groups = values.item['text']
-    date = values.message.split(' ')[1:]
+    date = values.message.split()[1:]
     date_str = ' '.join(date)
     tail_of_queue_name = groups + '_' + date_str
     message = 'Выбери предмет'
-    keyboard = getSubjectsForQueueButtons(values, tail_of_queue_name)
+    keyboard = get_subjects_for_queue_creation_buttons(values, tail_of_queue_name)
 
     return message, None, keyboard
 

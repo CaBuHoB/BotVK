@@ -96,16 +96,6 @@ def getTimetableDict(groupList):
     return timetableDict
 
 
-def getDaysDict():
-    return {'Понедельник': 'пн',
-            'Вторник': 'вт',
-            'Среда': 'ср',
-            'Четверг': 'чт',
-            'Пятница': 'пт',
-            'Суббота': 'сб',
-            'Воскресенье': 'вс'}
-
-
 def getTimetableByDay(timetableDict, group, day, isUpper):
 
     timetable = timetableDict[str(group)][day]

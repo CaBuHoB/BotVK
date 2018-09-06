@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 from Bot.Basis import command_system
 from Bot.Basis.DataBase.workWithDataBase import removeQueueInBD, updateDateInDateDeleted
-from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons
 
 
 def rewriteQueueDelete(values):
-    name = values.message.split(' ')[1:]
+    name = values.message.split()[1:]
     name = ' '.join(name)
 
     new_date = datetime.now() + timedelta(3)
@@ -14,11 +14,11 @@ def rewriteQueueDelete(values):
     year = str(new_date.timetuple()[0])
     date = day + '.' + month + '.' + year
 
-    name_ = '\"' + name + '\"'
-    updateDateInDateDeleted(values.connect, name_, date)
-
     message = 'Перенесена дата удаления очереди ' + name
-    keyboard = getDefaultScreenButtons(values)
+    name = '\"' + name + '\"'
+    updateDateInDateDeleted(values.connect, name, date)
+
+    keyboard = get_default_buttons(values)
 
     return message, None, keyboard
 

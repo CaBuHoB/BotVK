@@ -4,7 +4,7 @@ from Bot.Basis.YandexGoogle.GoogleApi import getTranslatedText
 
 
 def translate(values):
-    # TODO: исправить перевод. Сейчас переводит только с руссуого на англ
+    # TODO: исправить перевод. Сейчас переводит только с русского на англ
     message = getTranslatedText(values.message[values.message.find(' '):])
     return message, None, None
 

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.GetButtons import getGroupsForMessageButtons
+from Bot.Basis.Keyboards.getButtons import get_groups_for_message_buttons
 
 
 def infoMessage(values):
-    message = 'Для каких групп делать рассылку?'
-    return message, None, getGroupsForMessageButtons()
+    message = 'Выбери, для каких групп делать рассылку'
+    return message, None, get_groups_for_message_buttons()
 
 
 command = command_system.Command()

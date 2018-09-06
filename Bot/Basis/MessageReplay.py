@@ -6,12 +6,12 @@ import importlib
 
 import vk_api
 
-from Bot.Basis.Keyboards.GetButtons import getButtonsWithGroups, getDefaultScreenButtons, getSendOrNoButtons
+from Bot.Basis.Keyboards.getButtons import get_choose_group_buttons, get_default_buttons, get_asking_if_send_message_buttons
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
 
-def uploadFile(filePath, peer_id, title, vkApi):
+def upload_file(filePath, peer_id, title, vkApi):
     typeFile = {1: 'doc', 4: 'photo', 6: 'video'}
 
     upload = vk_api.VkUpload(vkApi)
@@ -40,34 +40,36 @@ def get_answer(values):
     message = values.item['text']
     if 'payload' in values.item:
         message = values.item['payload'].replace("\"", "")
-    body = message.lower().split(" ")
+    body = message.lower().split()
+    from_id = values.item['from_id']
 
     # Пользователь не зарегистрирован
-    from_id = values.item['from_id']
-    if (not from_id in values.users) and \
-            (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
-        return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, getButtonsWithGroups()
+    if (not from_id in values.users) and (body[0] != 'shownameslist') \
+                                    and (body[0] != 'endofregistration'):
+        return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, get_choose_group_buttons()
 
-    # Сообщение от пользователя отправлено в рассылку
-    if (from_id in values.messageFromAdmin) and (body[0] != 'infosendmessage') and \
-            (body[0] != 'backtodefaultkeyboard') and (body[0] != 'infobygroup'):
+    # Сообщение от пользователя отправлено в рассылку ?
+    if (from_id in values.messageFromAdmin) and (body[0] != 'infosendmessage') \
+                                            and (body[0] != 'backtodefaultkeyboard') \
+                                            and (body[0] != 'infobygroup'):
         values.messageFromAdmin[from_id]['message'] = values.item
         groups = values.messageFromAdmin[from_id]['groups']
         message = 'Сделать рассылку группам: ' + ' '.join(groups) + '?'
-        return message, None, getSendOrNoButtons()
+        return message, None, get_asking_if_send_message_buttons()
 
     # Обработка аудио/вложений
     if len(values.item['attachments']) > 0:
-        message = 'Я не понимаю, что ты от меня хочешь'
+        message = 'Я не понимаю, чего ты от меня хочешь. Чтобы узнать, ' \
+                  'что я умею, нажми на зелёную кнопку со знаком вопроса'
         if values.item['attachments'][0]['doc']['ext'] == 'ogg':
             url = values.item['attachments'][0]['doc']['url']
             message = voice_processing(url)
 
     # Обработка команд
     values.message = message
-    body = message.lower().split(" ")
+    body = message.lower().split()
     attachment = None
-    key = getDefaultScreenButtons(values)
+    key = get_default_buttons(values)
     for c in command_list:
         if body[0] in c.keys:
             message, attachment, key = c.process(values)

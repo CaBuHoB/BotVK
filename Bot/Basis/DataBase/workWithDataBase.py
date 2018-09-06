@@ -138,7 +138,11 @@ def setToQueue(connect, queue, id, name):
     cursor = connect.cursor()
 
     cursor.execute('SELECT * FROM queue.{} WHERE id = {}'.format(queue, id))
-    if len(cursor.fetchall()) == 0:
+    if len(cursor.fetchall()) != 0:
+        cursor.execute('DELETE FROM queue.{} WHERE id = {}'.format(queue, id))
+        connect.commit()
+        cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [id, name])
+    else:
         cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [id, name])
 
     cursor.close()

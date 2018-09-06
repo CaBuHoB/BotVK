@@ -1,13 +1,15 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons
 
 
 def backToDefaultKeyboard(values):
-    id = values.item['from_id']
+    user_id = values.item['from_id']
     message = 'Главное меню'
-    keyboard = getDefaultScreenButtons(values)
-    if id in values.messageFromAdmin:
-        values.messageFromAdmin.pop(id)
+    keyboard = get_default_buttons(values)
+
+    if user_id in values.messageFromAdmin:
+        values.messageFromAdmin.pop(user_id)
+
     return message, None, keyboard
 
 

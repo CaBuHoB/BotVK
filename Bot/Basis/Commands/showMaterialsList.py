@@ -1,5 +1,5 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.GetButtons import getMaterialsListButtons
+from Bot.Basis.Keyboards.getButtons import getMaterialsListButtons
 
 
 def showMaterialsList(values):

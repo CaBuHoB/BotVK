@@ -1,12 +1,12 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons
 
 
 def kroukMenu(values):
-    message = 'Пока я умею решать только сравнения вида x^2 = a (mod p)\n' \
+    message = 'Пока я умею только решать сравнения вида x^2 = a (mod p)\n' \
               'Чтобы получить таблицу, отправь мне \"Крук (число a) (модуль)\"\n' \
               'Пример: Крук 14 193'
-    return message, None, getDefaultScreenButtons(values)
+    return message, None, get_default_buttons(values)
 
 
 command = command_system.Command()

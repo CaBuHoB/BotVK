@@ -12,7 +12,7 @@ def wiki(values):
         page_py = page_py.summary
         name = page_py[:page_py.find('—')]
         other = page_py[page_py.find('—'):]
-        newMessage = 'Иногда я не идеально обрабатываю информацию\n\n' + name + '—' + other[:other.find('.') + 1]
+        newMessage = 'Иногда я неидеально обрабатываю информацию\n\n' + name + '—' + other[:other.find('.') + 1]
 
     return newMessage, None, None
 

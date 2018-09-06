@@ -14,7 +14,7 @@ def wolfram(values):
         if pod.text is not None:
             answer += '\n' + pod.title + ':\n' + '\n'.join(pod.texts)
     if answer == '':
-        answer = 'Что то у меня нет ответа. Я не умею пересылать на столько сложные ответы с сайта:('
+        answer = 'Что-то у меня ничего нет. Я не умею пересылать настолько сложные ответы с сайта:('
     return answer, None, None
 
 
