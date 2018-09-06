@@ -65,7 +65,7 @@ while True:
     # Обработка 
     try:
        conversations = vkApi.method('messages.getConversations', {'filter': 'unread'})
-    except ApiHttpError:
+    except vk_api.exceptions.ApiHttpError:
        continue
     for item in conversations['items']:
         user_id = item['conversation']['peer']['id']
