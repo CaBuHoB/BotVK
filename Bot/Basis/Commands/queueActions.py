@@ -1,30 +1,32 @@
 from Bot.Basis import command_system
 from Bot.Basis.DataBase.workWithDataBase import getQueueList
-from Bot.Basis.Keyboards.GetButtons import getQueueActionsButtons
+from Bot.Basis.Keyboards.getButtons import get_queue_actions_buttons
 
 
 def queueActions(values):
-    id = values.item['from_id']
+    user_id = values.item['from_id']
     queue = values.item['text']
     if queue == '⟵ в меню этой очереди':
         queue = values.message.split()[1]
 
-    queue_name = '\"' + queue + '\"'
     connect = values.connect
-    list = getQueueList(connect, queue_name)
+    queue_list = getQueueList(connect, ('\"' + queue + '\"'))
     message = 'Название очереди: ' + queue
     personIsIn = False
-    if len(list) < 1:
+
+    if len(queue_list) < 1:
         message += '\nВ этой очереди ещё никто не записан'
     else:
         message += '\n\nСписок:'
-        for name in list:
+        for name in queue_list:
             message += '\n'
-            if name == (values.users[id]['name'] + ' ' + values.users[id]['surname']):
+            if name == (values.users[user_id]['name'] + ' ' + values.users[user_id]['surname']):
                 personIsIn = True
                 message += '> '
             message += name
-    keyboard = getQueueActionsButtons(queue, personIsIn)
+
+    keyboard = get_queue_actions_buttons(queue, personIsIn)
+
     return message, None, keyboard
 
 

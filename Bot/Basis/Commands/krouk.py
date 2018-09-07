@@ -2,14 +2,14 @@
 import os
 
 from Bot.Basis import command_system
-from Bot.Basis.MessageReplay import uploadFile
+from Bot.Basis.MessageReplay import upload_file
 from Bot.Math.Cryptography import TableOfQuadraticComp as tableKr
 
 
 def krouk(values):
-    message = 'Здесь должна быть таблица!!!!!\n' + values.item['body']
+    message = 'Держи таблицу!\n' + values.item['body']
     filepath = tableKr.getFile(values.item['body'], str(values.item['user_id']))
-    file = uploadFile(filepath, values.item['user_id'], values.item['body'] + '.pdf', values.vkApi)
+    file = upload_file(filepath, values.item['user_id'], values.item['body'] + '.pdf', values.vkApi)
     os.remove(filepath)
     return message, file, None
 

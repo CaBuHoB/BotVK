@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons
 from Bot.Basis.MessageReplay import send_msg
 
 
+# TODO: Не обрабатывает файл, только текст
 def infoSendMessage(values):
     from_id = values.item['from_id']
     groups = values.messageFromAdmin[from_id]['groups']
@@ -24,7 +25,7 @@ def infoSendMessage(values):
     message = 'Сообщения разосланы группам: '
     for group in groups:
         message += (' ' + str(group))
-    return message, None, getDefaultScreenButtons(values)
+    return message, None, get_default_buttons(values)
 
 
 command = command_system.Command()

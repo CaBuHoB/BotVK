@@ -1,21 +1,20 @@
 from Bot.Basis import command_system
 from Bot.Basis.DataBase.workWithDataBase import subscribePerson, unSubscribePerson
-from Bot.Basis.Keyboards.GetButtons import getTimetableButtons
+from Bot.Basis.Keyboards.getButtons import get_timetable_menu_buttons
 
 
 def timetableSending(values):
-    id = values.item['from_id']
     if values.message.split()[1] == 'sub':
-        subscribePerson(values.connect, id)
-        message = 'Ты подписался на рассылку расписания.\n' \
-              'В 21:00 тебе будет приходить расписание на следующий день.\n' \
-              'За 15 минут до начала пары также будет приходить уведомление. ' \
-              'Чтобы отписаться от рассылки, нажми на красную кнопку \"Отписаться\" в меню расписания)'
+        subscribePerson(values.connect, values.item['from_id'])
+        message = 'Ты подписался на рассылку.\n' \
+                  'В 21:00 тебе будет приходить расписание на следующий день.\n' \
+                  'За 15 минут до начала каждой пары будет приходить уведомление с информацией. ' \
+                  'В любой момент ты можешь отписаться, нажав на красную кнопку в меню расписания)'
     else:
-        unSubscribePerson(values.connect, id)
-        message = 'Ты отписан от рассылки расписания'
+        unSubscribePerson(values.connect, values.item['from_id'])
+        message = 'Ты отписался от рассылки расписания'
 
-    return message, None, getTimetableButtons(values)
+    return message, None, get_timetable_menu_buttons(values)
 
 
 command = command_system.Command()

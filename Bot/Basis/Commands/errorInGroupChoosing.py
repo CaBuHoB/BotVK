@@ -1,10 +1,10 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.GetButtons import getButtonsWithGroups
+from Bot.Basis.Keyboards.getButtons import get_choose_group_buttons
 
 
 def errorInGroupChoosing(values):
     message = 'Выбери СВОЮ группу)'
-    keyboard = getButtonsWithGroups()
+    keyboard = get_choose_group_buttons()
     return message, None, keyboard
 
 

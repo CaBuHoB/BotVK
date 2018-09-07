@@ -1,24 +1,24 @@
 from Bot.Basis import command_system
 from Bot.Basis.DataBase.workWithDataBase import removeQueueInBD, removeFromDateDeleted, getQueueNames, \
     getDateDeletedTables
-from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons
+from Bot.Basis.QueueThread import remove_from_asked_list
 
 
 def removeQueue(values):
-    name = values.message.split(' ')[1:]
-    name = ' '.join(name)
-    n = '\"' + name + '\"'
+    name = ' '.join(values.message.split(' ')[1:])
+    name_ = '\"' + name + '\"'
 
     if name in getQueueNames(values.connect):
-        removeQueueInBD(values.connect, n)
+        removeQueueInBD(values.connect, name_)
+        remove_from_asked_list(values.item['from_id'])
+
     for queue in getDateDeletedTables(values.connect):
         if name == queue[0]:
             removeFromDateDeleted(values.connect, name)
-    if name in values.appealsForQueueDelete:
-        values.appealsForQueueDelete.remove(name)
 
     message = 'Удалена очередь: ' + name
-    keyboard = getDefaultScreenButtons(values)
+    keyboard = get_default_buttons(values)
 
     return message, None, keyboard
 

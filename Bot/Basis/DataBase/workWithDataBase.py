@@ -54,6 +54,7 @@ def createQueueInBD(connect, name):
     cursor.close()
     connect.commit()
 
+
 def removeQueueInBD(connect, queue):
     cursor = connect.cursor()
 
@@ -134,18 +135,15 @@ def removeFromQueueInDB(connect, queue, id):
     connect.commit()
 
 
-def setToQueue(connect, queue, id, name, addEvenIfAlreadyIn=True):
+def setToQueue(connect, queue, id, name):
     cursor = connect.cursor()
 
     cursor.execute('SELECT * FROM queue.{} WHERE id = {}'.format(queue, id))
-    isWritten = True if len(cursor.fetchall()) != 0 else False
-    if isWritten and not addEvenIfAlreadyIn:
-        return False
-    if isWritten and addEvenIfAlreadyIn:
+    if len(cursor.fetchall()) != 0:
         cursor.execute('DELETE FROM queue.{} WHERE id = {}'.format(queue, id))
         connect.commit()
         cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [id, name])
-    elif not isWritten:
+    else:
         cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [id, name])
 
     cursor.close()

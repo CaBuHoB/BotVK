@@ -96,24 +96,13 @@ def getTimetableDict(groupList):
     return timetableDict
 
 
-def getDaysDict():
-    return {'Понедельник': 'пн',
-            'Вторник': 'вт',
-            'Среда': 'ср',
-            'Четверг': 'чт',
-            'Пятница': 'пт',
-            'Суббота': 'сб',
-            'Воскресенье': 'вс'}
-
-
 def getTimetableByDay(timetableDict, group, day, isUpper):
-
     timetable = timetableDict[str(group)][day]
     timetableStr = '📅 ' + day + '\n\n'
     for lesson in timetable:
         les = timetable[lesson]
         if (isUpper is not None) and (sum([0 if (l['isUpper'] != isUpper \
-                and l['isUpper'] is not None) else 1 for l in les]) == 0):
+                                                 and l['isUpper'] is not None) else 1 for l in les]) == 0):
             continue
         timetableStr += '🔔 ' + lesson + '\n'
         for l in les:

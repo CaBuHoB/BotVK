@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.GetButtons import getDefaultScreenButtons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons
 
 
 def hello(values):
-    message = 'Привет, друг!\nЯ новый чат-бот.'
-    return message, None, getDefaultScreenButtons(values)
+    message = 'Привет!\nЯ чат-бот 52 кафедры СПбГУАП. Чтобы узнать, что я могу, ' \
+              'нажми на зелёную кнопку со знаком вопроса. Буду рад тебе помочь!'
+    return message, None, get_default_buttons(values)
 
 
 command = command_system.Command()
 
-command.keys = ['привет', 'hello', 'Hi', 'здравствуй', 'здравствуйте']
+command.keys = ['привет', 'hello', 'hi', 'здравствуй', 'здравствуйте']
 command.description = 'Приветствие пользователя'
 command.process = hello
