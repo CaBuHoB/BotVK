@@ -77,4 +77,4 @@ class TimetableNotifications(Thread):
             for sub in self.timeList:
                 if (now[3] == self.timeList[sub][0]) & (now[4] == self.timeList[sub][1]):
                     send_subject_notification(self.vk, self.connect, sub)
-            time.sleep(5400)
+                time.sleep(5400)
