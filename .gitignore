@@ -105,9 +105,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-.idea/Bot VK.iml
-.idea/inspectionProfiles/
-.idea/workspace.xml
+.idea
 Bot/Basis/DataBase/__pycache__/
 Bot/Basis/Keyboards/__pycache__/
 Bot/Basis/Timetable/__pycache__/
