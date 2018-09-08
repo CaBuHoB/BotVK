@@ -3,6 +3,7 @@ from Bot.Basis import command_system
 from Bot.Basis.Keyboards.getButtons import get_default_buttons
 from Bot.Basis.MessageReplay import send_msg
 
+
 # TODO: Не обрабатывает файл, только текст
 def infoSendMessage(values):
     from_id = values.item['from_id']

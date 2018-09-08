@@ -97,7 +97,6 @@ def getTimetableDict(groupList):
 
 
 def getTimetableByDay(timetableDict, group, day, isUpper):
-
     timetable = timetableDict[str(group)][day]
     timetableStr_head = '📅 ' + day + '\n\n'
     timetableStr = ''

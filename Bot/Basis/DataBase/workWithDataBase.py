@@ -54,6 +54,7 @@ def createQueueInBD(connect, name):
     cursor.close()
     connect.commit()
 
+
 def removeQueueInBD(connect, queue):
     cursor = connect.cursor()
 

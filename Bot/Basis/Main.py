@@ -18,7 +18,6 @@ users = getAllUsers(connect)
 messageFromAdmin = {}
 timetableDict = getTimetableDict([5621, 5622, 5623])
 
-
 # Установка главной клавиатуры всем пользователям
 for user in users:
    vkApi.get_api().messages.send(user_id=user,
@@ -41,8 +40,9 @@ while True:
 
     try:
         conversations = vkApi.method('messages.getConversations', {'filter': 'unread'})
-    except vk_api.exceptions.ApiHttpError:
+    except BaseException:
         continue
+    
     for item in conversations['items']:
         user_id = item['conversation']['peer']['id']
         count = item['conversation']['unread_count']

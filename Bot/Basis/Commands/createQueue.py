@@ -4,7 +4,6 @@ from Bot.Basis.Keyboards.getButtons import get_default_buttons, get_dates_for_qu
 
 
 def createQueue(values):
-
     message = 'Выбери дату (можно выбрать дату на пять дней вперед, воскресенья не учитываются)'
     keyboard = get_dates_for_queue_creation_buttons()
 
