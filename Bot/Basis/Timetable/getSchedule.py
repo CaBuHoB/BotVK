@@ -99,11 +99,12 @@ def getTimetableDict(groupList):
 def getTimetableByDay(timetableDict, group, day, isUpper):
 
     timetable = timetableDict[str(group)][day]
-    timetableStr = '📅 ' + day + '\n\n'
+    timetableStr_head = '📅 ' + day + '\n\n'
+    timetableStr = ''
     for lesson in timetable:
         les = timetable[lesson]
-        if (isUpper is not None) and (sum([0 if (l['isUpper'] != isUpper \
-                and l['isUpper'] is not None) else 1 for l in les]) == 0):
+        if (isUpper is not None) and (sum([0 if (l['isUpper'] != isUpper
+           and l['isUpper'] is not None) else 1 for l in les]) == 0):
             continue
         timetableStr += '🔔 ' + lesson + '\n'
         for l in les:
@@ -114,7 +115,10 @@ def getTimetableByDay(timetableDict, group, day, isUpper):
                 timetableStr += '(' + l['teacher'] + ')\n'
                 timetableStr += l['lecture hall'] + ' (' + ', '.join((group for group in l['group'])) + ')\n'
         timetableStr += '\n'
-    return timetableStr
+
+    if timetableStr == '':
+        return ''
+    return timetableStr_head + timetableStr
 
 
 def getTimetableByWeek(timetableDict, group, isUpper):

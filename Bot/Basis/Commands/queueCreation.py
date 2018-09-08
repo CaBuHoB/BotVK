@@ -1,7 +1,7 @@
 from Bot.Basis import command_system
 from Bot.Basis.DataBase.workWithDataBase import addTableInDateDeleteTable, createQueueInBD, getDateDeletedTables, \
     getQueueNames
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons, get_queue_actions_buttons
 from Bot.Basis.MessageReplay import send_msg
 from datetime import datetime, timedelta
 
@@ -42,11 +42,10 @@ def queueCreation(values):
 
     for user in values.users:
         if (str(values.users[user]['group']) in groups.split()) and (user != values.item['from_id']):
-            send_msg(values.vkApi.get_api(), user, message, attachment=None, keyboard=None)
+            send_msg(values.vkApi.get_api(), user, message,
+                     attachment=None, keyboard=get_queue_actions_buttons(queue_name, False))
 
-    keyboard = get_default_buttons(values)
-
-    return message, None, keyboard
+    return message, None, get_default_buttons(values)
 
 
 command = command_system.Command()

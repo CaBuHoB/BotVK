@@ -12,20 +12,29 @@ def queueActions(values):
     connect = values.connect
     queue_list = getQueueList(connect, ('\"' + queue + '\"'))
     message = 'Название очереди: ' + queue
-    personIsIn = False
+    person_is_in = False
 
     if len(queue_list) < 1:
-        message += '\nВ этой очереди ещё никто не записан'
+        message += '\nВ этой очереди никто не записан'
     else:
         message += '\n\nСписок:'
         for name in queue_list:
             message += '\n'
             if name == (values.users[user_id]['name'] + ' ' + values.users[user_id]['surname']):
-                personIsIn = True
+                person_is_in = True
                 message += '> '
             message += name
 
-    keyboard = get_queue_actions_buttons(queue, personIsIn)
+    if str(values.users[user_id]['group']) not in (queue.split('_')[1]).split():
+        if len((queue.split('_')[1]).split()) > 1:
+            message += '\n\nЭта очередь доступна тебе только для просмотра, так как она' \
+                       ' была создана для других групп'
+        else:
+            message += '\n\nЭта очередь доступна тебе только для просмотра, так как она' \
+                       ' была создана для другой группы'
+        return message, None, None
+
+    keyboard = get_queue_actions_buttons(queue, person_is_in)
 
     return message, None, keyboard
 
