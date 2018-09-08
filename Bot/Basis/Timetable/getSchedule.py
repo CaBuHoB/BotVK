@@ -87,9 +87,9 @@ def getTimetableDict(groupList):
 
                 lessons[day][lessonNumber] = lectures
 
-        file = str(group) + '.json'
-        with open(file, 'w') as outfile:
-            json.dump(lessons, outfile, ensure_ascii=False, indent=4)
+        # file = str(group) + '.json'
+        # with open(file, 'w') as outfile:
+        #     json.dump(lessons, outfile, ensure_ascii=False, indent=4)
 
         timetableDict[str(group)] = lessons
 
@@ -103,7 +103,7 @@ def getTimetableByDay(timetableDict, group, day, isUpper):
     for lesson in timetable:
         les = timetable[lesson]
         if (isUpper is not None) and (sum([0 if (l['isUpper'] != isUpper
-           and l['isUpper'] is not None) else 1 for l in les]) == 0):
+                                                 and l['isUpper'] is not None) else 1 for l in les]) == 0):
             continue
         timetableStr += '🔔 ' + lesson + '\n'
         for l in les:

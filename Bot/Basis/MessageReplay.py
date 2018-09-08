@@ -5,7 +5,8 @@ import os
 import importlib
 import vk_api
 
-from Bot.Basis.Keyboards.getButtons import get_choose_group_buttons, get_default_buttons, get_asking_if_send_message_buttons
+from Bot.Basis.Keyboards.getButtons import get_choose_group_buttons, get_default_buttons, \
+    get_asking_if_send_message_buttons
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
@@ -43,14 +44,13 @@ def get_answer(values):
     from_id = values.item['from_id']
 
     # Пользователь не зарегистрирован
-    if (not from_id in values.users) and (body[0] != 'shownameslist') \
-                                    and (body[0] != 'endofregistration'):
+    if (not from_id in values.users) and (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
         return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, get_choose_group_buttons()
 
     # Сообщение от пользователя отправлено в рассылку ?
     if (from_id in values.messageFromAdmin) and (body[0] != 'infosendmessage') \
-                                            and (body[0] != 'backtodefaultkeyboard') \
-                                            and (body[0] != 'infobygroup'):
+            and (body[0] != 'backtodefaultkeyboard') \
+            and (body[0] != 'infobygroup'):
         values.messageFromAdmin[from_id]['message'] = values.item
         groups = values.messageFromAdmin[from_id]['groups']
         message = 'Сделать рассылку группам: ' + ' '.join(groups) + '?'

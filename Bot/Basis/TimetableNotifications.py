@@ -50,7 +50,7 @@ def send_subject_notification(vk, connect, subject):
                         if users[user]['group'] == group:
                             vk.messages.send(user_id=user, message=message, attachment=None,
                                              keyboard=get_default_buttons(Namespace(users=users),
-                                             users_id=user))
+                                                                          users_id=user))
 
 
 class TimetableNotifications(Thread):
@@ -87,7 +87,7 @@ class TimetableNotifications(Thread):
             difference = (then - now).total_seconds()
 
             if difference < -60:  # если в этом дне прошло уже больше 60 секунд после рассылки,
-                                  # заснуть до 0:01, начать цикл заново
+                # заснуть до 0:01, начать цикл заново
                 now += dt.timedelta(1)
                 then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 0, 1)
                 time.sleep((then - now).total_seconds())  # Сон до 00:01
