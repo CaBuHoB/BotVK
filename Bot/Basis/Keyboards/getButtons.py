@@ -1,5 +1,7 @@
+import calendar
 import json
 from enum import Enum
+import datetime as dt
 from datetime import datetime, timedelta
 
 from Bot.Basis.DataBase.workWithDataBase import getQueueNames, getSubjects, getSubscribedUsers
@@ -24,8 +26,8 @@ def get_button(label, payload, color=Color.WHITE):
     }
 
 
-def get_default_buttons(values, user_id=None):
-    user_id = values.item['from_id'] if user_id is None else user_id
+def get_default_buttons(values, users_id=None):
+    user_id = values.item['from_id'] if users_id is None else users_id
     if in_asked_list(user_id):
         return None
     queue_buttons = [get_button('Очередь', 'queuesMenu', Color.WHITE)]
@@ -39,7 +41,7 @@ def get_default_buttons(values, user_id=None):
     buttons_list = []
     buttons_list.append([
         get_button('Лабы и материалы', 'materialsMenu', Color.WHITE),
-        get_button('Решение задач и алгоритмов', 'kroukMenu', Color.WHITE)
+        get_button('Алгоритмы', 'kroukMenu', Color.WHITE)
     ])
     buttons_list.append(queue_buttons)
     buttons_list.append([get_button('Расписание', 'showTimetableButtons', Color.WHITE)])
@@ -79,7 +81,7 @@ def get_choose_name_buttons(group):
         return None
 
     buttons_list = [[get_button(button, 'endOfRegistration ' + group, Color.BLUE)
-                     for button in two_buttons_pack]
+                    for button in two_buttons_pack]
                     for two_buttons_pack in buttons_list]
     buttons_list.append([get_button('⟵', 'errorInGroupChoosing', Color.RED)])
 
@@ -92,8 +94,18 @@ def get_choose_name_buttons(group):
 def get_queue_names_buttons(connect, group):
     queue_list = []
     for queue in getQueueNames(connect):
-        if str(group) in (queue.split('_')[1]).split():
+        now = datetime.now()
+
+        queue_date = queue.split('_')[2].split()[0].split('.')
+        day = int(queue_date[0])
+        month = int(queue_date[1])
+        invisible_time = dt.datetime(now.timetuple()[0], month, day, 23, 0)
+
+        if (invisible_time - now).days > 200:
+            invisible_time -= timedelta(366 if calendar.isleap(now.timetuple()[0] - 1) else 365)
+        if (now - invisible_time).days < 0:
             queue_list.append(queue)
+
     if len(queue_list) == 0:
         return None
 
@@ -108,7 +120,7 @@ def get_queue_names_buttons(connect, group):
 
 def get_queue_actions_buttons(queue, person_is_in):
     if person_is_in:
-        buttons = [get_button('Встать в конец очереди', 'addToQueue ' + queue, Color.WHITE),
+        buttons = [get_button('Встать в конец', 'addToQueue ' + queue, Color.WHITE),
                    get_button('Выйти из очереди', 'removeFromQueue ' + queue, Color.WHITE)]
     else:
         buttons = [get_button('Встать в очередь', 'addToQueue ' + queue, Color.WHITE)]
@@ -131,7 +143,8 @@ def get_materials_actions_buttons(values):
     items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
     materials_list = []
     for doc in items:
-        if doc['owner_id'] == -168366525 or doc['owner_id'] == -168330527:
+        if doc['owner_id'] == -168366525:
+            # TODO: заменить id тестовой группы на число основной
             materials_list.append(doc['title'])
     if len(materials_list) == 0:
         return None
@@ -150,17 +163,18 @@ def get_materials_actions_buttons(values):
     }, ensure_ascii=False)
 
 
-def getMaterialsListButtons(subject, values):
+def get_materials_list_buttons(subject, values):
     items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
     materials_list = []
     for doc in items:
-        if (doc['owner_id'] == -168366525 or doc['owner_id'] == -168330527) and (doc['title'].split()[1] == subject):
+        if (doc['owner_id'] == -168366525) and (doc['title'].split()[1] == subject):
+            # TODO: заменить id тестовой группы на число основной
             materials_list.append(doc['title'])
 
     buttons_list = [[get_button(material.split()[2], 'getFile ' + material, Color.WHITE)]
                     for material in materials_list]
     buttons_list.append([get_button('⟵ в меню материалов', 'materialsMenu', Color.BLUE),
-                         get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
+                        get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
     return json.dumps({
         "one_time": False,
         "buttons": buttons_list
@@ -233,11 +247,11 @@ def get_subjects_for_queue_creation_buttons(values, tail_of_queue_name):
         buttons_list.append(two_buttons_pack)
 
     buttons_list = [[get_button(sub, 'queueCreation ' + tail_of_queue_name, Color.BLUE)
-                     for sub in two_buttons_pack] for two_buttons_pack in buttons_list]
+                    for sub in two_buttons_pack] for two_buttons_pack in buttons_list]
     buttons_list.append([
         get_button('⟵ к выбору групп', 'queueByDate', Color.RED),
         get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.RED)
-    ])
+            ])
 
     return json.dumps({
         "one_time": False,
@@ -346,12 +360,18 @@ def get_asking_week_buttons():
         "one_time": False,
         "buttons": [
             [
-                get_button('Текущая', 'fullWeekTimetable', Color.WHITE),
-                get_button('Следующая', 'fullWeekTimetable', Color.WHITE),
+                get_button('Текущая', 'fullWeekTimetable', Color.WHITE)
+            ],
+            [
+                get_button('Следующая', 'fullWeekTimetable', Color.WHITE)
+            ],
+            [
                 get_button('Полное расписание', 'fullWeekTimetable', Color.WHITE)
             ],
             [
-                get_button('⟵ в меню расписания', 'showTimetableButtons', Color.BLUE),
+                get_button('⟵ в меню расписания', 'showTimetableButtons', Color.BLUE)
+            ],
+            [
                 get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)
             ]
         ]

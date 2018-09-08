@@ -23,12 +23,12 @@ def get_button(label, payload, color):
         "action": {"type": "text",
                    "payload": json.dumps(payload, ensure_ascii=False),
                    "label": label},
-        "color": color.value
+        "color": color
     }
 
 
 def queue_removing_buttons(queue):
-    json.dumps({
+    return json.dumps({
         "one_time": False,
         "buttons": [
             [
@@ -42,16 +42,17 @@ def queue_removing_buttons(queue):
 
 
 def ask_about_queue_removal(vk, connect):
-    something_was_sent = False
     queues_to_delete = getDateDeletedTables(connect)
+
+    something_was_sent = False
     for queue in queues_to_delete:
         queue_name, date, admin_id = queue[0], queue[1], queue[2]
         day, month, year = date.split('.')
-        difference = (dt.datetime.now() - dt.datetime(int(year), int(month), int(day), 0, 0)).days
+        difference = (dt.datetime.now() - dt.datetime(int(year), int(month), int(day), 10, 0)).days
         if difference >= 0:
             if admin_id not in asked_about_queue_users:
-                vk.messages.send(user_id=admin_id, message='Удалить очередь ' + queue_name + ' ?', \
-                                 attachment=None, keyboard=queue_removing_buttons(queue))
+                vk.messages.send(user_id=admin_id, message='Удалить очередь ' + queue_name + ' ?',
+                                 attachment=None, keyboard=queue_removing_buttons(queue_name))
                 asked_about_queue_users.append(admin_id)
             something_was_sent = True
     return something_was_sent
@@ -66,7 +67,18 @@ class QueueThread(Thread):
 
     def run(self):
         while True:
-            if not ask_about_queue_removal(self.vk, self.connect):
-                time.sleep(86400)
+            someone_was_asked = ask_about_queue_removal(self.vk, self.connect)
+
+            now = dt.datetime.now()
+            then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 10, 0)
+
+            if (then - now).total_seconds() <= 0:
+                then += dt.timedelta(1)
+            difference = int((then - now).total_seconds())  # время до 21:30
+
+            if not someone_was_asked:
+                time.sleep(difference)  # Спит до следующих 21:30
             else:
-                time.sleep(1800)
+                sleep_time = min(1800, difference)
+                time.sleep(sleep_time)  # Кого-то спросили об удалении и он еще не ответил, спим полчаса,
+                                        # вдруг у него ещё есть очереди, о которых нужно сегодня спросить
