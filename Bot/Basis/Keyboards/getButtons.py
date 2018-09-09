@@ -81,7 +81,7 @@ def get_choose_name_buttons(group):
         return None
 
     buttons_list = [[get_button(button, 'endOfRegistration ' + group, Color.BLUE)
-                    for button in two_buttons_pack]
+                     for button in two_buttons_pack]
                     for two_buttons_pack in buttons_list]
     buttons_list.append([get_button('⟵', 'errorInGroupChoosing', Color.RED)])
 
@@ -174,7 +174,7 @@ def get_materials_list_buttons(subject, values):
     buttons_list = [[get_button(material.split()[2], 'getFile ' + material, Color.WHITE)]
                     for material in materials_list]
     buttons_list.append([get_button('⟵ в меню материалов', 'materialsMenu', Color.BLUE),
-                        get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
+                         get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
     return json.dumps({
         "one_time": False,
         "buttons": buttons_list
@@ -247,11 +247,11 @@ def get_subjects_for_queue_creation_buttons(values, tail_of_queue_name):
         buttons_list.append(two_buttons_pack)
 
     buttons_list = [[get_button(sub, 'queueCreation ' + tail_of_queue_name, Color.BLUE)
-                    for sub in two_buttons_pack] for two_buttons_pack in buttons_list]
+                     for sub in two_buttons_pack] for two_buttons_pack in buttons_list]
     buttons_list.append([
         get_button('⟵ к выбору групп', 'queueByDate', Color.RED),
         get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.RED)
-            ])
+    ])
 
     return json.dumps({
         "one_time": False,

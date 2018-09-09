@@ -17,6 +17,7 @@ def getConnect():
         host=host,
         port=port
     )
+
     return con
 
 
@@ -53,6 +54,7 @@ def createQueueInBD(connect, name):
     cursor.execute('CREATE TABLE queue.{} (id int NOT NULL, name varchar(50) NOT NULL);'.format(name))
     cursor.close()
     connect.commit()
+
 
 def removeQueueInBD(connect, queue):
     cursor = connect.cursor()

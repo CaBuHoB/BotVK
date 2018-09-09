@@ -51,7 +51,7 @@ def send_subject_notification(vk, connect, subject):
                             if users[user]['group'] == group:
                                 vk.messages.send(user_id=user, message=message, attachment=None,
                                                  keyboard=get_default_buttons(Namespace(users=users),
-                                                 users_id=user))
+                                                                              users_id=user))
 
 
 class TimetableNotifications(Thread):
