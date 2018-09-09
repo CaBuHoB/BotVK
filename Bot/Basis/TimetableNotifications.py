@@ -75,10 +75,10 @@ class TimetableNotifications(Thread):
                 then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2],
                                    self.timeList[sub][0], self.timeList[sub][1])
                 difference = (then - now).total_seconds()
-                if difference < -60:  # если прошло больше 60 секунд с нужного времени в этом дне
+                if difference < 0:  # если прошло нужное время в этом дне
                     continue
                 else:
-                    if difference > 1:  # если это время еще не прошло и нужно ждать
+                    if difference >= 0:  # если это время еще не прошло и нужно ждать
                         time.sleep(difference)  # Сон до следующего предмета
                     send_subject_notification(self.vk, self.connect, sub)
 
@@ -87,13 +87,13 @@ class TimetableNotifications(Thread):
             then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 21, 0)
             difference = (then - now).total_seconds()
 
-            if difference < -60:  # если в этом дне прошло уже больше 60 секунд после рассылки,
-                # заснуть до 0:01, начать цикл заново
+            if difference < 0:  # если в этом дне время рассылки прошло
+                                  # заснуть до 0:01, начать цикл заново
                 now += dt.timedelta(1)
                 then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 0, 1)
                 now -= dt.timedelta(1)
                 time.sleep((then - now).total_seconds())  # Сон до 00:01
             else:
-                if difference > 1:
+                if difference >= 0:
                     time.sleep(difference)
                 send_day_timetable(self.vk, self.connect)
