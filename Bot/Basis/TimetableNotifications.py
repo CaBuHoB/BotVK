@@ -38,19 +38,20 @@ def send_subject_notification(vk, connect, subject):
     day_number = dt.datetime.weekday(dt.datetime.now())
 
     for group in range(5621, 5624):
-        timetable = timetable_dict[str(group)][week[day_number]]
-        if subject in timetable:
-            for sub in timetable[subject]:
-                if sub['isUpper'] == is_upper or sub['isUpper'] is None:
-                    message = 'Через 15 минут начнется пара: '
-                    message += sub['type'] + ' - ' + sub['name'] + ' '
-                    message += '(' + sub['teacher'] + ')\n'
-                    message += sub['lecture hall'] + ' (' + ', '.join((group for group in sub['group'])) + ')\n'
-                    for user in getSubscribedUsers(connect):
-                        if users[user]['group'] == group:
-                            vk.messages.send(user_id=user, message=message, attachment=None,
-                                             keyboard=get_default_buttons(Namespace(users=users),
-                                             users_id=user))
+        if week[day_number] in timetable_dict[str(group)]:
+            timetable = timetable_dict[str(group)][week[day_number]]
+            if subject in timetable:
+                for sub in timetable[subject]:
+                    if sub['isUpper'] == is_upper or sub['isUpper'] is None:
+                        message = 'Через 15 минут начнется пара: '
+                        message += sub['type'] + ' - ' + sub['name'] + ' '
+                        message += '(' + sub['teacher'] + ')\n'
+                        message += sub['lecture hall'] + ' (' + ', '.join((group for group in sub['group'])) + ')\n'
+                        for user in getSubscribedUsers(connect):
+                            if users[user]['group'] == group:
+                                vk.messages.send(user_id=user, message=message, attachment=None,
+                                                 keyboard=get_default_buttons(Namespace(users=users),
+                                                 users_id=user))
 
 
 class TimetableNotifications(Thread):
@@ -74,24 +75,25 @@ class TimetableNotifications(Thread):
                 then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2],
                                    self.timeList[sub][0], self.timeList[sub][1])
                 difference = (then - now).total_seconds()
-                if difference < -60:  # если прошло больше 60 секунд с нужного времени в этом дне
+                if difference < 0:  # если прошло нужное время в этом дне
                     continue
                 else:
-                    if difference > 1:  # если это время еще не прошло и нужно ждать
+                    if difference >= 0:  # если это время еще не прошло и нужно ждать
                         time.sleep(difference)  # Сон до следующего предмета
                     send_subject_notification(self.vk, self.connect, sub)
 
             # Вечерняя рассылка
             now = dt.datetime.now()
-            then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 21, 0)
+            then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 21, 10)
             difference = (then - now).total_seconds()
 
-            if difference < -60:  # если в этом дне прошло уже больше 60 секунд после рассылки,
+            if difference < 0:  # если в этом дне время рассылки прошло
                                   # заснуть до 0:01, начать цикл заново
                 now += dt.timedelta(1)
                 then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 0, 1)
+                now -= dt.timedelta(1)
                 time.sleep((then - now).total_seconds())  # Сон до 00:01
             else:
-                if difference > 1:
+                if difference >= 0:
                     time.sleep(difference)
                 send_day_timetable(self.vk, self.connect)
