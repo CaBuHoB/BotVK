@@ -30,15 +30,16 @@ connect = getConnect()
 users = getAllUsers(connect)
 messageFromAdmin = {}
 timetableDict = getTimetableDict([5621, 5622, 5623])
+materials = vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
 
 # Установка главной клавиатуры всем пользователям
-for user in users:
-    vkApi.get_api().messages.send(user_id=user,
-                                  message='Бот обновился. Ошибки исправлены, '
-                                          'производительность повышена, посуда вымыта, '
-                                          'мусор вынесен, теперь можно и чаю попить)',
-                                  attachment=None,
-                                  keyboard=get_default_buttons(Namespace(users=users), users_id=user))
+# for user in users:
+#     vkApi.get_api().messages.send(user_id=user,
+#                                   message='Бот обновился. Ошибки исправлены, '
+#                                           'производительность повышена, посуда вымыта, '
+#                                           'мусор вынесен, теперь можно и чаю попить)',
+#                                   attachment=None,
+#                                   keyboard=get_default_buttons(Namespace(users=users), users_id=user))
 
 notifications_thread = TimetableNotifications.TimetableNotifications(vkApi.get_api(), connect)
 notifications_thread.start()
@@ -63,6 +64,7 @@ while True:
         vkApi.method('messages.markAsRead', {'peer_id': user_id})
         for message in messages['items']:
             values = Namespace(vkApi=vkApi, item=message, connect=connect, users=users,
-                               timetableDict=timetableDict, messageFromAdmin=messageFromAdmin)
+                               timetableDict=timetableDict, messageFromAdmin=messageFromAdmin,
+                               materials=materials)
             my_thread = MessageReplay.MessageReplay(values)
             my_thread.start()

@@ -110,7 +110,7 @@ def get_queue_names_buttons(connect, group):
         return None
 
     buttons_list = [[get_button(queue, 'queueActions', Color.BLUE)] for queue in queue_list]
-    buttons_list.append([get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.WHITE)])
+    buttons_list.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.WHITE)])
 
     return json.dumps({
         "one_time": False,
@@ -130,10 +130,10 @@ def get_queue_actions_buttons(queue, person_is_in):
         "buttons": [
             buttons,
             [
-                get_button('⟵ к списку очередей', 'queuesMenu', Color.BLUE),
+                get_button('⟵ к очередям', 'queuesMenu', Color.BLUE),
             ],
             [
-                get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE),
+                get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE),
             ]
         ]
     }, ensure_ascii=False)
@@ -141,6 +141,7 @@ def get_queue_actions_buttons(queue, person_is_in):
 
 def get_materials_actions_buttons(values):
     items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
+    values.materials = items
     materials_list = []
     for doc in items:
         if doc['owner_id'] == -168366525:
@@ -151,30 +152,48 @@ def get_materials_actions_buttons(values):
 
     subjects_list = []
     for material in materials_list:
-        subject = ' '.join(material.split()[1:-1])
-        if subject not in subjects_list:
+        subject = ' '.join(material.split()[1:-1]).lower()
+        if subject not in subjects_list and material.split()[0] == '>':
             subjects_list.append(subject)
 
     buttons_list = [[get_button(subject, 'showMaterialsList', Color.WHITE)] for subject in subjects_list]
-    buttons_list.append([get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
+    buttons_list.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
     return json.dumps({
         "one_time": False,
         "buttons": buttons_list
     }, ensure_ascii=False)
 
 
-def get_materials_list_buttons(subject, values):
-    items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
+def get_materials_list_buttons(subject, values, page_num=None):
+    items = values.materials
+    pages_dict = None
     materials_list = []
     for doc in items:
-        if (doc['owner_id'] == -168366525) and (doc['title'].split()[1] == subject):
+        if (doc['owner_id'] == -168366525) and (doc['title'].split()[1].lower() == subject):
             # TODO: заменить id тестовой группы на число основной
-            materials_list.append(doc['title'])
+            materials_list.append(doc['title'].lower())
+    materials_list.sort()
+
+    if len(materials_list) > 8:
+        pages_dict = {0: []}
+        p_num = 0
+        for material in materials_list:
+            if len(pages_dict[p_num]) == 7:
+                p_num += 1
+                pages_dict.setdefault(p_num, [])
+            pages_dict[p_num].append(material)
+
+        materials_list = pages_dict[page_num if page_num is not None else 0]
 
     buttons_list = [[get_button(material.split()[2], 'getFile ' + material, Color.WHITE)]
                     for material in materials_list]
-    buttons_list.append([get_button('⟵ в меню материалов', 'materialsMenu', Color.BLUE),
-                         get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
+
+    if pages_dict is not None:
+        buttons_list.append([get_button(str(page + 1) + ' страница', 'nextMaterialsPage ' +
+                            subject + ' ' + str(page), Color.GREEN) for page in pages_dict])
+
+    buttons_list.append([get_button('⟵ все предметы', 'materialsMenu', Color.BLUE)])
+    buttons_list.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
     return json.dumps({
         "one_time": False,
         "buttons": buttons_list
@@ -202,7 +221,7 @@ def get_dates_for_queue_creation_buttons():
         weekday += 1
 
     buttons_list = [[get_button(day, 'queueByDate', Color.BLUE)] for day in days_list]
-    buttons_list.append([get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.RED)])
+    buttons_list.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.RED)])
 
     return json.dumps({
         "one_time": False,
@@ -229,7 +248,7 @@ def get_groups_for_queue_creation_buttons(date):
             ],
             [
                 get_button('⟵ к выбору даты', 'createQueue', Color.RED),
-                get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.RED)
+                get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.RED)
             ]
         ]
     }, ensure_ascii=False)
@@ -250,7 +269,7 @@ def get_subjects_for_queue_creation_buttons(values, tail_of_queue_name):
                      for sub in two_buttons_pack] for two_buttons_pack in buttons_list]
     buttons_list.append([
         get_button('⟵ к выбору групп', 'queueByDate', Color.RED),
-        get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.RED)
+        get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.RED)
     ])
 
     return json.dumps({
@@ -347,7 +366,7 @@ def get_timetable_menu_buttons(values):
 
     list_of_buttons.append([get_button('На всю неделю', 'askTheWeek', Color.WHITE)])
     list_of_buttons.append(subscription_button)
-    list_of_buttons.append([get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)])
+    list_of_buttons.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
 
     return json.dumps({
         "one_time": False,
