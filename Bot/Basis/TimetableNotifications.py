@@ -38,19 +38,20 @@ def send_subject_notification(vk, connect, subject):
     day_number = dt.datetime.weekday(dt.datetime.now())
 
     for group in range(5621, 5624):
-        timetable = timetable_dict[str(group)][week[day_number]]
-        if subject in timetable:
-            for sub in timetable[subject]:
-                if sub['isUpper'] == is_upper or sub['isUpper'] is None:
-                    message = 'Через 15 минут начнется пара: '
-                    message += sub['type'] + ' - ' + sub['name'] + ' '
-                    message += '(' + sub['teacher'] + ')\n'
-                    message += sub['lecture hall'] + ' (' + ', '.join((group for group in sub['group'])) + ')\n'
-                    for user in getSubscribedUsers(connect):
-                        if users[user]['group'] == group:
-                            vk.messages.send(user_id=user, message=message, attachment=None,
-                                             keyboard=get_default_buttons(Namespace(users=users),
-                                                                          users_id=user))
+        if week[day_number] in timetable_dict[str(group)]:
+            timetable = timetable_dict[str(group)][week[day_number]]
+            if subject in timetable:
+                for sub in timetable[subject]:
+                    if sub['isUpper'] == is_upper or sub['isUpper'] is None:
+                        message = 'Через 15 минут начнется пара: '
+                        message += sub['type'] + ' - ' + sub['name'] + ' '
+                        message += '(' + sub['teacher'] + ')\n'
+                        message += sub['lecture hall'] + ' (' + ', '.join((group for group in sub['group'])) + ')\n'
+                        for user in getSubscribedUsers(connect):
+                            if users[user]['group'] == group:
+                                vk.messages.send(user_id=user, message=message, attachment=None,
+                                                 keyboard=get_default_buttons(Namespace(users=users),
+                                                                              users_id=user))
 
 
 class TimetableNotifications(Thread):
