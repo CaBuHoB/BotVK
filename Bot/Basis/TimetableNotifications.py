@@ -90,6 +90,7 @@ class TimetableNotifications(Thread):
                 # заснуть до 0:01, начать цикл заново
                 now += dt.timedelta(1)
                 then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 0, 1)
+                now -= dt.timedelta(1)
                 time.sleep((then - now).total_seconds())  # Сон до 00:01
             else:
                 if difference > 1:
