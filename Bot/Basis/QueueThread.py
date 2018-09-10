@@ -74,10 +74,10 @@ class QueueThread(Thread):
 
             if (then - now).total_seconds() <= 0:
                 then += dt.timedelta(1)
-            difference = int((then - now).total_seconds())  # время до 21:30
+            difference = int((then - now).total_seconds())  # время до 22.00
 
             if not someone_was_asked:
-                time.sleep(difference)  # Спит до следующих 21:30
+                time.sleep(difference)  # Спит до следующих 22.00
             else:
                 sleep_time = min(1800, difference)
                 time.sleep(sleep_time)  # Кого-то спросили об удалении и он еще не ответил, спим полчаса,
