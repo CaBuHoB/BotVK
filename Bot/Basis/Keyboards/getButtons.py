@@ -178,7 +178,7 @@ def get_materials_list_buttons(subject, values, page_num=None):
         pages_dict = {0: []}
         p_num = 0
         for material in materials_list:
-            if len(pages_dict[p_num]) == 7:
+            if len(pages_dict[p_num]) == 5:
                 p_num += 1
                 pages_dict.setdefault(p_num, [])
             pages_dict[p_num].append(material)
@@ -189,8 +189,32 @@ def get_materials_list_buttons(subject, values, page_num=None):
                     for material in materials_list]
 
     if pages_dict is not None:
-        buttons_list.append([get_button(str(page + 1) + ' страница', 'nextMaterialsPage ' +
-                            subject + ' ' + str(page), Color.GREEN) for page in pages_dict])
+        if page_num is None or page_num == 0:
+
+            if len(pages_dict) > 3:
+                buttons_list.append([get_button('Конец', 'nextMaterialsPage ' + subject + ' ' +
+                                                str(len(pages_dict) - 1), Color.GREEN)])
+            buttons_list.append([get_button('→', 'nextMaterialsPage ' +
+                                            subject + ' 1', Color.GREEN)])
+
+        elif (page_num + 1) == len(pages_dict):
+            if len(pages_dict) > 3:
+                buttons_list.append([get_button('Начало', 'nextMaterialsPage ' + subject + ' 0', Color.GREEN)])
+            buttons_list.append([get_button('←', 'nextMaterialsPage ' + subject +
+                                            ' ' + str(page_num - 1), Color.GREEN)])
+
+        else:
+            if len(pages_dict) > 3:
+                buttons_list.append([get_button('Начало', 'nextMaterialsPage ' + subject + ' 0', Color.GREEN)])
+
+            buttons_list.append([get_button('→', 'nextMaterialsPage ' + subject +
+                                            ' ' + str(page_num + 1), Color.GREEN),
+                                 get_button('←', 'nextMaterialsPage ' + subject +
+                                            ' ' + str(page_num - 1), Color.GREEN)])
+
+            if len(pages_dict) > 3:
+                buttons_list.append([get_button('Конец', 'nextMaterialsPage ' + subject + ' ' +
+                                                str(len(pages_dict) - 1), Color.GREEN)])
 
     buttons_list.append([get_button('⟵ все предметы', 'materialsMenu', Color.BLUE)])
     buttons_list.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
