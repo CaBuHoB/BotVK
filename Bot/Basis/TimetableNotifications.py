@@ -43,6 +43,7 @@ def send_subject_notification(vk, connect, subject):
             if subject in timetable:
                 for sub in timetable[subject]:
                     if sub['isUpper'] == is_upper or sub['isUpper'] is None:
+                        message = ''
                         message += sub['type'] + ' - ' + sub['name'] + ' '
                         message += '(' + sub['teacher'] + '), '
                         message += sub['lecture hall'] + ' (' + ', '.join((group for group in sub['group'])) + ') '
