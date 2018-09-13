@@ -34,7 +34,9 @@ def get_default_buttons(values, users_id=None):
     info_message_button = None
 
     surname = values.users[user_id]['surname']
-    if (surname == 'Савинов') or (surname == 'Борисова'):
+    if (surname == 'Савинов') or (surname == 'Ялышев') or \
+        (surname == 'Мусикян') or (surname == 'Наумов') or \
+        (surname == 'Борисова') or (surname == 'Патерикина'):
         queue_buttons.append(get_button('Создать очередь', 'createQueue', Color.WHITE))
         info_message_button = [get_button('Рассылка сообщений', 'infoMessage', Color.WHITE)]
 
