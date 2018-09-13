@@ -146,7 +146,7 @@ def get_materials_actions_buttons(values):
     values.materials = items
     materials_list = []
     for doc in items:
-        if doc['owner_id'] == -168366525:
+        if doc['owner_id'] == -168330527:
             # TODO: заменить id тестовой группы на число основной
             materials_list.append(doc['title'])
     if len(materials_list) == 0:
@@ -171,7 +171,7 @@ def get_materials_list_buttons(subject, values, page_num=None):
     pages_dict = None
     materials_list = []
     for doc in items:
-        if (doc['owner_id'] == -168366525) and (doc['title'].split()[1].lower() == subject):
+        if (doc['owner_id'] == -168330527) and (doc['title'].split()[1].lower() == subject):
             # TODO: заменить id тестовой группы на число основной
             materials_list.append(doc['title'].lower())
     materials_list.sort()
