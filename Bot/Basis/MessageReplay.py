@@ -42,6 +42,10 @@ def get_answer(values):
         message = values.item['payload'].replace("\"", "")
     body = message.lower().split()
     from_id = values.item['from_id']
+    
+    # Пользователь не участник группы
+    if (values.vkApi.method('groups.isMember', {'group_id': str(168330527), 'user_id': from_id}) == 1):
+        return 'Для общения с ботом вступи в группу!', None, None
 
     # Пользователь не зарегистрирован
     if (from_id not in values.users) and (body[0] != 'shownameslist') and (body[0] != 'endofregistration')\
