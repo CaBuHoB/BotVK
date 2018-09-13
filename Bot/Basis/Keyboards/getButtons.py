@@ -28,7 +28,7 @@ def get_button(label, payload, color=Color.WHITE):
 
 def get_default_buttons(values, users_id=None):
     user_id = values.item['from_id'] if users_id is None else users_id
-    if in_asked_list(user_id):
+    if in_asked_list(user_id) or user_id not in values.users:
         return None
     queue_buttons = [get_button('Очередь', 'queuesMenu', Color.WHITE)]
     info_message_button = None

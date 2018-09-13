@@ -44,7 +44,8 @@ def get_answer(values):
     from_id = values.item['from_id']
 
     # Пользователь не зарегистрирован
-    if (from_id not in values.users) and (body[0] != 'shownameslist') and (body[0] != 'endofregistration'):
+    if (from_id not in values.users) and (body[0] != 'shownameslist') and (body[0] != 'endofregistration')\
+            and (body[0] != 'erroringroupchoosing'):
         return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, get_choose_group_buttons()
 
     # Сообщение от пользователя отправлено в рассылку ?

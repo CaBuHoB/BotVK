@@ -36,7 +36,7 @@ materials = vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200
 # Установка главной клавиатуры всем пользователям
 for user in users:
     vkApi.get_api().messages.send(user_id=user,
-                                  message='Бот обновился. Наверное, ошибки исправлены, '
+                                  message='Бот обновился. Ошибки исправлены, '
                                           'производительность повышена, посуда вымыта, '
                                           'мусор вынесен, теперь можно и чаю попить)',
                                   attachment=None,

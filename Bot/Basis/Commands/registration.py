@@ -6,17 +6,16 @@ from Bot.Basis.YandexGoogle.GoogleTables import setNameSelectedToGoogle
 
 def endOfRegistration(values):
     fullname = values.item['text']
-    name = fullname.split(' ')[1]
-    surname = fullname.split(' ')[0]
-    group = values.message.split(' ')[1]
+    surname, name = fullname.split()
+    group = values.message.split()[1]
     user_id = values.item['from_id']
     connect = values.connect
 
     values.users.setdefault(user_id, {'name': name,
                                       'surname': surname,
-                                      'group': group})
+                                      'group': int(group)})
     setNameSelectedToGoogle(fullname, group)
-    addPersonToDB(connect, user_id, name, surname, group)
+    addPersonToDB(connect, user_id, name, surname, int(group))
 
     message = 'Ты зарегистрирован как ' + fullname + '!) ' \
               'Если случайно нажал не туда - напиши администратору!\n\n' \
