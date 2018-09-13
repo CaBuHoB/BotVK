@@ -61,7 +61,7 @@ def createPDFFile(data, userId):
 def getFile(task, userId):
     task = task.split(" ")
     if len(task) != 3:
-        return 'Чет не так с данными', None, None
+        return 'Чет не так с данными, введи по образцу', None, None
 
     data = []
 

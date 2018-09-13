@@ -31,6 +31,7 @@ connect = getConnect()
 users = getAllUsers(connect)
 messageFromAdmin = {}
 timetableDict = getTimetableDict([5621, 5622, 5623])
+materials = vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
 
 # Установка главной клавиатуры всем пользователям
 for user in users:
@@ -64,6 +65,7 @@ while True:
         vkApi.method('messages.markAsRead', {'peer_id': user_id})
         for message in messages['items']:
             values = Namespace(vkApi=vkApi, item=message, connect=connect, users=users,
-                               timetableDict=timetableDict, messageFromAdmin=messageFromAdmin)
+                               timetableDict=timetableDict, messageFromAdmin=messageFromAdmin,
+                               materials=materials)
             my_thread = MessageReplay.MessageReplay(values)
             my_thread.start()
