@@ -34,13 +34,14 @@ timetableDict = getTimetableDict([5621, 5622, 5623])
 materials = vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
 
 # Установка главной клавиатуры всем пользователям
-for user in users:
-    vkApi.get_api().messages.send(user_id=user,
-                                  message='Бот обновился. Ошибки исправлены, '
-                                          'производительность повышена, посуда вымыта, '
-                                          'мусор вынесен, теперь можно и чаю попить)',
-                                  attachment=None,
-                                  keyboard=get_default_buttons(Namespace(users=users), users_id=user))
+#for user in users:
+#    if (vkApi.method('groups.isMember', {'group_id': str(168330527), 'user_id': user}) == 1):
+#        vkApi.get_api().messages.send(user_id=user,
+#                                  message='Бот обновился. Ошибки исправлены, '
+#                                          'производительность повышена, посуда вымыта, '
+#                                          'мусор вынесен, теперь можно и чаю попить)',
+#                                  attachment=None,
+#                                  keyboard=get_default_buttons(Namespace(users=users), users_id=user))
 
 notifications_thread = TimetableNotifications.TimetableNotifications(vkApi.get_api(), connect)
 notifications_thread.start()
