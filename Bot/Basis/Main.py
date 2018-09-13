@@ -6,7 +6,8 @@ import sys
 import argparse
 import vk_api
 
-from Bot.Basis import MessageReplay, QueueThread, TimetableNotifications
+from Bot.Basis import MessageReplay, QueueThread
+from Bot.Basis.Timetable import TimetableNotifications
 from Bot.Basis.Keyboards.getButtons import get_default_buttons
 from Bot.Basis.DataBase.workWithDataBase import getConnect, getAllUsers
 from Bot.Basis.Timetable.getSchedule import getTimetableDict
