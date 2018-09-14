@@ -7,6 +7,7 @@ import time
 
 from Bot.Basis.DataBase.workWithDataBase import getSubscribedUsers, getAllUsers
 from Bot.Basis.Keyboards.getButtons import get_default_buttons
+from Bot.Basis.Main import resetStatements
 from Bot.Basis.Timetable.getSchedule import getDate, getTimetableByDay, getTimetableDict
 
 
@@ -30,7 +31,7 @@ def send_day_timetable(vk, connect):
                          keyboard=get_default_buttons(Namespace(users=users), users_id=user))
 
 
-def send_subject_notification(vk, connect, subject):
+def send_subject_notification(vk, connect, subject, group_users):
     users = getAllUsers(connect)
     timetable_dict = getTimetableDict([5621, 5622, 5623])
     is_upper = getDate()['isUpper']
@@ -49,7 +50,7 @@ def send_subject_notification(vk, connect, subject):
                         message += sub['lecture hall'] + ' (' + ', '.join((group for group in sub['group'])) + ') '
                         message += 'начнётся через 15 минут'
                         for user in getSubscribedUsers(connect):
-                            if users[user]['group'] == group:
+                            if users[user]['group'] == group and user in group_users:
                                 vk.messages.send(user_id=user, message=message, attachment=None,
                                                  keyboard=get_default_buttons(Namespace(users=users),
                                                                               users_id=user))
@@ -81,7 +82,8 @@ class TimetableNotifications(Thread):
                 else:
                     if difference >= 0:  # если это время еще не прошло и нужно ждать
                         time.sleep(difference)  # Сон до следующего предмета
-                    send_subject_notification(self.vk, self.connect, sub)
+                    in_group = self.vk.method('groups.getMembers', {'group_id': str(168330527)})['items']
+                    send_subject_notification(self.vk, self.connect, sub, in_group)
 
             # Вечерняя рассылка
             now = dt.datetime.now()

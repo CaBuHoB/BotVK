@@ -7,6 +7,7 @@ import vk_api
 
 from Bot.Basis.Keyboards.getButtons import get_choose_group_buttons, get_default_buttons, \
     get_asking_if_send_message_buttons
+from Bot.Basis.Main import resetStatements
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
@@ -42,6 +43,14 @@ def get_answer(values):
         message = values.item['payload'].replace("\"", "")
     body = message.lower().split()
     from_id = values.item['from_id']
+
+    # Пользователь не в локальном списке участников сообщества
+    if from_id not in values.usersInGroup:
+        # Проверяем, вступил или нет
+        if values.vkApi.method('groups.isMember', {'group_id': str(168366525), 'user_id': from_id}) != 1:
+            return 'Для общения с ботом вступи в группу!', None, None
+        else:
+            values.usersInGroup, values.users = resetStatements(values.users)
 
     # Пользователь не зарегистрирован
     if (from_id not in values.users) and (body[0] != 'shownameslist') and (body[0] != 'endofregistration')\
