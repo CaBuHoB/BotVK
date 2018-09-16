@@ -1,3 +1,5 @@
+from argparse import Namespace
+
 import vk
 
 from Bot.Basis import QueueThread
@@ -22,7 +24,6 @@ timetableDict = getTimetableDict([5621, 5622, 5623])
 
 session = vk.Session(token)
 api = vk.API(session, v=5.85)
-
 
 # Установка главной клавиатуры всем пользователям
 for user in users:
