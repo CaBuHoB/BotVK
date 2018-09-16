@@ -67,7 +67,6 @@ class TimetableNotifications(Thread):
                          '4 пара (14:10-15:40)': [13, 55],
                          '5 пара (15:50-17:20)': [15, 35],
                          '6 пара (17:30-19:00)': [17, 15]}
-        print('Я запустился)')
 
     def run(self):
         while True:
