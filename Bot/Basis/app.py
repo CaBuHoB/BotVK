@@ -11,15 +11,6 @@ from Bot.Basis.Configs import confirmation_token, timetableDict, api, connect, u
 
 app = Flask(__name__)
 
-# Установка главной клавиатуры всем пользователям
-for user in users:
-    api.messages.send(user_id=user,
-                      message='Бот обновился. Ошибки исправлены, '
-                              'производительность повышена, посуда вымыта, '
-                              'мусор вынесен, теперь можно и чаю попить)',
-                      attachment=None,
-                      keyboard=get_default_buttons(Namespace(users=users), users_id=user))
-
 notifications_thread = TimetableNotifications.TimetableNotifications(api, connect)
 notifications_thread.start()
 
@@ -57,4 +48,12 @@ def processing():
 
 
 if __name__ == '__main__':
+    # Установка главной клавиатуры всем пользователям
+    for user in users:
+        api.messages.send(user_id=user,
+                          message='Бот обновился. Ошибки исправлены, '
+                                  'производительность повышена, посуда вымыта, '
+                                  'мусор вынесен, теперь можно и чаю попить)',
+                          attachment=None,
+                          keyboard=get_default_buttons(Namespace(users=users), users_id=user))
     app.run()
