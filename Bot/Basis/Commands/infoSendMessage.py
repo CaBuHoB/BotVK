@@ -17,7 +17,7 @@ def infoSendMessage(values):
 
     for user in values.users:
         if str(values.users[user]['group']) in groups:
-            send_msg(values.vkApi.get_api(), user, message_for_groups['text'],
+            send_msg(values.vkApi, user, message_for_groups['text'],
                      attachment=attachments, keyboard=None)
 
     values.messageFromAdmin.pop(from_id)

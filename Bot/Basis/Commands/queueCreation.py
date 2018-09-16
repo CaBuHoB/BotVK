@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 
 
 def queueCreation(values):
+    data_delete = ''
     subject = values.item['text']
     tail_of_queue_name = values.message.split()[1:]
     tail_of_queue_name_str = ' '.join(tail_of_queue_name)
@@ -42,10 +43,10 @@ def queueCreation(values):
 
     for user in values.users:
         if (str(values.users[user]['group']) in groups.split()) and (user != values.item['from_id']):
-            send_msg(values.vkApi.get_api(), user, message,
+            send_msg(values.vkApi, user, message,
                      attachment=None, keyboard=get_queue_actions_buttons(queue_name, False))
 
-    return message, None, get_default_buttons(values)
+    return message, None, get_queue_actions_buttons(queue_name, False)
 
 
 command = command_system.Command()

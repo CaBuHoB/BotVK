@@ -9,7 +9,7 @@ def getFile(values):
 
     message = 'Нашёл) Держи:'
     file_name = values.message[values.message.find(' ') + 1:]
-    doc = values.vkApi.method('docs.search', {'q': file_name, 'search_own': 1, 'count': 1})['items']
+    doc = values.vkApi.docs.search(q=file_name, search_own=1, count=200)['items']
     if len(doc) == 0:
         send_sticker(values.vkApi.get_api(), values.item['user_id'], 8480)
         return 'Ошибочка вышла', None, None

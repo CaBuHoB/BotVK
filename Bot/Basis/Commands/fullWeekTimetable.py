@@ -9,9 +9,9 @@ def fullWeekTimetable(values):
 
     isUpper = None
     if values.item['text'] == 'Текущая':
-        isUpper = getDate()['isUpper']
+        isUpper = values.isUpper
     elif values.item['text'] == 'Следующая':
-        isUpper = not getDate()['isUpper']
+        isUpper = not values.isUpper
 
     if isUpper:
         message = 'Сейчас верхняя (красная, нечётная) неделя\n\n'

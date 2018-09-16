@@ -13,7 +13,7 @@ def appealToAdmin(values):
     msg = 'Сообщение для админа: \n\n' + \
           ' '.join(msg_words) + '\n\n' + name
 
-    send_msg(values.vkApi.get_api(), admin_id, msg, attachment=None, keyboard=None)
+    send_msg(values.vkApi, admin_id, msg, attachment=None, keyboard=None)
     message = 'Сообщение отправлено администратору )'
 
     return message, None, get_default_buttons(values)

@@ -1,13 +1,13 @@
 from Bot.Basis import command_system
 from Bot.Basis.Keyboards.getButtons import get_timetable_menu_buttons
-from Bot.Basis.Timetable.getSchedule import getDate, getTimetableByDay, getDaysForGroup
+from Bot.Basis.Timetable.getSchedule import getTimetableByDay, getDaysForGroup
 
 from datetime import datetime
 
 
 def oneDayTimetable(values):
     group = values.users[values.item['from_id']]['group']
-    isUpper = getDate()['isUpper']
+    isUpper = values.isUpper
     message_tail = ''
 
     if (values.item['text'] == 'Сегодня') or (values.item['text'] == 'Завтра'):
