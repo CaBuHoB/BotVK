@@ -7,12 +7,11 @@ import time
 
 from Bot.Basis.DataBase.workWithDataBase import getSubscribedUsers, getAllUsers
 from Bot.Basis.Keyboards.getButtons import get_default_buttons
-from Bot.Basis.Main import resetStatements
 from Bot.Basis.Timetable.getSchedule import getDate, getTimetableByDay, getTimetableDict
 
 
-def send_day_timetable(vk, connect):
-    users = getAllUsers(connect)
+def send_day_timetable(vk):
+    users = getAllUsers()
     timetable_dict = getTimetableDict([5621, 5622, 5623])
     is_upper = getDate()['isUpper']
 
@@ -21,7 +20,7 @@ def send_day_timetable(vk, connect):
     if day_number == 0:
         is_upper = not is_upper
 
-    for user in getSubscribedUsers(connect):
+    for user in getSubscribedUsers():
         message = getTimetableByDay(timetable_dict, users[user]['group'],
                                     week[day_number], is_upper)
         if message == '':
@@ -31,8 +30,8 @@ def send_day_timetable(vk, connect):
                          keyboard=get_default_buttons(Namespace(users=users), users_id=user))
 
 
-def send_subject_notification(vk, connect, subject, group_users):
-    users = getAllUsers(connect)
+def send_subject_notification(vk, subject):
+    users = getAllUsers()
     timetable_dict = getTimetableDict([5621, 5622, 5623])
     is_upper = getDate()['isUpper']
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
@@ -49,8 +48,8 @@ def send_subject_notification(vk, connect, subject, group_users):
                         message += sub['lecture hall'] + ') - ' + sub['name'] + ' '
                         message += '(' + sub['teacher'] + ')'
                         message += ' - начнётся через 15 минут'
-                        for user in getSubscribedUsers(connect):
-                            if users[user]['group'] == group and user in group_users:
+                        for user in getSubscribedUsers():
+                            if users[user]['group'] == group:
                                 vk.messages.send(user_id=user, message=message, attachment=None,
                                                  keyboard=get_default_buttons(Namespace(users=users),
                                                                               users_id=user))
@@ -58,10 +57,9 @@ def send_subject_notification(vk, connect, subject, group_users):
 
 class TimetableNotifications(Thread):
 
-    def __init__(self, vk, connect):
+    def __init__(self, vk):
         Thread.__init__(self)
         self.vk = vk
-        self.connect = connect
         self.timeList = {'1 пара (9:00-10:30)': [8, 45],
                          '2 пара (10:40-12:10)': [10, 25],
                          '3 пара (12:20-13:50)': [12, 5],
@@ -82,8 +80,7 @@ class TimetableNotifications(Thread):
                 else:
                     if difference >= 0:  # если это время еще не прошло и нужно ждать
                         time.sleep(difference)  # Сон до следующего предмета
-                    in_group = self.vk.method('groups.getMembers', {'group_id': str(168330527)})['items']
-                    send_subject_notification(self.vk, self.connect, sub, in_group)
+                    send_subject_notification(self.vk, sub)
 
             # Вечерняя рассылка
             now = dt.datetime.now()
@@ -99,4 +96,4 @@ class TimetableNotifications(Thread):
             else:
                 if difference >= 0:
                     time.sleep(difference)
-                send_day_timetable(self.vk, self.connect)
+                send_day_timetable(self.vk)

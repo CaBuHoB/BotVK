@@ -41,8 +41,8 @@ def queue_removing_buttons(queue):
     }, ensure_ascii=False)
 
 
-def ask_about_queue_removal(vk, connect):
-    queues_to_delete = getDateDeletedTables(connect)
+def ask_about_queue_removal(vk):
+    queues_to_delete = getDateDeletedTables()
 
     something_was_sent = False
     for queue in queues_to_delete:
@@ -60,14 +60,13 @@ def ask_about_queue_removal(vk, connect):
 
 class QueueThread(Thread):
 
-    def __init__(self, vk, connect):
+    def __init__(self, vk):
         Thread.__init__(self)
         self.vk = vk
-        self.connect = connect
 
     def run(self):
         while True:
-            someone_was_asked = ask_about_queue_removal(self.vk, self.connect)
+            someone_was_asked = ask_about_queue_removal(self.vk)
 
             now = dt.datetime.now()
             then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 10, 0)

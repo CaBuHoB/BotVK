@@ -93,9 +93,9 @@ def get_choose_name_buttons(group):
     }, ensure_ascii=False)
 
 
-def get_queue_names_buttons(connect, group):
+def get_queue_names_buttons(group):
     queue_list = []
-    for queue in getQueueNames(connect):
+    for queue in getQueueNames():
         now = datetime.now()
 
         queue_date = queue.split('_')[2].split()[0].split('.')

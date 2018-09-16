@@ -9,8 +9,7 @@ from Bot.Basis.Timetable import TimetableNotifications
 
 token = '890e1e0743f9afdcf2787f6338c1fd0bc73327a2aa398d8cd38d4e6fdb998b08b43f0a26b905bf25ae47b'
 
-connect = getConnect()
-users = getAllUsers(connect)
+users = getAllUsers()
 
 session = vk.Session(token)
 api = vk.API(session, v=5.85)
@@ -24,8 +23,8 @@ for user in users:
                       attachment=None,
                       keyboard=get_default_buttons(Namespace(users=users), users_id=user))
 
-notifications_thread = TimetableNotifications.TimetableNotifications(api, connect)
+notifications_thread = TimetableNotifications.TimetableNotifications(api)
 notifications_thread.start()
 
-queue_thread = QueueThread.QueueThread(api, connect)
+queue_thread = QueueThread.QueueThread(api)
 queue_thread.start()
