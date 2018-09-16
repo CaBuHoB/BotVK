@@ -11,8 +11,7 @@ from Bot.Basis.Timetable.getSchedule import getDate, getTimetableDict
 token = '890e1e0743f9afdcf2787f6338c1fd0bc73327a2aa398d8cd38d4e6fdb998b08b43f0a26b905bf25ae47b'
 confirmation_token = 'c9a8cdcb'
 
-connect = getConnect()
-users = getAllUsers(connect)
+users = getAllUsers()
 messageFromAdmin = {}
 isUpper = getDate()['isUpper']
 timetableDict = getTimetableDict([5621, 5622, 5623])

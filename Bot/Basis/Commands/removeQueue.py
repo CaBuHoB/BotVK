@@ -9,13 +9,13 @@ def removeQueue(values):
     name = ' '.join(values.message.split(' ')[1:])
     name_ = '\"' + name + '\"'
 
-    if name in getQueueNames(values.connect):
-        removeQueueInBD(values.connect, name_)
+    if name in getQueueNames():
+        removeQueueInBD(name_)
         remove_from_asked_list(values.item['from_id'])
 
-    for queue in getDateDeletedTables(values.connect):
+    for queue in getDateDeletedTables():
         if name == queue[0]:
-            removeFromDateDeleted(values.connect, name)
+            removeFromDateDeleted(name)
 
     message = 'Удалена очередь: ' + name
     keyboard = get_default_buttons(values)

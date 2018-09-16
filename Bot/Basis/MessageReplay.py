@@ -12,7 +12,6 @@ from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
 
-# TODO: переделать выгрузку файлов
 def upload_file(filePath, peer_id, title, vkApi):
     typeFile = {1: 'doc', 4: 'photo', 6: 'video'}
 

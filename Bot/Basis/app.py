@@ -5,7 +5,7 @@ from flask import Flask, request, json
 
 from Bot.Basis import MessageReplay
 from Bot.Basis.Timetable.getSchedule import getTimetableDict, getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api, connect, users, messageFromAdmin, isUpper
+from Bot.Basis.Configs import confirmation_token, timetableDict, api, users, messageFromAdmin, isUpper
 
 app = Flask(__name__)
 
@@ -32,7 +32,7 @@ def processing():
             timetableDict.update(getTimetableDict([5621, 5622, 5623]))
             # TODO: сделать обновление isUpper
 
-        values = Namespace(vkApi=api, item=data['object'], connect=connect, users=users,
+        values = Namespace(vkApi=api, item=data['object'], users=users,
                            timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=isUpper)
         mr = MessageReplay.MessageReplay(values)
         mr.run()

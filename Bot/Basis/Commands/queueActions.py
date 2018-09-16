@@ -9,8 +9,7 @@ def queueActions(values):
     if queue == '⟵ в меню этой очереди':
         queue = values.message.split()[1]
 
-    connect = values.connect
-    queue_list = getQueueList(connect, ('\"' + queue + '\"'))
+    queue_list = getQueueList('\"' + queue + '\"')
     message = 'Название очереди: ' + queue
     person_is_in = False
 

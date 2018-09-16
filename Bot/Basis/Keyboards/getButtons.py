@@ -278,7 +278,7 @@ def get_groups_for_queue_creation_buttons(date):
 def get_subjects_for_queue_creation_buttons(values, tail_of_queue_name):
     buttons_list = []
     two_buttons_pack = []
-    for sub in getSubjects(values.connect):
+    for sub in getSubjects():
         two_buttons_pack.append(sub)
         if len(two_buttons_pack) == 2:
             buttons_list.append(two_buttons_pack)
@@ -351,7 +351,7 @@ def get_message_cancel_button():
 def get_timetable_menu_buttons(values):
     group = values.users[values.item['from_id']]['group']
 
-    if values.item['from_id'] not in getSubscribedUsers(values.connect):
+    if values.item['from_id'] not in getSubscribedUsers():
         subscription_button = [get_button('Подписаться на рассылку', 'timetableSending sub', Color.GREEN)]
     else:
         subscription_button = [get_button('Отписаться от рассылки', 'timetableSending unsub', Color.RED)]
