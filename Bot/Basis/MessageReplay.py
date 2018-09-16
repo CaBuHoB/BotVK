@@ -3,20 +3,23 @@ from inspect import getframeinfo, currentframe
 from threading import Thread
 import os
 import importlib
-import vk_api
+
+import requests
 
 from Bot.Basis.Keyboards.getButtons import get_choose_group_buttons, get_default_buttons, \
     get_asking_if_send_message_buttons
-from Bot.Basis.Main import resetStatements
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
 
+# TODO: переделать выгрузку файлов
 def upload_file(filePath, peer_id, title, vkApi):
     typeFile = {1: 'doc', 4: 'photo', 6: 'video'}
 
-    upload = vk_api.VkUpload(vkApi)
-    fileInfo = upload.document_message(filePath, title=title, peer_id=peer_id)
+    upload_url = vkApi.docs.getMessagesUploadServer(type='doc', peer_id=peer_id)['upload_url']
+    files = {'file': open(filePath, 'rb')}
+    response = requests.post(upload_url, files=files).json()
+    fileInfo = vkApi.docs.save(file=response['file'], title=title)
     return typeFile[fileInfo[0]['type']] + str(fileInfo[0]['owner_id']) + '_' + str(fileInfo[0]['id'])
 
 
@@ -44,17 +47,12 @@ def get_answer(values):
     body = message.lower().split()
     from_id = values.item['from_id']
 
-    # Пользователь не в локальном списке участников сообщества
-    if from_id not in values.usersInGroup:
-        # Проверяем, вступил или нет
-        if values.vkApi.method('groups.isMember', {'group_id': str(168366525), 'user_id': from_id}) != 1:
-            return 'Для общения с ботом вступи в группу!', None, None
-        else:
-            values.usersInGroup, values.users = resetStatements(values.users)
-
     # Пользователь не зарегистрирован
-    if (from_id not in values.users) and (body[0] != 'shownameslist') and (body[0] != 'endofregistration')\
+    if (from_id not in values.users) and (body[0] != 'shownameslist') and (body[0] != 'endofregistration') \
             and (body[0] != 'erroringroupchoosing'):
+        # Пользователь не участник группы
+        if values.vkApi.groups.isMember(group_id=str(168330527), user_id=from_id) != 1:
+            return 'Для общения с ботом вступи в группу!', None, None
         return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, get_choose_group_buttons()
 
     # Сообщение от пользователя отправлено в рассылку ?
@@ -87,7 +85,7 @@ def get_answer(values):
     return message, attachment, key
 
 
-class MessageReplay(Thread):
+class MessageReplay():
 
     def __init__(self, values):
         Thread.__init__(self)
@@ -96,4 +94,4 @@ class MessageReplay(Thread):
     def run(self):
         load_modules()
         message, attachment, key = get_answer(self.values)
-        send_msg(self.values.vkApi.get_api(), self.values.item['from_id'], message, attachment, key)
+        send_msg(self.values.vkApi, self.values.item['from_id'], message, attachment, key)

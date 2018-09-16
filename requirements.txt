@@ -1,3 +1,6 @@
+Flask
+gunicorn
+vk
 bs4
 beautifulsoup4
 vk_api

@@ -34,7 +34,9 @@ def get_default_buttons(values, users_id=None):
     info_message_button = None
 
     surname = values.users[user_id]['surname']
-    if (surname == 'Савинов') or (surname == 'Борисова'):
+    if (surname == 'Савинов') or (surname == 'Ялышев') or \
+            (surname == 'Мусикян') or (surname == 'Наумов') or \
+            (surname == 'Борисова') or (surname == 'Патерикина'):
         queue_buttons.append(get_button('Создать очередь', 'createQueue', Color.WHITE))
         info_message_button = [get_button('Рассылка сообщений', 'infoMessage', Color.WHITE)]
 
@@ -140,12 +142,11 @@ def get_queue_actions_buttons(queue, person_is_in):
 
 
 def get_materials_actions_buttons(values):
-    items = values.vkApi.method('docs.search', {'q': '>', 'search_own': 1, 'count': 200})['items']
+    items = values.vkApi.docs.search(q='>', search_own=1, count=200)['items']
     values.materials = items
     materials_list = []
     for doc in items:
-        if doc['owner_id'] == -168366525:
-            # TODO: заменить id тестовой группы на число основной
+        if doc['owner_id'] == -168330527 or doc['owner_id'] == -168366525:
             materials_list.append(doc['title'])
     if len(materials_list) == 0:
         return None
@@ -165,12 +166,12 @@ def get_materials_actions_buttons(values):
 
 
 def get_materials_list_buttons(subject, values, page_num=None):
-    items = values.materials
+    items = values.vkApi.docs.search(q='>', search_own=1, count=200)['items']
     pages_dict = None
     materials_list = []
     for doc in items:
-        if (doc['owner_id'] == -168366525) and (doc['title'].split()[1].lower() == subject):
-            # TODO: заменить id тестовой группы на число основной
+        if (doc['owner_id'] == -168330527 or doc['owner_id'] == -168366525) and \
+                (doc['title'].split()[1].lower() == subject):
             materials_list.append(doc['title'].lower())
     materials_list.sort()
 
@@ -205,8 +206,8 @@ def get_materials_list_buttons(subject, values, page_num=None):
         else:
             buttons_list.append([get_button('←', 'nextMaterialsPage ' + subject +
                                             ' ' + str(page_num - 1), Color.GREEN),
-                                get_button('→', 'nextMaterialsPage ' + subject +
-                                           ' ' + str(page_num + 1), Color.GREEN)])
+                                 get_button('→', 'nextMaterialsPage ' + subject +
+                                            ' ' + str(page_num + 1), Color.GREEN)])
             if len(pages_dict) > 2:
                 buttons_list.append([get_button('Начало', 'nextMaterialsPage ' + subject + ' 0', Color.GREEN),
                                      get_button('Конец', 'nextMaterialsPage ' + subject + ' ' +
