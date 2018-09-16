@@ -87,10 +87,6 @@ def getTimetableDict(groupList):
 
                 lessons[day][lessonNumber] = lectures
 
-        # file = str(group) + '.json'
-        # with open(file, 'w') as outfile:
-        #     json.dump(lessons, outfile, ensure_ascii=False, indent=4)
-
         timetableDict[str(group)] = lessons
 
     return timetableDict
