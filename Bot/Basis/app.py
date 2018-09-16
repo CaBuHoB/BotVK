@@ -3,19 +3,11 @@ from argparse import Namespace
 
 from flask import Flask, request, json
 
-from Bot.Basis import MessageReplay, QueueThread
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
-from Bot.Basis.Timetable import TimetableNotifications
+from Bot.Basis import MessageReplay
 from Bot.Basis.Timetable.getSchedule import getTimetableDict, getDate
 from Bot.Basis.Configs import confirmation_token, timetableDict, api, connect, users, messageFromAdmin, isUpper
 
 app = Flask(__name__)
-
-notifications_thread = TimetableNotifications.TimetableNotifications(api, connect)
-notifications_thread.start()
-
-queue_thread = QueueThread.QueueThread(api, connect)
-queue_thread.start()
 
 
 @app.route('/')
@@ -48,12 +40,4 @@ def processing():
 
 
 if __name__ == '__main__':
-    # Установка главной клавиатуры всем пользователям
-    for user in users:
-        api.messages.send(user_id=user,
-                          message='Бот обновился. Ошибки исправлены, '
-                                  'производительность повышена, посуда вымыта, '
-                                  'мусор вынесен, теперь можно и чаю попить)',
-                          attachment=None,
-                          keyboard=get_default_buttons(Namespace(users=users), users_id=user))
     app.run()
