@@ -10,7 +10,7 @@ def removeFromQueue(values):
     message = 'Ты вышел из этой очереди: ' + queue
     keyboard = get_default_buttons(values)
     queue = '\"' + queue + '\"'
-    removeFromQueueInDB(values.connect, queue, user_id)
+    removeFromQueueInDB(queue, user_id)
 
     return message, None, keyboard
 

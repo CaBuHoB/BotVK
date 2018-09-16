@@ -32,7 +32,7 @@ def processing():
             timetableDict.update(getTimetableDict([5621, 5622, 5623]))
             # TODO: сделать обновление isUpper
 
-        values = Namespace(vkApi=api, item=data['object'], connect=connect, users=users,
+        values = Namespace(vkApi=api, item=data['object'], users=users,
                            timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=isUpper)
         mr = MessageReplay.MessageReplay(values)
         mr.run()

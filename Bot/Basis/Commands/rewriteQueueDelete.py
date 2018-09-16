@@ -18,7 +18,7 @@ def rewriteQueueDelete(values):
     message = 'Перенесена дата удаления очереди ' + name
     name = '\"' + name + '\"'
 
-    updateDateInDateDeleted(values.connect, name, date)
+    updateDateInDateDeleted(name, date)
     remove_from_asked_list(values.item['from_id'])
 
     keyboard = get_default_buttons(values)

@@ -11,7 +11,7 @@ def queuesMenu(values):
               'Так же ты увидишь список людей, которые уже в неё записались.\n\n'
 
     group = values.users[values.item['from_id']]['group']
-    keyboard = get_queue_names_buttons(values.connect, group)
+    keyboard = get_queue_names_buttons(group)
 
     if keyboard is None:
         message += 'Сейчас доступных очередей нет =( \n' \

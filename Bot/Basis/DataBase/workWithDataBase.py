@@ -21,7 +21,7 @@ def getConnect():
     return con
 
 
-def getAllUsers(connect):
+def getAllUsers():
     connect = getConnect()
     cursor = connect.cursor()
     cursor.execute('SELECT * FROM users')
@@ -42,7 +42,7 @@ def getAllUsers(connect):
     return users
 
 
-def addPersonToDB(connect, id, name, surname, group):
+def addPersonToDB(id, name, surname, group):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -52,7 +52,7 @@ def addPersonToDB(connect, id, name, surname, group):
     connect.close()
 
 
-def createQueueInBD(connect, name):
+def createQueueInBD(name):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -62,7 +62,7 @@ def createQueueInBD(connect, name):
     connect.close()
 
 
-def removeQueueInBD(connect, queue):
+def removeQueueInBD(queue):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -72,7 +72,7 @@ def removeQueueInBD(connect, queue):
     connect.close()
 
 
-def removeFromDateDeleted(connect, queue):
+def removeFromDateDeleted(queue):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -82,7 +82,7 @@ def removeFromDateDeleted(connect, queue):
     connect.close()
 
 
-def getDateDeletedTables(connect):
+def getDateDeletedTables():
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -94,7 +94,7 @@ def getDateDeletedTables(connect):
     return nameDate
 
 
-def addTableInDateDeleteTable(connect, name, date, id):
+def addTableInDateDeleteTable(name, date, id):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -104,7 +104,7 @@ def addTableInDateDeleteTable(connect, name, date, id):
     connect.close()
 
 
-def updateDateInDateDeleted(connect, queue, newDate):
+def updateDateInDateDeleted(queue, newDate):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -114,7 +114,7 @@ def updateDateInDateDeleted(connect, queue, newDate):
     connect.close()
 
 
-def getQueueNames(connect):
+def getQueueNames():
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -126,7 +126,7 @@ def getQueueNames(connect):
     return tables
 
 
-def getQueueList(connect, queue):
+def getQueueList(queue):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -138,7 +138,7 @@ def getQueueList(connect, queue):
     return queueList
 
 
-def getSubjects(connect):
+def getSubjects():
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -150,7 +150,7 @@ def getSubjects(connect):
     return subjectsList
 
 
-def removeFromQueueInDB(connect, queue, id):
+def removeFromQueueInDB(queue, id):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -160,7 +160,7 @@ def removeFromQueueInDB(connect, queue, id):
     connect.close()
 
 
-def setToQueue(connect, queue, id, name):
+def setToQueue(queue, id, name):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -179,7 +179,7 @@ def setToQueue(connect, queue, id, name):
     return True
 
 
-def subscribePerson(connect, user_id):
+def subscribePerson(user_id):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -189,7 +189,7 @@ def subscribePerson(connect, user_id):
     connect.close()
 
 
-def unSubscribePerson(connect, user_id):
+def unSubscribePerson(user_id):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -199,7 +199,7 @@ def unSubscribePerson(connect, user_id):
     connect.close()
 
 
-def getSubscribedUsers(connect):
+def getSubscribedUsers():
     connect = getConnect()
     cursor = connect.cursor()
 

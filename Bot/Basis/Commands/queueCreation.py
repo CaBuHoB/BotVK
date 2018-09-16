@@ -14,7 +14,7 @@ def queueCreation(values):
     groups, date = tail_of_queue_name_str.split('_')
 
     queue_name = subject + '_' + groups + '_' + date
-    if queue_name in getQueueNames(values.connect):
+    if queue_name in getQueueNames():
         return 'Такая очередь уже есть!', None, get_default_buttons(values)
 
     date = date.split()[0]
@@ -36,8 +36,8 @@ def queueCreation(values):
             break
         now += timedelta(1)
 
-    createQueueInBD(values.connect, ('\"' + queue_name + '\"'))
-    addTableInDateDeleteTable(values.connect, queue_name, data_delete, values.item['from_id'])
+    createQueueInBD('\"' + queue_name + '\"')
+    addTableInDateDeleteTable(queue_name, data_delete, values.item['from_id'])
 
     message = 'Создана очередь: ' + queue_name
 

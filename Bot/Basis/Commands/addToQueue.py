@@ -7,13 +7,12 @@ def addToQueue(values):
     queue = ' '.join(values.message.split()[1:])
     user_id = int(values.item['from_id'])
     name = values.users[user_id]['name'] + ' ' + values.users[user_id]['surname']
-    connect = values.connect
     queue = '\"' + queue + '\"'
 
-    setToQueue(connect, queue, user_id, name)
+    setToQueue(queue, user_id, name)
 
     message = 'Готово!\nОчередь на данный момент:'
-    for name in getQueueList(connect, queue):
+    for name in getQueueList(queue):
         message += '\n'
         if name == (values.users[user_id]['name'] + ' ' + values.users[user_id]['surname']):
             message += '> '
