@@ -32,6 +32,7 @@ def processing():
             timetableDict.update(getTimetableDict([5621, 5622, 5623]))
             # TODO: сделать обновление isUpper
 
+        api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
                            timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=isUpper)
         mr = MessageReplay.MessageReplay(values)
