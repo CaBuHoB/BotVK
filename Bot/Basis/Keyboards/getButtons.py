@@ -34,9 +34,7 @@ def get_default_buttons(values, users_id=None):
     info_message_button = None
 
     surname = values.users[user_id]['surname']
-    if (surname == 'Савинов') or (surname == 'Ялышев') or \
-        (surname == 'Мусикян') or (surname == 'Наумов') or \
-        (surname == 'Борисова') or (surname == 'Патерикина'):
+    if (surname == 'Савинов') or (surname == 'Борисова'):
         queue_buttons.append(get_button('Создать очередь', 'createQueue', Color.WHITE))
         info_message_button = [get_button('Рассылка сообщений', 'infoMessage', Color.WHITE)]
 
@@ -146,7 +144,7 @@ def get_materials_actions_buttons(values):
     values.materials = items
     materials_list = []
     for doc in items:
-        if doc['owner_id'] == -168330527:
+        if doc['owner_id'] == -168366525:
             # TODO: заменить id тестовой группы на число основной
             materials_list.append(doc['title'])
     if len(materials_list) == 0:
@@ -171,7 +169,7 @@ def get_materials_list_buttons(subject, values, page_num=None):
     pages_dict = None
     materials_list = []
     for doc in items:
-        if (doc['owner_id'] == -168330527) and (doc['title'].split()[1].lower() == subject):
+        if (doc['owner_id'] == -168366525) and (doc['title'].split()[1].lower() == subject):
             # TODO: заменить id тестовой группы на число основной
             materials_list.append(doc['title'].lower())
     materials_list.sort()
