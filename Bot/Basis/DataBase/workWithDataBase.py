@@ -22,6 +22,7 @@ def getConnect():
 
 
 def getAllUsers(connect):
+    connect = getConnect()
     cursor = connect.cursor()
     cursor.execute('SELECT * FROM users')
 
@@ -36,107 +37,131 @@ def getAllUsers(connect):
             }
         )
     cursor.close()
+    connect.close()
 
     return users
 
 
 def addPersonToDB(connect, id, name, surname, group):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s)', [id, name, surname, group])
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def createQueueInBD(connect, name):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('CREATE TABLE queue.{} (id int NOT NULL, name varchar(50) NOT NULL);'.format(name))
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def removeQueueInBD(connect, queue):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('DROP TABLE queue.{}'.format(queue))
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def removeFromDateDeleted(connect, queue):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('DELETE FROM public."date deleted tables" WHERE name = %s', [queue])
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def getDateDeletedTables(connect):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('SELECT * FROM public."date deleted tables"')
     nameDate = [[table[0], table[1], table[2]] for table in cursor]
     cursor.close()
+    connect.close()
 
     return nameDate
 
 
 def addTableInDateDeleteTable(connect, name, date, id):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('INSERT INTO public."date deleted tables" VALUES (%s, %s, %s)', [name, date, id])
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def updateDateInDateDeleted(connect, queue, newDate):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('UPDATE public."date deleted tables" SET date = %s WHERE name = %s', [newDate, queue])
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def getQueueNames(connect):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('SELECT table_name FROM information_schema.tables WHERE table_schema = %s', ['queue'])
     tables = [answ[0] for answ in cursor]
     cursor.close()
+    connect.close()
 
     return tables
 
 
 def getQueueList(connect, queue):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('SELECT name FROM queue.{}'.format(queue))
     queueList = [name[0] for name in cursor]
     cursor.close()
+    connect.close()
 
     return queueList
 
 
 def getSubjects(connect):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('SELECT name FROM public.subjects')
     subjectsList = [name[0] for name in cursor]
     cursor.close()
+    connect.close()
 
     return subjectsList
 
 
 def removeFromQueueInDB(connect, queue, id):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('DELETE FROM queue.{} WHERE id = {}'.format(queue, id))
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def setToQueue(connect, queue, id, name):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('SELECT * FROM queue.{} WHERE id = {}'.format(queue, id))
@@ -149,31 +174,38 @@ def setToQueue(connect, queue, id, name):
 
     cursor.close()
     connect.commit()
+    connect.close()
 
     return True
 
 
 def subscribePerson(connect, user_id):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('INSERT INTO public.subscribers VALUES (%s)', [user_id])
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def unSubscribePerson(connect, user_id):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('DELETE FROM public.subscribers WHERE id = {}'.format(user_id))
     cursor.close()
     connect.commit()
+    connect.close()
 
 
 def getSubscribedUsers(connect):
+    connect = getConnect()
     cursor = connect.cursor()
 
     cursor.execute('SELECT id FROM public.subscribers')
     subscribers = [id[0] for id in cursor]
     cursor.close()
+    connect.close()
 
     return subscribers
