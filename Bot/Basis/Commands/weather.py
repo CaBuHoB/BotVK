@@ -5,6 +5,7 @@ from weather import Weather, Unit
 
 
 def weather(values):
+    # TODO: сделать нормальную погоду с gismeteo
     weather = Weather(unit=Unit.CELSIUS)
     location = weather.lookup_by_location('petersburg')
     condition = location.condition

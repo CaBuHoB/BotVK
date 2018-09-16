@@ -5,7 +5,7 @@ from flask import Flask, request, json
 
 from Bot.Basis import MessageReplay
 from Bot.Basis.Timetable.getSchedule import getTimetableDict, getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api, connect, users, messageFromAdmin, isUpper
+from Bot.Basis.Configs import confirmation_token, timetableDict, api, users, messageFromAdmin, isUpper
 
 app = Flask(__name__)
 
