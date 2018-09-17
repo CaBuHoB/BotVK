@@ -5,7 +5,8 @@ from flask import Flask, request, json
 
 from Bot.Basis import MessageReplay
 from Bot.Basis.Timetable.getSchedule import getTimetableDict, getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api, users, messageFromAdmin, isUpper
+from Bot.Basis.Configs import confirmation_token, timetableDict, api, users, messageFromAdmin
+from Bot.Basis import Configs
 
 app = Flask(__name__)
 
@@ -30,11 +31,12 @@ def processing():
         now = datetime.now().timetuple()
         if now[3] == 21 and now[4] == 0:
             timetableDict.update(getTimetableDict([5621, 5622, 5623]))
+            Configs.isUpper = getDate()['isUpper']
             # TODO: сделать обновление isUpper
 
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
-                           timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=isUpper)
+                           timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=Configs.isUpper)
         mr = MessageReplay.MessageReplay(values)
         mr.run()
         return 'ok'

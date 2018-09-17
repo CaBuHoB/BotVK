@@ -67,8 +67,8 @@ def get_answer(values):
     if len(values.item['attachments']) > 0:
         message = 'Я не понимаю, чего ты от меня хочешь. Чтобы узнать, ' \
                   'что я умею, нажми на зелёную кнопку со знаком вопроса'
-        if values.item['attachments'][0]['doc']['ext'] == 'ogg':
-            url = values.item['attachments'][0]['doc']['url']
+        if values.item['attachments'][0]['type'] == 'audio_message':
+            url = values.item['attachments'][0]['audio_message']['link_ogg']
             message = voice_processing(url)
 
     # Обработка команд

@@ -111,3 +111,4 @@ Bot/Basis/Keyboards/__pycache__/
 Bot/Basis/Timetable/__pycache__/
 Bot/Basis/YandexGoogle/__pycache__/
 Bot/Basis/__pycache__/
+/Bot/Basis/Configs.py
