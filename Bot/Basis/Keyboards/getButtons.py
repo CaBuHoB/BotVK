@@ -34,10 +34,13 @@ def get_default_buttons(values, users_id=None):
     info_message_button = None
 
     surname = values.users[user_id]['surname']
-    if (surname == 'Савинов') or (surname == 'Ялышев') or \
-            (surname == 'Мусикян') or (surname == 'Наумов') or \
-            (surname == 'Борисова') or (surname == 'Патерикина'):
+    if (surname == 'Ялышев') or (surname == 'Патерикина') or \
+            (surname == 'Мусикян') or (surname == 'Наумов'):
         queue_buttons.append(get_button('Создать очередь', 'createQueue', Color.WHITE))
+        info_message_button = [get_button('Рассылка сообщений', 'infoMessage', Color.WHITE)]
+    elif (surname == 'Савинов') or (surname == 'Борисова'):
+        queue_buttons.append(get_button('Создать', 'createQueue', Color.WHITE))
+        queue_buttons.append(get_button('Удалить', 'deleteQueue', Color.WHITE))
         info_message_button = [get_button('Рассылка сообщений', 'infoMessage', Color.WHITE)]
 
     buttons_list = []
@@ -89,6 +92,23 @@ def get_choose_name_buttons(group):
 
     return json.dumps({
         "one_time": True,
+        "buttons": buttons_list
+    }, ensure_ascii=False)
+
+
+def get_queue_names_for_removing():
+    queue_list = []
+    for queue in getQueueNames():
+        queue_list.append(queue)
+
+    if len(queue_list) == 0:
+        return None
+
+    buttons_list = [[get_button(queue, 'removeQueue ' + queue, Color.RED)] for queue in queue_list]
+    buttons_list.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
+
+    return json.dumps({
+        "one_time": False,
         "buttons": buttons_list
     }, ensure_ascii=False)
 
