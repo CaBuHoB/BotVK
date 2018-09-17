@@ -28,4 +28,3 @@ notifications_thread.start()
 
 queue_thread = QueueThread.QueueThread(api)
 queue_thread.start()
-queue_thread.join()
