@@ -6,7 +6,7 @@ from Bot.Basis.QueueThread import remove_from_asked_list
 
 
 def removeQueue(values):
-    name = ' '.join(values.message.split(' ')[1:])
+    name = ' '.join(values.message.split()[1:])
     name_ = '\"' + name + '\"'
 
     if name in getQueueNames():
