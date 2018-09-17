@@ -5,7 +5,7 @@ from Bot.Basis.Keyboards.getButtons import get_groups_for_queue_creation_buttons
 def queueByDate(values):
     date = values.item['text']
     message = 'Выбери, для каких групп создаётся эта очередь'
-    keyboard = get_groups_for_queue_creation_buttons(date)
+    keyboard = get_groups_for_queue_creation_buttons(date, values)
 
     return message, None, keyboard
 

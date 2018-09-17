@@ -9,6 +9,7 @@ def infoByGroup(values):
     message = 'Жду сообщения для групп:'
     for group in groups:
         message += (' ' + str(group))
+    message += '\n\nПодпишись в конце сообщения, если хочешь, чтоб было понятно, от кого оно :)'
     return message, None, get_message_cancel_button()
 
 

@@ -34,13 +34,12 @@ def get_default_buttons(values, users_id=None):
     info_message_button = None
 
     surname = values.users[user_id]['surname']
-    if (surname == 'Ялышев') or (surname == 'Патерикина') or \
-            (surname == 'Мусикян') or (surname == 'Наумов'):
-        queue_buttons.append(get_button('Создать очередь', 'createQueue', Color.WHITE))
-        info_message_button = [get_button('Рассылка сообщений', 'infoMessage', Color.WHITE)]
-    elif (surname == 'Савинов') or (surname == 'Борисова'):
+    if (surname == 'Савинов') or (surname == 'Ялышев') or \
+        (surname == 'Патерикина') or (surname == 'Борисова') or \
+         (surname == 'Мусикян') or (surname == 'Наумов'):
         queue_buttons.append(get_button('Создать', 'createQueue', Color.WHITE))
         queue_buttons.append(get_button('Удалить', 'deleteQueue', Color.WHITE))
+
         info_message_button = [get_button('Рассылка сообщений', 'infoMessage', Color.WHITE)]
 
     buttons_list = []
@@ -96,20 +95,35 @@ def get_choose_name_buttons(group):
     }, ensure_ascii=False)
 
 
-def get_queue_names_for_removing():
+def get_queue_names_for_removing(values):
     queue_list = []
     for queue in getQueueNames():
-        queue_list.append(queue)
+        if str(values.users[values.item['from_id']]['group']) in queue.split('_')[1].split():
+            queue_list.append(queue)
 
     if len(queue_list) == 0:
         return None
 
-    buttons_list = [[get_button(queue, 'removeQueue ' + queue, Color.RED)] for queue in queue_list]
+    buttons_list = [[get_button(queue, 'removeQueueOrDont ' + queue, Color.RED)] for queue in queue_list]
     buttons_list.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
 
     return json.dumps({
         "one_time": False,
         "buttons": buttons_list
+    }, ensure_ascii=False)
+
+
+def queue_removing_buttons(queue):
+    return json.dumps({
+        "one_time": False,
+        "buttons": [
+            [
+                get_button('Да, удалить очередь', 'removeQueue ' + queue, Color.WHITE)
+            ],
+            [
+                get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)
+            ]
+        ]
     }, ensure_ascii=False)
 
 
@@ -270,20 +284,25 @@ def get_dates_for_queue_creation_buttons():
     }, ensure_ascii=False)
 
 
-def get_groups_for_queue_creation_buttons(date):
+def get_groups_for_queue_creation_buttons(date, values):
+    group = values.users[values.item['from_id']]['group']
+    group_button = get_button(group, 'queueByGroup ' + date, Color.BLUE)
+
+    groups_buttons = []
+    if group in [5621, 5622]:
+        groups_buttons.append(get_button('5621 5622', 'queueByGroup ' + date, Color.BLUE))
+    if group in [5622, 5623]:
+        groups_buttons.append(get_button('5622 5623', 'queueByGroup ' + date, Color.BLUE))
+    if group in [5621, 5623]:
+        groups_buttons.append(get_button('5621 5623', 'queueByGroup ' + date, Color.BLUE))
+
     return json.dumps({
         "one_time": False,
         "buttons": [
             [
-                get_button('5621', 'queueByGroup ' + date, Color.BLUE),
-                get_button('5622', 'queueByGroup ' + date, Color.BLUE),
-                get_button('5623', 'queueByGroup ' + date, Color.BLUE)
+                group_button
             ],
-            [
-                get_button('5621 5622', 'queueByGroup ' + date, Color.BLUE),
-                get_button('5621 5623', 'queueByGroup ' + date, Color.BLUE),
-                get_button('5622 5623', 'queueByGroup ' + date, Color.BLUE)
-            ],
+            groups_buttons,
             [
                 get_button('5621 5622 5623', 'queueByGroup ' + date, Color.BLUE)
             ],
