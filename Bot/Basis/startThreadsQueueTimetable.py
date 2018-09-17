@@ -3,14 +3,13 @@ from argparse import Namespace
 import vk
 
 from Bot.Basis import QueueThread
-from Bot.Basis.DataBase.workWithDataBase import getConnect, getAllUsers
+from Bot.Basis.Configs import token
+from Bot.Basis.DataBase.workWithDataBase import getAllUsers
 from Bot.Basis.Keyboards.getButtons import get_default_buttons
 from Bot.Basis.Timetable import TimetableNotifications
 
-token = '890e1e0743f9afdcf2787f6338c1fd0bc73327a2aa398d8cd38d4e6fdb998b08b43f0a26b905bf25ae47b'
 
 users = getAllUsers()
-
 session = vk.Session(token)
 api = vk.API(session, v=5.85)
 
