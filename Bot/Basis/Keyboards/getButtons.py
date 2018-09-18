@@ -49,7 +49,8 @@ def get_default_buttons(values, users_id=None):
         get_button('Алгоритмы', 'kroukMenu', Color.WHITE)
     ])
     buttons_list.append(queue_buttons)
-    buttons_list.append([get_button('Расписание', 'showTimetableButtons', Color.WHITE)])
+    buttons_list.append([get_button('Расписание', 'showTimetableButtons', Color.WHITE),
+                         get_button('Погода', 'погода', Color.WHITE)])
     buttons_list.append(info_message_button) if info_message_button is not None else None
     buttons_list.append([get_button('?', 'help', Color.GREEN)])
 

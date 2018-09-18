@@ -1,6 +1,6 @@
 from Bot.Basis import command_system
 from Bot.Basis.DataBase.workWithDataBase import unSubscribePersonWeather, subscribePersonWeather
-from Bot.Basis.Keyboards.getButtons import get_timetable_menu_buttons
+from Bot.Basis.Keyboards.getButtons import get_default_buttons
 
 
 def weatherSending(values):
@@ -13,7 +13,7 @@ def weatherSending(values):
         unSubscribePersonWeather(values.item['from_id'])
         message = 'Ты отписался от рассылки погоды'
 
-    return message, None, get_timetable_menu_buttons(values)
+    return message, None, get_default_buttons(values)
 
 
 command = command_system.Command()
