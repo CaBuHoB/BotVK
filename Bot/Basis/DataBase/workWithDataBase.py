@@ -209,3 +209,35 @@ def getSubscribedUsers():
     connect.close()
 
     return subscribers
+
+
+def subscribePersonWeather(user_id):
+    connect = getConnect()
+    cursor = connect.cursor()
+
+    cursor.execute("INSERT INTO public.\"subscribers weather\" VALUES (%s)", [user_id])
+    cursor.close()
+    connect.commit()
+    connect.close()
+
+
+def unSubscribePersonWeather(user_id):
+    connect = getConnect()
+    cursor = connect.cursor()
+
+    cursor.execute("DELETE FROM public.\"subscribers weather\" WHERE id = {}".format(user_id))
+    cursor.close()
+    connect.commit()
+    connect.close()
+
+
+def getSubscribedUsersWeather():
+    connect = getConnect()
+    cursor = connect.cursor()
+
+    cursor.execute("SELECT id FROM public.\"subscribers weather\"")
+    subscribers = [id[0] for id in cursor]
+    cursor.close()
+    connect.close()
+
+    return subscribers

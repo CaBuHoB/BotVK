@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
+from Bot.Basis.Keyboards.getButtons import get_weather_menu_buttons
 
 
 def weather(values):
@@ -29,7 +29,12 @@ def weather(values):
     humidity = humidity.find('th').text + ': ' + humidity.find('td').text
     weather += humidity + '\n'
     weather += 'Сегодня: ' + hilo
-    return weather, None, get_default_buttons(values)
+
+    keyboard = None
+    if values is not None:
+        keyboard = get_weather_menu_buttons(values)
+
+    return weather, None, keyboard
 
 
 command = command_system.Command()

@@ -2,7 +2,7 @@ from argparse import Namespace
 
 import vk
 
-from Bot.Basis import QueueThread
+from Bot.Basis import QueueThread, WeatherThread
 from Bot.Basis.Configs import token
 from Bot.Basis.DataBase.workWithDataBase import getAllUsers
 from Bot.Basis.Keyboards.getButtons import get_default_buttons
@@ -28,3 +28,6 @@ notifications_thread.start()
 
 queue_thread = QueueThread.QueueThread(api)
 queue_thread.start()
+
+weather_thread = WeatherThread.WeatherThread(api)
+weather_thread.start()

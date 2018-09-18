@@ -4,7 +4,8 @@ from enum import Enum
 import datetime as dt
 from datetime import datetime, timedelta
 
-from Bot.Basis.DataBase.workWithDataBase import getQueueNames, getSubjects, getSubscribedUsers
+from Bot.Basis.DataBase.workWithDataBase import getQueueNames, getSubjects, getSubscribedUsers, \
+    getSubscribedUsersWeather
 from Bot.Basis.QueueThread import in_asked_list
 from Bot.Basis.Timetable.getSchedule import getDaysForGroup
 from Bot.Basis.YandexGoogle.GoogleTables import getNamesListFromGoogle, getGroupNumbersFromGoogle
@@ -454,4 +455,20 @@ def get_asking_week_buttons():
                 get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)
             ]
         ]
+    }, ensure_ascii=False)
+
+
+def get_weather_menu_buttons(values):
+    if values.item['from_id'] not in getSubscribedUsersWeather():
+        subscription_button = [get_button('Подписаться на рассылку', 'weatherSending sub', Color.GREEN)]
+    else:
+        subscription_button = [get_button('Отписаться от рассылки', 'weatherSending unsub', Color.RED)]
+
+    list_of_buttons = []
+    list_of_buttons.append(subscription_button)
+    list_of_buttons.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
+
+    return json.dumps({
+        "one_time": False,
+        "buttons": list_of_buttons
     }, ensure_ascii=False)
