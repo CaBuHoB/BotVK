@@ -7,6 +7,7 @@ from Bot.Basis import MessageReplay
 from Bot.Basis.Timetable.getSchedule import getTimetableDict, getDate
 from Bot.Basis.Configs import confirmation_token, timetableDict, api, users, messageFromAdmin
 from Bot.Basis import Configs
+from Bot.Basis.getWeatherForecast import getWeather
 
 app = Flask(__name__)
 
@@ -15,10 +16,11 @@ app = Flask(__name__)
 def hello_world():
     now = datetime.now().timetuple()
     if now[3] == 0 and now[4] == 1:
-        timetableDict.update(getTimetableDict([5621, 5622, 5623]))
+        Configs.timetableDict.update(getTimetableDict([5621, 5622, 5623]))
         Configs.isUpper = getDate()['isUpper']
         api.messages.send(user_id=38081883, message='Все норм, я обновил расписане:)')
-        # TODO: сделать обновление isUpper
+    if now[4] % 5 == 0:
+        Configs.weatherForecast = getWeather()
     return 'Hello, World!'
 
 

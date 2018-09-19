@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 from Bot.Basis.DataBase.workWithDataBase import getQueueNames, getSubjects, getSubscribedUsers, \
     getSubscribedUsersWeather
-from Bot.Basis.QueueThread import in_asked_list
+from Bot.Basis.Threads.QueueThread import in_asked_list
 from Bot.Basis.Timetable.getSchedule import getDaysForGroup
 from Bot.Basis.YandexGoogle.GoogleTables import getNamesListFromGoogle, getGroupNumbersFromGoogle
 
