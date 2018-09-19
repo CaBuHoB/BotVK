@@ -12,7 +12,7 @@ from Bot.Basis.Keyboards.getButtons import get_default_buttons
 
 def send_day_weather(vk):
     users = getAllUsers()
-    message = 'Погода на сегодня:\n\n' + weather(None)[0]
+    message = 'Доброе утро) Рассылка погоды :)\n\n' + weather(None)[0]
     for user in getSubscribedUsersWeather():
         vk.messages.send(user_id=user, message=message, attachment=None,
                          keyboard=get_default_buttons(Namespace(users=users), users_id=user))
