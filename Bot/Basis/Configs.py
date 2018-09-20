@@ -1,8 +1,8 @@
 import vk
 
-from Bot.Basis.DataBase.workWithDataBase import getAllUsers
-from Bot.Basis.Timetable.getSchedule import getDate, getTimetableDict
-from Bot.Basis.getWeatherForecast import getWeather
+from Bot.Basis.Functions.workWithDataBase import getAllUsers
+from Bot.Basis.Functions.getSchedule import getDate, getTimetableDict
+from Bot.Basis.Functions.getWeatherForecast import getWeather
 
 # Тестовый бот
 # token = '07bad0077791b970f09942de845145ae326dc6c6b3d89c03690b1240f4a4a033899cf96e5fa72d6a334bb'

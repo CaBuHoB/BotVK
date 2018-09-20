@@ -6,7 +6,7 @@ import importlib
 
 import requests
 
-from Bot.Basis.Keyboards.getButtons import get_choose_group_buttons, get_default_buttons, \
+from Bot.Basis.Functions.getButtons import get_choose_group_buttons, get_default_buttons, \
     get_asking_if_send_message_buttons
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
@@ -33,7 +33,7 @@ def send_sticker(vk, user_id, sticker_id):
 def load_modules():
     filename = getframeinfo(currentframe()).filename
     filename = filename[:filename.rfind('/') + 1]
-    files = os.listdir(filename + "Commands")
+    files = os.listdir(filename + "../Commands")
     modules = filter(lambda x: x.endswith('.py'), files)
     for m in modules:
         importlib.import_module("Commands." + m[0:-3])

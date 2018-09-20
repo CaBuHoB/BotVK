@@ -4,10 +4,10 @@ from enum import Enum
 import datetime as dt
 from datetime import datetime, timedelta
 
-from Bot.Basis.DataBase.workWithDataBase import getQueueNames, getSubjects, getSubscribedUsers, \
+from Bot.Basis.Functions.workWithDataBase import getQueueNames, getSubjects, getSubscribedUsers, \
     getSubscribedUsersWeather
 from Bot.Basis.Threads.QueueThread import in_asked_list
-from Bot.Basis.Timetable.getSchedule import getDaysForGroup
+from Bot.Basis.Functions.getSchedule import getDaysForGroup
 from Bot.Basis.YandexGoogle.GoogleTables import getNamesListFromGoogle, getGroupNumbersFromGoogle
 
 

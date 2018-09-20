@@ -1,5 +1,5 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import queue_removing_buttons
+from Bot.Basis.Functions.getButtons import queue_removing_buttons
 
 
 def removeQueueOrDont(values):

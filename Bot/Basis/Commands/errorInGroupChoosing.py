@@ -1,5 +1,5 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import get_choose_group_buttons
+from Bot.Basis.Functions.getButtons import get_choose_group_buttons
 
 
 def errorInGroupChoosing(values):

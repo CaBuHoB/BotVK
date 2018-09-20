@@ -6,8 +6,8 @@ from threading import Thread
 import time
 
 from Bot.Basis.Commands.weather import weather
-from Bot.Basis.DataBase.workWithDataBase import getSubscribedUsersWeather, getAllUsers
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
+from Bot.Basis.Functions.workWithDataBase import getSubscribedUsersWeather, getAllUsers
+from Bot.Basis.Functions.getButtons import get_default_buttons
 
 
 def send_day_weather(vk):

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from Bot.Basis import command_system
-from Bot.Basis.DataBase.workWithDataBase import updateDateInDateDeleted
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
+from Bot.Basis.Functions.workWithDataBase import updateDateInDateDeleted
+from Bot.Basis.Functions.getButtons import get_default_buttons
 from Bot.Basis.Threads.QueueThread import remove_from_asked_list
 
 

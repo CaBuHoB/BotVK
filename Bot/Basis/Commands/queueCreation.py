@@ -1,8 +1,7 @@
 from Bot.Basis import command_system
-from Bot.Basis.DataBase.workWithDataBase import addTableInDateDeleteTable, createQueueInBD, getDateDeletedTables, \
-    getQueueNames
-from Bot.Basis.Keyboards.getButtons import get_default_buttons, get_queue_actions_buttons
-from Bot.Basis.MessageReplay import send_msg
+from Bot.Basis.Functions.workWithDataBase import addTableInDateDeleteTable, createQueueInBD, getQueueNames
+from Bot.Basis.Functions.getButtons import get_default_buttons, get_queue_actions_buttons
+from Bot.Basis.Functions.MessageReplay import send_msg
 from datetime import datetime, timedelta
 
 

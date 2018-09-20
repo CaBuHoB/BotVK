@@ -5,9 +5,9 @@ from threading import Thread
 
 import time
 
-from Bot.Basis.DataBase.workWithDataBase import getSubscribedUsers, getAllUsers
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
-from Bot.Basis.Timetable.getSchedule import getDate, getTimetableByDay, getTimetableDict
+from Bot.Basis.Functions.workWithDataBase import getSubscribedUsers, getAllUsers
+from Bot.Basis.Functions.getButtons import get_default_buttons
+from Bot.Basis.Functions.getSchedule import getDate, getTimetableByDay, getTimetableDict
 
 
 def send_day_timetable(vk):

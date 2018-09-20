@@ -2,7 +2,7 @@ import vk
 
 from Bot.Basis.Threads import QueueThread, WeatherThread, TimetableNotifications
 from Bot.Basis.Configs import token
-from Bot.Basis.DataBase.workWithDataBase import getAllUsers
+from Bot.Basis.Functions.workWithDataBase import getAllUsers
 
 users = getAllUsers()
 session = vk.Session(token)

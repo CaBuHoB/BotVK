@@ -1,6 +1,6 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import get_timetable_menu_buttons
-from Bot.Basis.Timetable.getSchedule import getDate, getTimetableByWeek
+from Bot.Basis.Functions.getButtons import get_timetable_menu_buttons
+from Bot.Basis.Functions.getSchedule import getTimetableByWeek
 
 
 def fullWeekTimetable(values):

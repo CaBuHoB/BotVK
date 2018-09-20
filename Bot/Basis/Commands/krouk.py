@@ -2,7 +2,7 @@
 import os
 
 from Bot.Basis import command_system
-from Bot.Basis.MessageReplay import upload_file
+from Bot.Basis.Functions.MessageReplay import upload_file
 from Bot.Math.Cryptography import TableOfQuadraticComp as tableKr
 
 

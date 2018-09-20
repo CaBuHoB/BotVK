@@ -3,11 +3,11 @@ from argparse import Namespace
 
 from flask import Flask, request, json
 
-from Bot.Basis import MessageReplay
-from Bot.Basis.Timetable.getSchedule import getTimetableDict, getDate
+from Bot.Basis.Functions import MessageReplay
+from Bot.Basis.Functions.getSchedule import getTimetableDict, getDate
 from Bot.Basis.Configs import confirmation_token, timetableDict, api, users, messageFromAdmin
 from Bot.Basis import Configs
-from Bot.Basis.getWeatherForecast import getWeather
+from Bot.Basis.Functions.getWeatherForecast import getWeather
 
 app = Flask(__name__)
 

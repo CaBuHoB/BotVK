@@ -1,6 +1,6 @@
 from Bot.Basis import command_system
-from Bot.Basis.DataBase.workWithDataBase import unSubscribePersonWeather, subscribePersonWeather
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
+from Bot.Basis.Functions.workWithDataBase import unSubscribePersonWeather, subscribePersonWeather
+from Bot.Basis.Functions.getButtons import get_default_buttons
 
 
 def weatherSending(values):

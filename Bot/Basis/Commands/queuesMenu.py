@@ -1,5 +1,5 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import get_queue_names_buttons, get_default_buttons
+from Bot.Basis.Functions.getButtons import get_queue_names_buttons, get_default_buttons
 
 
 def queuesMenu(values):

@@ -1,6 +1,6 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import get_timetable_menu_buttons
-from Bot.Basis.Timetable.getSchedule import getTimetableByDay, getDaysForGroup
+from Bot.Basis.Functions.getButtons import get_timetable_menu_buttons
+from Bot.Basis.Functions.getSchedule import getTimetableByDay, getDaysForGroup
 
 from datetime import datetime
 
