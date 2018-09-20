@@ -1,4 +1,6 @@
 import json
+import os
+
 import vk
 
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
@@ -17,7 +19,8 @@ users = getAllUsers()
 messageFromAdmin = {}
 isUpper = getDate()['isUpper']
 weatherForecast = getWeather()
-with open('Bot/Basis/Threads/timetable.json', 'r') as f:
+path = os.path.abspath(__file__)
+with open(path + '/Threads/timetable.json', 'r') as f:
     timetableDict = json.load(f)
 
 session = vk.Session(token)
