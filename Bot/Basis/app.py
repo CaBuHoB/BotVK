@@ -16,7 +16,8 @@ app = Flask(__name__)
 def hello_world():
     now = datetime.now().timetuple()
     if now[3] == 0 and now[4] == 1:
-        Configs.timetableDict.update(getTimetableDict([5621, 5622, 5623]))
+        with open('Threads/timetable.json', 'r') as f:
+            Configs.timetableDict.update(json.load(f))
         Configs.isUpper = getDate()['isUpper']
         api.messages.send(user_id=38081883, message='Все норм, я обновил расписане:)')
     if now[4] % 5 == 0:

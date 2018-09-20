@@ -1,7 +1,8 @@
+import json
 import vk
 
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
-from Bot.Basis.Functions.getSchedule import getDate, getTimetableDict
+from Bot.Basis.Functions.getSchedule import getDate
 from Bot.Basis.Functions.getWeatherForecast import getWeather
 
 # Тестовый бот
@@ -16,7 +17,8 @@ users = getAllUsers()
 messageFromAdmin = {}
 isUpper = getDate()['isUpper']
 weatherForecast = getWeather()
-timetableDict = getTimetableDict([5621, 5622, 5623])
+with open('Threads/timetable.json', 'r') as f:
+    timetableDict = json.load(f)
 
 session = vk.Session(token)
 api = vk.API(session, v=5.85)

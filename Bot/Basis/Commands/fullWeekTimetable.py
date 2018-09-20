@@ -15,7 +15,7 @@ def fullWeekTimetable(values):
 
     if isUpper:
         message = 'Сейчас верхняя (красная, нечётная) неделя\n\n'
-    elif isUpper == False:
+    elif not isUpper:
         message = 'Сейчас нижняя (синяя, чётная) неделя\n\n'
 
     message += getTimetableByWeek(values.timetableDict, group, isUpper)

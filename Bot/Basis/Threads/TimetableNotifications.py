@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime as dt
+import json
 from argparse import Namespace
 from threading import Thread
 
@@ -12,7 +13,8 @@ from Bot.Basis.Functions.getSchedule import getDate, getTimetableByDay, getTimet
 
 def send_day_timetable(vk):
     users = getAllUsers()
-    timetable_dict = getTimetableDict([5621, 5622, 5623])
+    with open('timetable.json', 'r') as f:
+        timetable_dict = json.load(f)
     is_upper = getDate()['isUpper']
 
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
@@ -32,7 +34,8 @@ def send_day_timetable(vk):
 
 def send_subject_notification(vk, subject):
     users = getAllUsers()
-    timetable_dict = getTimetableDict([5621, 5622, 5623])
+    with open('timetable.json', 'r') as f:
+        timetable_dict = json.load(f)
     is_upper = getDate()['isUpper']
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
     day_number = dt.datetime.weekday(dt.datetime.now())
