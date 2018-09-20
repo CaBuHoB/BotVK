@@ -51,7 +51,7 @@ def send_subject_notification(vk, subject):
                     if sub['isUpper'] == is_upper or sub['isUpper'] is None:
                         message = '🕓 '
                         message += sub['type'] + ' ('
-                        message += sub['lecture hall'] + ') - ' + sub['name'] + ' '
+                        message += sub['lecture hall'] + ') ' + sub['name'] + ' '
                         message += '(' + sub['teacher'] + ')'
                         message += ' - начнётся через 15 минут'
                         for user in getSubscribedUsers():
