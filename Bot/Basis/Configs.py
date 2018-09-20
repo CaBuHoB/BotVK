@@ -17,7 +17,7 @@ users = getAllUsers()
 messageFromAdmin = {}
 isUpper = getDate()['isUpper']
 weatherForecast = getWeather()
-with open('Threads/timetable.json', 'r') as f:
+with open('Bot/Basis/Threads/timetable.json', 'r') as f:
     timetableDict = json.load(f)
 
 session = vk.Session(token)
