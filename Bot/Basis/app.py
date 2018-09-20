@@ -17,7 +17,7 @@ app = Flask(__name__)
 def hello_world():
     now = datetime.now().timetuple()
     if now[3] == 0 and now[4] == 1:
-        path = os.path.abspath(os.path.abspath(__file__))
+        path = os.path.split(os.path.abspath(__file__))[0]
         with open(path + '/Threads/timetable.json', 'r') as f:
             Configs.timetableDict.update(json.load(f))
         Configs.isUpper = getDate()['isUpper']
