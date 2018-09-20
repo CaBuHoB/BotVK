@@ -14,7 +14,7 @@ from Bot.Basis.Functions.getSchedule import getDate, getTimetableByDay, getTimet
 
 def send_day_timetable(vk):
     users = getAllUsers()
-    path = os.path.abspath(__file__)
+    path = os.path.abspath(os.path.abspath(__file__))
     with open(path + '/timetable.json', 'r') as f:
         timetable_dict = json.load(f)
     is_upper = getDate()['isUpper']
@@ -36,7 +36,7 @@ def send_day_timetable(vk):
 
 def send_subject_notification(vk, subject):
     users = getAllUsers()
-    path = os.path.abspath(__file__)
+    path = os.path.abspath(os.path.abspath(__file__))
     with open(path + '/timetable.json', 'r') as f:
         timetable_dict = json.load(f)
     is_upper = getDate()['isUpper']
