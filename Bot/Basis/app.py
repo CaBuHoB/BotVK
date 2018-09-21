@@ -6,7 +6,7 @@ from flask import Flask, request, json
 
 from Bot.Basis.Functions import MessageReplay
 from Bot.Basis.Functions.getSchedule import getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api
+from Bot.Basis.Configs import confirmation_token, timetableDict, api, users
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
 
