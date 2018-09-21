@@ -5,13 +5,16 @@ from argparse import Namespace
 from flask import Flask, request, json
 
 from Bot.Basis.Functions import MessageReplay
-from Bot.Basis.Functions.getSchedule import getTimetableDict, getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api, users, messageFromAdmin
+from Bot.Basis.Functions.getSchedule import getDate
+from Bot.Basis.Configs import confirmation_token, timetableDict, api
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
+from Bot.Basis.Functions.workWithDataBase import getAllUsers
 
 app = Flask(__name__)
 
+users = getAllUsers()
+messageFromAdmin = {}
 
 @app.route('/')
 def hello_world():
