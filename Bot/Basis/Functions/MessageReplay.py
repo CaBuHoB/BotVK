@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from inspect import getframeinfo, currentframe
-from threading import Thread
 import os
 import importlib
 
@@ -87,7 +86,6 @@ def get_answer(values):
 class MessageReplay():
 
     def __init__(self, values):
-        Thread.__init__(self)
         self.values = values
 
     def run(self):
