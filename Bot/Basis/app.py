@@ -12,7 +12,6 @@ from Bot.Basis.Functions.getWeatherForecast import getWeather
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
 
 app = Flask(__name__)
-users = {}
 
 
 @app.route('/')
@@ -41,6 +40,7 @@ def processing():
     if data['type'] == 'message_reply':
         return 'ok'
     elif data['type'] == 'message_new':
+        users = getAllUsers()
         print("First", users)
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
@@ -52,5 +52,4 @@ def processing():
 
 
 if __name__ == '__main__':
-    users = getAllUsers()
     app.run()

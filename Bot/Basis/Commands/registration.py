@@ -15,7 +15,7 @@ def endOfRegistration(values):
                                       'group': int(group)})
     print(values.users)
     # setNameSelectedToGoogle(fullname, group)
-    # addPersonToDB(user_id, name, surname, int(group))
+    addPersonToDB(user_id, name, surname, int(group))
 
     message = 'Ты зарегистрирован как ' + fullname + '!) ' \
               'Если случайно нажал не туда - напиши администратору!\n\n' \
