@@ -13,6 +13,7 @@ def endOfRegistration(values):
     values.users.setdefault(user_id, {'name': name,
                                       'surname': surname,
                                       'group': int(group)})
+    print(values.users)
     # setNameSelectedToGoogle(fullname, group)
     # addPersonToDB(user_id, name, surname, int(group))
 
