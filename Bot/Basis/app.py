@@ -12,6 +12,7 @@ from Bot.Basis.Functions.getWeatherForecast import getWeather
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
 
 app = Flask(__name__)
+messageFromAdmin = {}
 
 
 @app.route('/')
@@ -43,7 +44,7 @@ def processing():
         users = getAllUsers()
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
-                           timetableDict=timetableDict, messageFromAdmin=Configs.messageFromAdmin, isUpper=Configs.isUpper)
+                           timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=Configs.isUpper)
         mr = MessageReplay.MessageReplay(values)
         mr.run()
         return 'ok'

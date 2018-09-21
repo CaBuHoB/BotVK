@@ -5,7 +5,7 @@ from Bot.Basis.Functions.getButtons import get_message_cancel_button
 
 def infoByGroup(values):
     groups = values.item['text'].split(' ')
-    values.messageFromAdmin.setdefault(values.item['from_id'], {'message': None, 'groups': groups})
+    values.messageFromAdmin[values.item['from_id']] = {'message': None, 'groups': groups}
     message = 'Жду сообщения для групп:'
     for group in groups:
         message += (' ' + str(group))
