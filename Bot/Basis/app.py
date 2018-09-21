@@ -6,7 +6,7 @@ from flask import Flask, request, json
 
 from Bot.Basis.Functions import MessageReplay
 from Bot.Basis.Functions.getSchedule import getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api, messageFromAdmin
+from Bot.Basis.Configs import confirmation_token, timetableDict, api
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
@@ -43,7 +43,7 @@ def processing():
         users = getAllUsers()
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
-                           timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=Configs.isUpper)
+                           timetableDict=timetableDict, messageFromAdmin=Configs.messageFromAdmin, isUpper=Configs.isUpper)
         mr = MessageReplay.MessageReplay(values)
         mr.run()
         return 'ok'
