@@ -18,7 +18,6 @@ def hello_world():
         timetableDict.update(getTimetableDict([5621, 5622, 5623]))
         Configs.isUpper = getDate()['isUpper']
         api.messages.send(user_id=38081883, message='Все норм, я обновил расписане:)')
-        # TODO: сделать обновление isUpper
     return 'Hello, World!'
 
 
