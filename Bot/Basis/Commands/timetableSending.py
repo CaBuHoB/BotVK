@@ -1,6 +1,6 @@
 from Bot.Basis import command_system
-from Bot.Basis.DataBase.workWithDataBase import subscribePerson, unSubscribePerson
-from Bot.Basis.Keyboards.getButtons import get_timetable_menu_buttons
+from Bot.Basis.Functions.workWithDataBase import subscribePerson, unSubscribePerson
+from Bot.Basis.Functions.getButtons import get_timetable_menu_buttons
 
 
 def timetableSending(values):

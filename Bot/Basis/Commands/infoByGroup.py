@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import get_message_cancel_button
+from Bot.Basis.Functions.getButtons import get_message_cancel_button
 
 
 def infoByGroup(values):

@@ -6,15 +6,14 @@ from threading import Thread
 import time
 
 from Bot.Basis.Commands.weather import weather
-from Bot.Basis.DataBase.workWithDataBase import getSubscribedUsersWeather, getAllUsers
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
+from Bot.Basis.Functions.workWithDataBase import getSubscribedUsersWeather, getAllUsers
+from Bot.Basis.Functions.getButtons import get_default_buttons
 
 
 def send_day_weather(vk):
     users = getAllUsers()
-
+    message = 'Доброе утро) Рассылка погоды :)\n\n' + weather(None)[0]
     for user in getSubscribedUsersWeather():
-        message = 'Погода на сегодня:\n\n' + weather(None)[0]
         vk.messages.send(user_id=user, message=message, attachment=None,
                          keyboard=get_default_buttons(Namespace(users=users), users_id=user))
 
@@ -28,7 +27,7 @@ class WeatherThread(Thread):
     def run(self):
         while True:
             now = dt.datetime.now()
-            then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 13, 25)
+            then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 9, 0)
             difference = (then - now).total_seconds()
 
             if difference < 0:  # если в этом дне время рассылки прошло

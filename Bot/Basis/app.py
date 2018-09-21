@@ -3,21 +3,27 @@ from argparse import Namespace
 
 from flask import Flask, request, json
 
-from Bot.Basis import MessageReplay
-from Bot.Basis.Timetable.getSchedule import getTimetableDict, getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api, users, messageFromAdmin
+from Bot.Basis.Functions import MessageReplay
+from Bot.Basis.Functions.getSchedule import getDate
+from Bot.Basis.Configs import confirmation_token, timetableDict, api, users
 from Bot.Basis import Configs
+from Bot.Basis.Functions.getWeatherForecast import getWeather
 
 app = Flask(__name__)
+messageFromAdmin = {}
 
 
 @app.route('/')
 def hello_world():
     now = datetime.now().timetuple()
     if now[3] == 0 and now[4] == 1:
-        timetableDict.update(getTimetableDict([5621, 5622, 5623]))
+        path = os.path.split(os.path.abspath(__file__))[0]
+        with open(path + '/Threads/timetable.json', 'r') as f:
+            Configs.timetableDict.update(json.load(f))
         Configs.isUpper = getDate()['isUpper']
         api.messages.send(user_id=38081883, message='Все норм, я обновил расписане:)')
+    if now[4] % 5 == 0:
+        Configs.weatherForecast = getWeather()
     return 'Hello, World!'
 
 

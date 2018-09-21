@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import get_materials_list_buttons
+from Bot.Basis.Functions.getButtons import get_materials_list_buttons
 
 
 def nextMaterialsPage(values):

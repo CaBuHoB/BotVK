@@ -1,7 +1,11 @@
+import json
+import os
+
 import vk
 
-from Bot.Basis.DataBase.workWithDataBase import getAllUsers
-from Bot.Basis.Timetable.getSchedule import getDate, getTimetableDict
+from Bot.Basis.Functions.getSchedule import getDate
+from Bot.Basis.Functions.getWeatherForecast import getWeather
+from Bot.Basis.Functions.workWithDataBase import getAllUsers
 
 # Тестовый бот
 token = '07bad0077791b970f09942de845145ae326dc6c6b3d89c03690b1240f4a4a033899cf96e5fa72d6a334bb'
@@ -12,9 +16,11 @@ confirmation_token = 'b3451e9c'
 # confirmation_token = 'c9a8cdcb'
 
 users = getAllUsers()
-messageFromAdmin = {}
 isUpper = getDate()['isUpper']
-timetableDict = getTimetableDict([5621, 5622, 5623])
+weatherForecast = getWeather()
+path = os.path.split(os.path.abspath(__file__))[0]
+with open(path + '/Threads/timetable.json', 'r') as f:
+    timetableDict = json.load(f)
 
 session = vk.Session(token)
 api = vk.API(session, v=5.85)

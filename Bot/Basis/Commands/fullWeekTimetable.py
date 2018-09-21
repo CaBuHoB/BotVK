@@ -1,6 +1,6 @@
 from Bot.Basis import command_system
-from Bot.Basis.Keyboards.getButtons import get_timetable_menu_buttons
-from Bot.Basis.Timetable.getSchedule import getDate, getTimetableByWeek
+from Bot.Basis.Functions.getButtons import get_timetable_menu_buttons
+from Bot.Basis.Functions.getSchedule import getTimetableByWeek
 
 
 def fullWeekTimetable(values):
@@ -15,7 +15,7 @@ def fullWeekTimetable(values):
 
     if isUpper:
         message = 'Сейчас верхняя (красная, нечётная) неделя\n\n'
-    elif isUpper == False:
+    elif not isUpper:
         message = 'Сейчас нижняя (синяя, чётная) неделя\n\n'
 
     message += getTimetableByWeek(values.timetableDict, group, isUpper)

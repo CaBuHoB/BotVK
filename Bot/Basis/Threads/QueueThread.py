@@ -4,7 +4,7 @@ import json
 import time
 from threading import Thread
 
-from Bot.Basis.DataBase.workWithDataBase import getDateDeletedTables
+from Bot.Basis.Functions.workWithDataBase import getDateDeletedTables
 
 asked_about_queue_users = []
 

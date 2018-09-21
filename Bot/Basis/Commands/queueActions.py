@@ -1,6 +1,6 @@
 from Bot.Basis import command_system
-from Bot.Basis.DataBase.workWithDataBase import getQueueList
-from Bot.Basis.Keyboards.getButtons import get_queue_actions_buttons
+from Bot.Basis.Functions.workWithDataBase import getQueueList
+from Bot.Basis.Functions.getButtons import get_queue_actions_buttons
 
 
 def queueActions(values):

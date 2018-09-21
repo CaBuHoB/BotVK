@@ -1,12 +1,8 @@
-from argparse import Namespace
-
 import vk
 
-from Bot.Basis import QueueThread, WeatherThread
+from Bot.Basis.Threads import QueueThread, WeatherThread, TimetableNotifications
 from Bot.Basis.Configs import token
-from Bot.Basis.DataBase.workWithDataBase import getAllUsers
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
-from Bot.Basis.Timetable import TimetableNotifications
+from Bot.Basis.Functions.workWithDataBase import getAllUsers
 
 users = getAllUsers()
 session = vk.Session(token)

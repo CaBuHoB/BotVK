@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 import datetime as dt
+import json
+import os
 from argparse import Namespace
 from threading import Thread
 
 import time
 
-from Bot.Basis.DataBase.workWithDataBase import getSubscribedUsers, getAllUsers
-from Bot.Basis.Keyboards.getButtons import get_default_buttons
-from Bot.Basis.Timetable.getSchedule import getDate, getTimetableByDay, getTimetableDict
+from Bot.Basis.Functions.workWithDataBase import getSubscribedUsers, getAllUsers
+from Bot.Basis.Functions.getButtons import get_default_buttons
+from Bot.Basis.Functions.getSchedule import getDate, getTimetableByDay, getTimetableDict
 
 
 def send_day_timetable(vk):
     users = getAllUsers()
-    timetable_dict = getTimetableDict([5621, 5622, 5623])
+    path = os.path.split(os.path.abspath(__file__))[0]
+    with open(path + '/timetable.json', 'r') as f:
+        timetable_dict = json.load(f)
     is_upper = getDate()['isUpper']
 
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
@@ -32,7 +36,9 @@ def send_day_timetable(vk):
 
 def send_subject_notification(vk, subject):
     users = getAllUsers()
-    timetable_dict = getTimetableDict([5621, 5622, 5623])
+    path = os.path.split(os.path.abspath(__file__))[0]
+    with open(path + '/timetable.json', 'r') as f:
+        timetable_dict = json.load(f)
     is_upper = getDate()['isUpper']
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
     day_number = dt.datetime.weekday(dt.datetime.now())
@@ -45,7 +51,7 @@ def send_subject_notification(vk, subject):
                     if sub['isUpper'] == is_upper or sub['isUpper'] is None:
                         message = '🕓 '
                         message += sub['type'] + ' ('
-                        message += sub['lecture hall'] + ') - ' + sub['name'] + ' '
+                        message += sub['lecture hall'] + ') ' + sub['name'] + ' '
                         message += '(' + sub['teacher'] + ')'
                         message += ' - начнётся через 15 минут'
                         for user in getSubscribedUsers():
