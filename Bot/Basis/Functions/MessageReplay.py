@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import ast
 from inspect import getframeinfo, currentframe
 import os
 import importlib
@@ -7,6 +8,7 @@ import requests
 
 from Bot.Basis.Functions.getButtons import get_choose_group_buttons, get_default_buttons, \
     get_asking_if_send_message_buttons
+from Bot.Basis.Functions.workWithDataBase import getDictWithMessageFromAdmin, setDictWithMessageFromAdmin
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
@@ -54,10 +56,14 @@ def get_answer(values):
         return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, get_choose_group_buttons()
 
     # Сообщение от пользователя отправлено в рассылку ?
-    if (from_id in values.messageFromAdmin) and (
+    print(getDictWithMessageFromAdmin(from_id))
+    messageFromAdmin = ast.literal_eval(getDictWithMessageFromAdmin(from_id))
+    if (from_id in messageFromAdmin) and (
             body == [] or (body[0] not in ['infosendmessage', 'backtodefaultkeyboard', 'infobygroup'])):
-        values.messageFromAdmin[from_id]['message'] = values.item
-        groups = values.messageFromAdmin[from_id]['groups']
+
+        messageFromAdmin[from_id]['message'] = values.item
+        groups = messageFromAdmin[from_id]['groups']
+        setDictWithMessageFromAdmin(from_id, str(messageFromAdmin))
         message = 'Сделать рассылку группам: ' + ' '.join(groups) + '?'
         return message, None, get_asking_if_send_message_buttons()
 

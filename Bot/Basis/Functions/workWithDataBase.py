@@ -241,3 +241,41 @@ def getSubscribedUsersWeather():
     connect.close()
 
     return subscribers
+
+
+def getDictWithMessageFromAdmin(userId):
+    connect = getConnect()
+    cursor = connect.cursor()
+
+    cursor.execute("SELECT dict FROM public.\"message from admin\" WHERE id = {}".format(userId))
+    dictUser = cursor.fetchone()
+    dictUser = "{}" if dictUser is None else dictUser[0]
+    cursor.close()
+    connect.close()
+
+    return dictUser
+
+
+def deleteDictWithMessageFromAdmin(userId):
+    connect = getConnect()
+    cursor = connect.cursor()
+
+    cursor.execute("DELETE FROM public.\"message from admin\" WHERE id = {}".format(userId))
+    cursor.close()
+    connect.commit()
+    connect.close()
+
+
+def setDictWithMessageFromAdmin(userId, dict):
+    connect = getConnect()
+    cursor = connect.cursor()
+
+    cursor.execute("SELECT dict FROM public.\"message from admin\" WHERE id = {}".format(userId))
+    if len(cursor.fetchall()) != 0:
+        cursor.execute("DELETE FROM public.\"message from admin\" WHERE id = {}".format(userId))
+        connect.commit()
+    cursor.execute("INSERT INTO public.\"message from admin\" VALUES (%s, %s)", [userId, dict])
+
+    cursor.close()
+    connect.commit()
+    connect.close()

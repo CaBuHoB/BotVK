@@ -40,15 +40,12 @@ def processing():
     if data['type'] == 'message_reply':
         return 'ok'
     elif data['type'] == 'message_new':
-        print('first', Configs.messageFromAdmin)
         users = getAllUsers()
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
-                           timetableDict=timetableDict, messageFromAdmin=Configs.messageFromAdmin, isUpper=Configs.isUpper)
+                           timetableDict=timetableDict, isUpper=Configs.isUpper)
         mr = MessageReplay.MessageReplay(values)
         mr.run()
-        Configs.messageFromAdmin = values.messageFromAdmin
-        print('second', Configs.messageFromAdmin)
         return 'ok'
 
 
