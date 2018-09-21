@@ -56,7 +56,6 @@ def get_answer(values):
         return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, get_choose_group_buttons()
 
     # Сообщение от пользователя отправлено в рассылку ?
-    print(getDictWithMessageFromAdmin(from_id))
     messageFromAdmin = ast.literal_eval(getDictWithMessageFromAdmin(from_id))
     if (from_id in messageFromAdmin) and (
             body == [] or (body[0] not in ['infosendmessage', 'backtodefaultkeyboard', 'infobygroup'])):
