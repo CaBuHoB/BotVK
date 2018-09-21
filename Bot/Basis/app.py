@@ -2,11 +2,12 @@ import os
 from datetime import datetime
 from argparse import Namespace
 
+import vk
 from flask import Flask, request, json
 
 from Bot.Basis.Functions import MessageReplay
 from Bot.Basis.Functions.getSchedule import getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api
+from Bot.Basis.Configs import confirmation_token, timetableDict, token
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
@@ -42,6 +43,8 @@ def processing():
     if data['type'] == 'message_reply':
         return 'ok'
     elif data['type'] == 'message_new':
+        session = vk.Session(token)
+        api = vk.API(session, v=5.85)
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
                            timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=Configs.isUpper)

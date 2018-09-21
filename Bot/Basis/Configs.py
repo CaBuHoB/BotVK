@@ -1,9 +1,6 @@
 import json
 import os
 
-import vk
-
-from Bot.Basis.Functions.workWithDataBase import getAllUsers
 from Bot.Basis.Functions.getSchedule import getDate
 from Bot.Basis.Functions.getWeatherForecast import getWeather
 
@@ -20,6 +17,3 @@ weatherForecast = getWeather()
 path = os.path.split(os.path.abspath(__file__))[0]
 with open(path + '/Threads/timetable.json', 'r') as f:
     timetableDict = json.load(f)
-
-session = vk.Session(token)
-api = vk.API(session, v=5.85)
