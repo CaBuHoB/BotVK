@@ -42,6 +42,7 @@ def processing():
         return 'ok'
     elif data['type'] == 'message_new':
         global messageFromAdmin
+        print('first' + messageFromAdmin)
         users = getAllUsers()
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
@@ -49,6 +50,7 @@ def processing():
         mr = MessageReplay.MessageReplay(values)
         mr.run()
         messageFromAdmin = values.messageFromAdmin
+        print('second' + messageFromAdmin)
         return 'ok'
 
 
