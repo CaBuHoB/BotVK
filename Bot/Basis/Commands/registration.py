@@ -13,8 +13,8 @@ def endOfRegistration(values):
     Configs.users.setdefault(user_id, {'name': name,
                                       'surname': surname,
                                       'group': int(group)})
-    # setNameSelectedToGoogle(fullname, group)
-    # addPersonToDB(user_id, name, surname, int(group))
+    setNameSelectedToGoogle(fullname, group)
+    addPersonToDB(user_id, name, surname, int(group))
 
     message = 'Ты зарегистрирован как ' + fullname + '!) ' \
               'Если случайно нажал не туда - напиши администратору!\n\n' \
