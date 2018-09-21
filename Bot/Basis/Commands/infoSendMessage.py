@@ -18,10 +18,10 @@ def infoSendMessage(values):
 
     mes = 'Это тебе:)' if message_for_groups['text'] == '' else message_for_groups['text']
 
-    for user in values.users:
-        if str(values.users[user]['group']) in groups:
-            send_msg(values.vkApi, user, mes,
-                     attachment=attachments, keyboard=None)
+    # for user in values.users:
+    #     if str(values.users[user]['group']) in groups:
+    #         send_msg(values.vkApi, user, mes,
+    #                  attachment=attachments, keyboard=None)
 
     values.messageFromAdmin.pop(from_id)
     message = 'Сообщения разосланы группам: '
