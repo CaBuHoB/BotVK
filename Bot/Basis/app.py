@@ -6,11 +6,13 @@ from flask import Flask, request, json
 
 from Bot.Basis.Functions import MessageReplay
 from Bot.Basis.Functions.getSchedule import getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api, messageFromAdmin, users
+from Bot.Basis.Configs import confirmation_token, timetableDict, api, messageFromAdmin
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
+from Bot.Basis.Functions.workWithDataBase import getAllUsers
 
 app = Flask(__name__)
+users = {}
 
 
 @app.route('/')
@@ -50,4 +52,5 @@ def processing():
 
 
 if __name__ == '__main__':
+    users = getAllUsers()
     app.run()
