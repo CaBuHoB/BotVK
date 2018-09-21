@@ -10,11 +10,7 @@ def endOfRegistration(values):
     group = values.message.split()[1]
     user_id = values.item['from_id']
 
-    values.users.setdefault(user_id, {'name': name,
-                                      'surname': surname,
-                                      'group': int(group)})
-    print(values.users)
-    # setNameSelectedToGoogle(fullname, group)
+    setNameSelectedToGoogle(fullname, group)
     addPersonToDB(user_id, name, surname, int(group))
 
     message = 'Ты зарегистрирован как ' + fullname + '!) ' \

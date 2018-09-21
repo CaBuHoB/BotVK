@@ -4,7 +4,7 @@ from Bot.Basis.Functions.getButtons import get_default_buttons
 from Bot.Basis.Functions.MessageReplay import send_msg
 
 
-# TODO: Не обрабатывает файл, только текст
+# TODO: Не обрабатывает докуметы, только текст и изображения
 def infoSendMessage(values):
     from_id = values.item['from_id']
     groups = values.messageFromAdmin[from_id]['groups']
@@ -12,16 +12,18 @@ def infoSendMessage(values):
 
     attachments = []
     for att in message_for_groups['attachments']:
-        type = att['type']
-        attachments.append(type + '-' + str(att[type]['owner_id']) + '_' + str(att[type]['id']))
+        typeFile = att['type']
+        attachments.append(typeFile + str(att[typeFile]['owner_id']) + '_' +
+                           str(att[typeFile]['id']) + '_' + att[typeFile]['access_key'])
+
+    mes = 'Это тебе:)' if message_for_groups['text'] == '' else message_for_groups['text']
 
     for user in values.users:
         if str(values.users[user]['group']) in groups:
-            send_msg(values.vkApi, user, message_for_groups['text'],
+            send_msg(values.vkApi, user, mes,
                      attachment=attachments, keyboard=None)
 
     values.messageFromAdmin.pop(from_id)
-
     message = 'Сообщения разосланы группам: '
     for group in groups:
         message += (' ' + str(group))

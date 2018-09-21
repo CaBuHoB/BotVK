@@ -54,9 +54,8 @@ def get_answer(values):
         return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, get_choose_group_buttons()
 
     # Сообщение от пользователя отправлено в рассылку ?
-    if (from_id in values.messageFromAdmin) and (body[0] != 'infosendmessage') \
-            and (body[0] != 'backtodefaultkeyboard') \
-            and (body[0] != 'infobygroup'):
+    if (from_id in values.messageFromAdmin) and (
+            body == [] or (body[0] not in ['infosendmessage', 'backtodefaultkeyboard', 'infobygroup'])):
         values.messageFromAdmin[from_id]['message'] = values.item
         groups = values.messageFromAdmin[from_id]['groups']
         message = 'Сделать рассылку группам: ' + ' '.join(groups) + '?'
