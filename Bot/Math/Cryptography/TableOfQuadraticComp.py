@@ -97,8 +97,8 @@ def getFile(task, userId):
     a = int(task[1])
     mod = int(task[2])
 
-    if MillerRabin(mod):
-        return 'mod должен быть простым', False, None
+    if mod <= 2 or MillerRabin(mod):
+        return 'mod должен быть простым и больше двух )', False, None
 
     if gcd(a, mod) != 1:
         return 'a и mod должены быть взаимнопростыми', False, None
