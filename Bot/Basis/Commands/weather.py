@@ -5,8 +5,7 @@ from Bot.Basis import Configs
 
 
 def weather(values):
-    keyboard = get_weather_menu_buttons(values) if values is not None else None
-    return Configs.weatherForecast, None, keyboard
+    return Configs.weatherForecast, None, get_weather_menu_buttons(values)
 
 
 command = command_system.Command()
