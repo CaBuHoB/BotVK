@@ -2,6 +2,8 @@ import requests
 import json
 from bs4 import BeautifulSoup
 
+from Bot.Basis.YandexGoogle.GoogleTables import getTimetableFromGoogle
+
 
 def getUrlGroups(groupList):
     url = 'http://rasp.guap.ru'
@@ -31,65 +33,8 @@ def getDate():
     return {'dayWeek': dayWeek, 'isUpper': isUpper}
 
 
-def getTimetableDict(groupList):
-    timetableDict = {}
-    url = getUrlGroups(groupList)
-    for group in groupList:
-        r = requests.get(url[str(group)])
-        lessons = {}
-
-        soup = BeautifulSoup(r.text, features="lxml")
-        lessonList = soup.find('div', {'class': 'result'})
-        dayOfWeek = lessonList.find_all('h3')
-        for day in dayOfWeek:
-            nameOfDay = day.text
-            lessons[nameOfDay] = {}
-            nextSibling = day.nextSibling
-            while nextSibling is not None and nextSibling.name != 'h3':
-                lessonNumber = nextSibling.text
-                nextSibling = nextSibling.nextSibling
-
-                lessonName = []
-                while nextSibling is not None and nextSibling.name == 'div':
-                    name = nextSibling.next.text
-                    teacher = nextSibling.next.nextSibling.next.text
-                    if nextSibling.next.nextSibling.next.nextSibling is not None:
-                        lectureHall = nextSibling.next.nextSibling.next.nextSibling.text
-                    else:
-                        lectureHall = teacher
-                        teacher = None
-
-                    lessonName.append([name, teacher, lectureHall])
-                    nextSibling = nextSibling.nextSibling
-
-                lessons[nameOfDay][lessonNumber] = lessonName
-
-        for day in lessons:
-            for lessonNumber in lessons[day]:
-                lectures = []
-                for classUniversity in lessons[day][lessonNumber]:
-                    classUniversity[0] = classUniversity[0].split(' – ')
-                    if classUniversity[0][0][0] == '▲' or classUniversity[0][0][0] == '▼':
-                        isUpper = True if classUniversity[0][0][0] == '▲' else False
-                        classUniversity[0][0] = classUniversity[0][0][2:]
-                    else:
-                        isUpper = None
-                    if classUniversity[1] is not None:
-                        classUniversity[1] = classUniversity[1].split('-')[0].split(':')[1]
-                    classUniversity[2] = classUniversity[2].split(': ')[1].split('; ')
-
-                    lectures.append({'isUpper': isUpper,
-                                     'type': str(classUniversity[0][0]).strip(),
-                                     'name': str(classUniversity[0][1]).strip(),
-                                     'lecture hall': str(classUniversity[0][2]).strip(),
-                                     'teacher': str(classUniversity[1]).strip(),
-                                     'group': classUniversity[2]})
-
-                lessons[day][lessonNumber] = lectures
-
-        timetableDict[str(group)] = lessons
-
-    return timetableDict
+def getTimetableDict():
+    return getTimetableFromGoogle()
 
 
 def getTimetableByDay(timetableDict, group, day, isUpper):

@@ -13,7 +13,7 @@ from Bot.Basis.Functions.workWithDataBase import getDictWithMessageFromAdmin, de
 def infoSendMessage(values):
     from_id = values.item['from_id']
 
-    messageFromAdmin = ast.literal_eval(getDictWithMessageFromAdmin(values.item['from_id']))
+    messageFromAdmin = ast.literal_eval(getDictWithMessageFromAdmin(from_id))
     groups = messageFromAdmin[from_id]['groups']
     message_for_groups = messageFromAdmin[from_id]['message']
 
@@ -23,7 +23,12 @@ def infoSendMessage(values):
         attachments.append(typeFile + str(att[typeFile]['owner_id']) + '_' +
                            str(att[typeFile]['id']) + '_' + att[typeFile]['access_key'])
 
-    mes = 'Это тебе:)' if message_for_groups['text'] == '' else message_for_groups['text']
+    mes = message_for_groups['text']
+    if (values.users[from_id]['surname'] != 'Савинов') and (values.users[from_id]['surname'] != 'Борисова'):
+        mes += '\n\n(' + values.users[from_id]['name'] + ' ' + values.users[from_id]['surname'] + ')'
+
+    if mes == '':
+        mes = 'Рассылка от администратора )'
 
     for user in values.users:
         if str(values.users[user]['group']) in groups:

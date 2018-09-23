@@ -54,3 +54,46 @@ def setNameUnSelectedToGoogle(name, group):
 
     cell = worksheet.find(name)
     worksheet.update_cell(cell.row, cell.col + 1, '0')
+
+
+def getTimetableFromGoogle():
+    timetableDict = {}
+
+    account = getGoogleAccess()
+    file = account.open("Timetable")
+
+    for group in range(5621, 5624):
+        worksheet = file.worksheet(str(group))
+        daysOfWeek = worksheet.row_values(1)
+        timetableForGroup = {}
+
+        for nameOfDay in daysOfWeek:
+            timetableForGroup[nameOfDay] = {}
+            lessons_list = worksheet.col_values(worksheet.find(nameOfDay).col)[1:]
+
+            for lesson in lessons_list:
+                timename, isUpper, type, name, hall, teacher, groups = lesson.split('\n')
+                
+                groups = groups.split()
+                if isUpper == 'true':
+                    isUpper = True
+                elif isUpper == 'false':
+                    isUpper = False
+                else:
+                    isUpper = None
+
+                if timename not in timetableForGroup[nameOfDay]:
+                    timetableForGroup[nameOfDay][timename] = []
+
+                timetableForGroup[nameOfDay][timename].append({
+                    "isUpper": isUpper,
+                    "type": type,
+                    "name": name,
+                    "lecture hall": hall,
+                    "teacher": teacher,
+                    "group": groups
+                })
+
+        timetableDict[str(group)] = timetableForGroup
+
+    return timetableDict

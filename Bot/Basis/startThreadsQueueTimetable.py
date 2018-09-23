@@ -17,7 +17,8 @@ api = vk.API(session, v=5.85)
 #                       attachment=None,
 #                       keyboard=get_default_buttons(Namespace(users=users), users_id=user))
 
-api.messages.send(user_id=38081883, message='Бот обновился:(')
+api.messages.send(user_id=38081883, message='Бот обновился (:')
+api.messages.send(user_id=388195126, message='Бот обновился :)')
 
 notifications_thread = TimetableNotifications.TimetableNotifications(api)
 notifications_thread.start()
