@@ -1,5 +1,6 @@
 from Bot.Basis import command_system
 from Bot.Basis.Functions.getButtons import get_default_buttons
+from Bot.Basis.Functions.workWithDataBase import deleteDictWithMessageFromAdmin
 
 
 def backToDefaultKeyboard(values):
@@ -7,8 +8,7 @@ def backToDefaultKeyboard(values):
     message = 'Главное меню'
     keyboard = get_default_buttons(values)
 
-    if user_id in values.messageFromAdmin:
-        values.messageFromAdmin.pop(user_id)
+    deleteDictWithMessageFromAdmin(user_id)
 
     return message, None, keyboard
 

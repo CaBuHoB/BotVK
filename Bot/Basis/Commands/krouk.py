@@ -8,10 +8,13 @@ from Bot.Math.Cryptography import TableOfQuadraticComp as tableKr
 
 def krouk(values):
     message = 'Держи таблицу!\n' + values.item['text']
-    filepath = tableKr.getFile(values.item['text'], str(values.item['from_id']))
-    file = upload_file(filepath, values.item['from_id'], values.item['text'] + '.pdf', values.vkApi)
-    os.remove(filepath)
-    return message, file, None
+    filepathOrMessage, check, _ = tableKr.getFile(values.item['text'], str(values.item['from_id']))
+    if check:
+        file = upload_file(filepathOrMessage, values.item['from_id'], values.item['text'] + '.pdf', values.vkApi)
+        os.remove(filepathOrMessage)
+        return message, file, None
+    message = filepathOrMessage
+    return message, None, None
 
 
 command = command_system.Command()

@@ -6,13 +6,14 @@ from threading import Thread
 import time
 
 from Bot.Basis.Commands.weather import weather
+from Bot.Basis.Functions.getWeatherForecast import getWeather
 from Bot.Basis.Functions.workWithDataBase import getSubscribedUsersWeather, getAllUsers
 from Bot.Basis.Functions.getButtons import get_default_buttons
 
 
 def send_day_weather(vk):
     users = getAllUsers()
-    message = 'Доброе утро) Рассылка погоды :)\n\n' + weather(None)[0]
+    message = 'Доброе утро) Рассылка погоды :)\n\n' + getWeather()
     for user in getSubscribedUsersWeather():
         vk.messages.send(user_id=user, message=message, attachment=None,
                          keyboard=get_default_buttons(Namespace(users=users), users_id=user))

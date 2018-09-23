@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import random
+
+from reportlab import xrange
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
+from fractions import gcd
 
 from Bot.Math.Cryptography import LegendreSymbol
 
@@ -58,15 +62,47 @@ def createPDFFile(data, userId):
     return doc.filename
 
 
+def toBinary(n):
+    r = []
+    while (n > 0):
+        r.append(n % 2)
+        n = n / 2
+        return r
+
+
+def MillerRabin(n, s=50):
+    for j in xrange(1, s + 1):
+        a = random.randint(1, n - 1)
+        b = toBinary(n - 1)
+        d = 1
+        for i in xrange(len(b) - 1, -1, -1):
+            x = d
+            d = (d * d) % n
+            if d == 1 and x != 1 and x != n - 1:
+                return True  # Составное
+            if b[i] == 1:
+                d = (d * a) % n
+                if d != 1:
+                    return True  # Составное
+                return False  # Простое
+
+
 def getFile(task, userId):
     task = task.split(" ")
     if len(task) != 3:
-        return 'Чет не так с данными, введи по образцу', None, None
+        return 'Чет не так с данными, введи по образцу', False, None
 
     data = []
 
     a = int(task[1])
     mod = int(task[2])
+
+    if mod <= 2 or MillerRabin(mod):
+        return 'mod должен быть простым и больше двух )', False, None
+
+    if gcd(a, mod) != 1:
+        return 'a и mod должены быть взаимнопростыми', False, None
+
     N = 0
     for i in range(3, mod - 1):
         if LegendreSymbol.calculateLegendre(i, mod) == -1:
@@ -103,4 +139,4 @@ def getFile(task, userId):
     # print(x)
     # print(data)
 
-    return createPDFFile(data, userId)
+    return createPDFFile(data, userId), True, None

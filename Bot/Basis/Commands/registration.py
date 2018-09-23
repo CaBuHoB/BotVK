@@ -1,4 +1,4 @@
-from Bot.Basis import command_system, Configs
+from Bot.Basis import command_system
 from Bot.Basis.Functions.workWithDataBase import addPersonToDB
 from Bot.Basis.Functions.getButtons import get_default_buttons
 from Bot.Basis.YandexGoogle.GoogleTables import setNameSelectedToGoogle
@@ -10,9 +10,6 @@ def endOfRegistration(values):
     group = values.message.split()[1]
     user_id = values.item['from_id']
 
-    Configs.users.setdefault(user_id, {'name': name,
-                                      'surname': surname,
-                                      'group': int(group)})
     setNameSelectedToGoogle(fullname, group)
     addPersonToDB(user_id, name, surname, int(group))
 

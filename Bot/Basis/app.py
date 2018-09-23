@@ -6,12 +6,12 @@ from flask import Flask, request, json
 import os
 from Bot.Basis.Functions import MessageReplay
 from Bot.Basis.Functions.getSchedule import getDate
-from Bot.Basis.Configs import confirmation_token, timetableDict, api, users
+from Bot.Basis.Configs import confirmation_token, timetableDict, api
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
+from Bot.Basis.Functions.workWithDataBase import getAllUsers
 
 app = Flask(__name__)
-messageFromAdmin = {}
 
 
 @app.route('/')
@@ -40,9 +40,10 @@ def processing():
     if data['type'] == 'message_reply':
         return 'ok'
     elif data['type'] == 'message_new':
+        users = getAllUsers()
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
-                           timetableDict=timetableDict, messageFromAdmin=messageFromAdmin, isUpper=Configs.isUpper)
+                           timetableDict=timetableDict, isUpper=Configs.isUpper)
         mr = MessageReplay.MessageReplay(values)
         mr.run()
         return 'ok'
