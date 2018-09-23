@@ -3,6 +3,7 @@ from argparse import Namespace
 
 from flask import Flask, request, json
 
+import os
 from Bot.Basis.Functions import MessageReplay
 from Bot.Basis.Functions.getSchedule import getDate
 from Bot.Basis.Configs import confirmation_token, timetableDict, api, users
