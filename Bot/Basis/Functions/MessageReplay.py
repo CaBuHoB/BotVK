@@ -60,15 +60,17 @@ def get_answer(values):
         return 'Тебе нужно зарегистрироваться! Выбери свою группу:', None, get_choose_group_buttons()
 
     # Сообщение от пользователя отправлено в рассылку ?
-    messageFromAdmin = ast.literal_eval(getDictWithMessageFromAdmin(from_id))
-    if (from_id in messageFromAdmin) and (
-            body == [] or (body[0] not in ['infosendmessage', 'backtodefaultkeyboard', 'infobygroup'])):
+    dictWithMessageFromAdmin = getDictWithMessageFromAdmin(from_id)
+    if dictWithMessageFromAdmin is not None:
+        messageFromAdmin = ast.literal_eval(dictWithMessageFromAdmin)
+        if (from_id in messageFromAdmin) and (
+                body == [] or (body[0] not in ['infosendmessage', 'backtodefaultkeyboard', 'infobygroup'])):
 
-        messageFromAdmin[from_id]['message'] = values.item
-        groups = messageFromAdmin[from_id]['groups']
-        setDictWithMessageFromAdmin(from_id, str(messageFromAdmin))
-        message = 'Сделать рассылку группам: ' + ' '.join(groups) + '?'
-        return message, None, get_asking_if_send_message_buttons()
+            messageFromAdmin[from_id]['message'] = values.item
+            groups = messageFromAdmin[from_id]['groups']
+            setDictWithMessageFromAdmin(from_id, str(messageFromAdmin))
+            message = 'Сделать рассылку группам: ' + ' '.join(groups) + '?'
+            return message, None, get_asking_if_send_message_buttons()
 
     # Обработка аудио/вложений
     if len(values.item['attachments']) > 0:

@@ -28,7 +28,7 @@ def getDate():
     soup = BeautifulSoup(r.text, features="lxml")
     date = soup.find_all('p')[0].text.split(' ')
     dayWeek = date[2].replace(',', '')
-    isUpper = False if date[9] == '(2)' else True
+    isUpper = False if date[7] == 'нижняя' else True
 
     return {'dayWeek': dayWeek, 'isUpper': isUpper}
 

@@ -8,7 +8,10 @@ from Bot.Basis.Functions.workWithDataBase import getDictWithMessageFromAdmin, se
 
 def infoByGroup(values):
     groups = values.item['text'].split(' ')
-    messageFromAdmin = ast.literal_eval(getDictWithMessageFromAdmin(values.item['from_id']))
+    dictWithMessageFromAdmin = getDictWithMessageFromAdmin(values.item['from_id'])
+    messageFromAdmin = {}
+    if dictWithMessageFromAdmin is not None:
+        messageFromAdmin = ast.literal_eval(dictWithMessageFromAdmin)
     messageFromAdmin[values.item['from_id']] = {'message': None, 'groups': groups}
     setDictWithMessageFromAdmin(values.item['from_id'], str(messageFromAdmin))
     message = 'Жду сообщения для групп: ' + ' '.join(groups)
