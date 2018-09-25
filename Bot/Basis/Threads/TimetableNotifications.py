@@ -20,7 +20,7 @@ def send_day_timetable(vk):
 
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
     day_number = (dt.datetime.weekday(dt.datetime.now()) + 1) % 7
-    
+
     if day_number == 0:
         is_upper = not is_upper
 
