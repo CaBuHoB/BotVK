@@ -7,7 +7,7 @@ from Bot.Basis.Functions.workWithDataBase import getDictWithMessageFromAdmin, se
 
 
 def infoByGroup(values):
-    groups = values.item['text'].split(' ')
+    groups = values.item['text'].split()
     dictWithMessageFromAdmin = getDictWithMessageFromAdmin(values.item['from_id'])
     messageFromAdmin = {}
     if dictWithMessageFromAdmin is not None:
