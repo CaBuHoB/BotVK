@@ -41,6 +41,10 @@ def load_modules():
 
 
 def get_answer(values):
+    if len(values.item['fwd_messages']) >= 1:
+        return 'Я не знаю, для чего мне нужны пересланные сообщения, поэтому пока не умею ' \
+               'их обрабатывать) Если хочешь научить меня чему-нибудь полезному, напиши админам )', None, None
+
     message = values.item['text']
     if 'payload' in values.item:
         message = values.item['payload'].replace("\"", "")

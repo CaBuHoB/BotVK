@@ -1,26 +1,25 @@
 from Bot.Basis import command_system
 from Bot.Basis.Functions.workWithDataBase import setToQueue, getQueueList
-from Bot.Basis.Functions.getButtons import get_default_buttons
+from Bot.Basis.Functions.getButtons import get_queue_actions_buttons
 
 
 def addToQueue(values):
-    queue = ' '.join(values.message.split()[1:])
-    user_id = int(values.item['from_id'])
+    user_id = values.item['from_id']
     name = values.users[user_id]['name'] + ' ' + values.users[user_id]['surname']
-    queue = '\"' + queue + '\"'
+    queue = ' '.join(values.message.split()[1:])
+    queue_name = '\"' + queue + '\"'
 
-    setToQueue(queue, user_id, name)
+    setToQueue(queue_name, user_id, name)
 
-    message = 'Готово!\nОчередь на данный момент:'
-    for name in getQueueList(queue):
+    message = 'Готово!\n' \
+              'Очередь на данный момент:\n'
+    for name in getQueueList(queue_name):
         message += '\n'
         if name == (values.users[user_id]['name'] + ' ' + values.users[user_id]['surname']):
             message += '> '
         message += name
 
-    keyboard = get_default_buttons(values)
-
-    return message, None, keyboard
+    return message, None, get_queue_actions_buttons(queue, True)
 
 
 command = command_system.Command()
