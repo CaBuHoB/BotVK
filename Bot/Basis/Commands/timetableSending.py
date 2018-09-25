@@ -1,6 +1,6 @@
 from Bot.Basis import command_system
 from Bot.Basis.Functions.workWithDataBase import subscribePerson, unSubscribePerson
-from Bot.Basis.Functions.getButtons import get_timetable_menu_buttons
+from Bot.Basis.Functions.getButtons import get_sub_buttons
 
 
 def timetableSending(values):
@@ -14,7 +14,7 @@ def timetableSending(values):
         unSubscribePerson(values.item['from_id'])
         message = 'Ты отписался от рассылки расписания'
 
-    return message, None, get_timetable_menu_buttons(values)
+    return message, None, get_sub_buttons(values)
 
 
 command = command_system.Command()
