@@ -23,6 +23,7 @@ def hello_world():
         # with open(path + '/Threads/timetable.json', 'r') as f:
         #     Configs.timetableDict.update(json.load(f))
         # Configs.isUpper = getDate()['isUpper']
+        
         Configs.timetableDict.update(getTimetableDict())
         Configs.isUpper = True if (datetime.now().isocalendar()[1] % 2 == 0) else False
 
