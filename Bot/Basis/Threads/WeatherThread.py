@@ -27,7 +27,7 @@ class WeatherThread(Thread):
     def run(self):
         while True:
             now = dt.datetime.now()
-            then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 9, 0)
+            then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 7, 0)
             difference = (then - now).total_seconds()
 
             if difference < 0:  # если в этом дне время рассылки прошло
