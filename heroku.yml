@@ -4,3 +4,6 @@ build:
     - texlive-fonts-recommended
     - texlive-fonts-extra
     - texlive-latex-extr
+run:
+  web: gunicorn app:app --chdir Bot/Basis/
+  worker: python Bot/Basis/startThreadsQueueTimetable.py
