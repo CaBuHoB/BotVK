@@ -14,13 +14,13 @@ def krouk(values):
 
     try:
         message = 'Держи решение!\n' + values.item['text']
-        message, filepath = createFileExtendedEuclideanAlgorithm(values.item['text'].split(' ')[1:],
+        mes, filepath = createFileExtendedEuclideanAlgorithm(values.item['text'].split(' ')[1:],
                                                                  values.item['from_id'])
         if filepath is not None:
             file = upload_file(filepath, values.item['from_id'], values.item['text'] + '.pdf', values.vkApi)
             os.remove(filepath)
             return message, file, None
-        message = message
+        message = mes
     finally:
         lock.release()
 
