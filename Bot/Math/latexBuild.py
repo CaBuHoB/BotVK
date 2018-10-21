@@ -10,18 +10,13 @@ def createPDF(document, filePath, fileName):
 
 def getPreamble():
     return (r"\documentclass{article}"
-            r"\usepackage[12pt]{extsizes}"
             r"\usepackage[left=20mm, top=20mm, right=15mm, bottom=20mm, nohead, footskip=10mm]{geometry}"
-            r"\usepackage[english,russian]{babel}"
             r"\usepackage{amsmath}"
             r"\usepackage{amsfonts}"
             r"\usepackage{amssymb}"
             r"\usepackage{makeidx}"
             r"\usepackage{graphicx}"
             r"\usepackage{multicol}"
-            r"\usepackage{float}"
-            r"\usepackage{listings}"
-            r"\usepackage{xcolor}"
             r""
             r"\begin{document}")
 
