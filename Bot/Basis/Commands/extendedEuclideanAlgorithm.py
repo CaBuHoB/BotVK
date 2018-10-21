@@ -13,7 +13,7 @@ def krouk(values):
     lock.acquire()
 
     try:
-        message = 'Держи решение!\n' + values.item['text']
+        message = 'Держи решение!\n'
         mes, filepath = createFileExtendedEuclideanAlgorithm(values.item['text'].split(' ')[1:],
                                                                  values.item['from_id'])
         if filepath is not None:

@@ -12,7 +12,7 @@ def krouk(values):
     lock.acquire()
 
     try:
-        message = 'Держи таблицу!\n' + values.item['text']
+        message = 'Держи таблицу!\n'
         filepathOrMessage, check, _ = tableKr.getFile(values.item['text'], str(values.item['from_id']))
         if check:
             file = upload_file(filepathOrMessage, values.item['from_id'], values.item['text'] + '.pdf', values.vkApi)
