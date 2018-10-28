@@ -8,10 +8,8 @@ from Bot.Basis.Functions.getSchedule import getTimetableDict
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
-from Bot.Basis.Threads import startThreadsQueueTimetable
 
 app = Flask(__name__)
-startThreadsQueueTimetable.start(Configs.timetableDict)
 
 
 @app.route('/')
@@ -42,7 +40,8 @@ def processing():
         users = getAllUsers()
         Configs.api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=Configs.api, item=data['object'], users=users,
-                           timetableDict=Configs.timetableDict, isUpper=Configs.isUpper, weather=Configs.weatherForecast)
+                           timetableDict=Configs.timetableDict, isUpper=Configs.isUpper,
+                           weather=Configs.weatherForecast)
         mr = MessageReplay.MessageReplay(values)
         mr.run()
         return 'ok'

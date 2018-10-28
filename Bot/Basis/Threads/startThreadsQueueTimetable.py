@@ -3,6 +3,7 @@ import time
 
 import vk
 
+from Bot.Basis import Configs
 from Bot.Basis.Threads import TimetableNotifications, QueueThread, WeatherThread
 
 
@@ -26,3 +27,6 @@ def start(timetableDict):
     api.messages.send(user_id=88195126, message='Бот обновился :)')
 
     time.sleep(1)
+
+
+start(Configs.timetableDict)
