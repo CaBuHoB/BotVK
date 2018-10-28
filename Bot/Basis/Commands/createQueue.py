@@ -2,6 +2,7 @@ from Bot.Basis import command_system
 from Bot.Basis.Functions.getButtons import get_dates_for_queue_creation_buttons
 
 
+# noinspection PyUnusedLocal
 def createQueue(values):
     message = 'Выбери дату (можно выбрать дату на пять дней вперед, воскресенья не учитываются)'
     keyboard = get_dates_for_queue_creation_buttons()

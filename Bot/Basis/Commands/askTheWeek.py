@@ -2,6 +2,7 @@ from Bot.Basis import command_system
 from Bot.Basis.Functions.getButtons import get_asking_week_buttons
 
 
+# noinspection PyUnusedLocal
 def askTheWeek(values):
     return 'Расписание какой недели прислать?', None, get_asking_week_buttons()
 

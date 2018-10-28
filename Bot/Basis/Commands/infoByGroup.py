@@ -15,7 +15,7 @@ def infoByGroup(values):
     messageFromAdmin[values.item['from_id']] = {'message': None, 'groups': groups}
     setDictWithMessageFromAdmin(values.item['from_id'], str(messageFromAdmin))
     message = 'Жду сообщения для групп: ' + ' '.join(groups)
-    # message += '\n\nПодпишись в конце сообщения, если хочешь, чтоб было понятно, от кого оно :)'
+
     return message, None, get_message_cancel_button()
 
 

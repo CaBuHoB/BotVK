@@ -3,6 +3,7 @@ from Bot.Basis import command_system
 from Bot.Basis.Functions.getButtons import get_groups_for_message_buttons
 
 
+# noinspection PyUnusedLocal
 def infoMessage(values):
     message = 'Выбери, для каких групп делать рассылку'
     return message, None, get_groups_for_message_buttons()

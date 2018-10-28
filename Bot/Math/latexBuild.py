@@ -26,11 +26,11 @@ def getEnd():
 
 
 def getCases(matrix, variable=None):
-    str = r"\["
+    cases = r"\["
     if variable is not None:
-        str += variable + r"="
-    str = str + r"\begin{cases}"
+        cases += variable + r"="
+    cases = cases + r"\begin{cases}"
     for strFromMatrix in matrix:
-        str = str + strFromMatrix + r" \\"
-    str = str + r"\end{cases}"
-    return str + r"\]"
+        cases = cases + strFromMatrix + r" \\"
+    cases = cases + r"\end{cases}"
+    return cases + r"\]"

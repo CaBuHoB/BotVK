@@ -4,7 +4,6 @@ from Bot.Basis.Functions.getButtons import get_sub_buttons
 
 
 def subscribes(values):
-
     return 'Меню подписок', None, get_sub_buttons(values)
 
 

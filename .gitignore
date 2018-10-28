@@ -51,7 +51,7 @@ celerybeat-schedule
 .env
 .venv
 env/
-venv
+venv/
 ENV/
 env.bak/
 venv.bak/
@@ -60,7 +60,6 @@ venv.bak/
 .ropeproject
 /site
 .mypy_cache/
-.gitignore
 .idea/
 Bot/Basis/Commands/__pycache__/
 Bot/Basis/Functions/__pycache__/
@@ -68,4 +67,4 @@ Bot/Basis/Threads/__pycache__/
 Bot/Basis/YandexGoogle/__pycache__/
 Bot/Basis/__pycache__/
 Bot/Math/Cryptography/__pycache__/
-venv/
+Bot/Math/__pycache__/

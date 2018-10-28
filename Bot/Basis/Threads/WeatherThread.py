@@ -31,7 +31,7 @@ class WeatherThread(Thread):
             difference = (then - now).total_seconds()
 
             if difference < 0:  # если в этом дне время рассылки прошло
-                                  # заснуть до 0:01, начать цикл заново
+                # заснуть до 0:01, начать цикл заново
                 now += dt.timedelta(1)
                 then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 0, 1)
                 now -= dt.timedelta(1)

@@ -10,7 +10,7 @@ def factorize(n):
 
     p = 2
     while True:
-        while (n % p == 0 and n > 0):
+        while n % p == 0 and n > 0:
             factors.append(p)
             n = n / p
         p += 1
