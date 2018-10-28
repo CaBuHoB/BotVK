@@ -17,8 +17,9 @@ confirmation_token = 'b3451e9c'
 isUpper = getDate()['isUpper']
 weatherForecast = getWeather()
 path = os.path.split(os.path.abspath(__file__))[0]
-with open(path + '/Threads/timetable.json', 'r') as f:
-    timetableDict = json.load(f)
+# with open(path + '/Threads/timetable.json', 'r') as f:
+#     timetableDict = json.load(f)
+timetableDict = {}
 
 session = vk.Session(token)
 api = vk.API(session, v=5.85)
