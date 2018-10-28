@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import random
+from random import randrange
 
 from reportlab import xrange
 from reportlab.lib import colors
@@ -70,21 +70,34 @@ def toBinary(n):
     return r
 
 
-def MillerRabin(n, s=50):
-    for j in xrange(1, s + 1):
-        a = random.randint(1, n - 1)
-        b = toBinary(n - 1)
-        d = 1
-        for i in xrange(len(b) - 1, -1, -1):
-            x = d
-            d = (d * d) % n
-            if d == 1 and x != 1 and x != n - 1:
-                return True  # Составное
-            if b[i] == 1:
-                d = (d * a) % n
-                if d != 1:
-                    return True  # Составное
-                return False  # Простое
+def MillerRabin(n, k=10):
+    if n == 2:
+        return True
+    if not n & 1:
+        return False
+
+    def check(a, s, d, n):
+        x = pow(a, d, n)
+        if x == 1:
+            return True
+        for i in xrange(s - 1):
+            if x == n - 1:
+                return True
+            x = pow(x, 2, n)
+        return x == n - 1
+
+    s = 0
+    d = n - 1
+
+    while d % 2 == 0:
+        d >>= 1
+        s += 1
+
+    for i in xrange(k):
+        a = randrange(2, n - 1)
+        if not check(a, s, d, n):
+            return False
+    return True
 
 
 def getFile(task, userId):
@@ -100,7 +113,7 @@ def getFile(task, userId):
                'издеваются. Я не смогу прислать решение такого сравнения (', False, None
     a = int(task[1]) % mod
 
-    if mod <= 2 or MillerRabin(mod):
+    if mod <= 2 or not MillerRabin(mod):
         return 'mod должен быть простым и больше двух )', False, None
 
     if gcd(a, mod) != 1:
