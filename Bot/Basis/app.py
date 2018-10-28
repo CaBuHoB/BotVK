@@ -11,7 +11,7 @@ from Bot.Basis.Functions.workWithDataBase import getAllUsers
 from Bot.Basis.Threads import startThreadsQueueTimetable
 
 app = Flask(__name__)
-startThreadsQueueTimetable.start(Configs.getTimetableDict())
+startThreadsQueueTimetable.start(Configs.timetableDict)
 
 
 @app.route('/')
