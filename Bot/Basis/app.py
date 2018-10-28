@@ -42,7 +42,7 @@ def processing():
         users = getAllUsers()
         api.messages.markAsRead(peer_id=data['object']['peer_id'])
         values = Namespace(vkApi=api, item=data['object'], users=users,
-                           timetableDict=timetableDict, isUpper=Configs.isUpper)
+                           timetableDict=timetableDict, isUpper=Configs.isUpper, weather=Configs.weatherForecast)
         mr = MessageReplay.MessageReplay(values)
         mr.run()
         return 'ok'

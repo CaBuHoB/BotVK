@@ -76,6 +76,7 @@ def MillerRabin(n, k=10):
     if not n & 1:
         return False
 
+    # noinspection PyShadowingNames
     def check(a, s, d, n):
         x = pow(a, d, n)
         if x == 1:
@@ -134,7 +135,6 @@ def getFile(task, userId):
 
     data.append(['i', 'b', 'c', 'd', 'j', 'N2'])
 
-    # print('i\tb\tc\td\tj\tN2')
     for i in range(k - 1):
         b = a1 * N2 % mod
         c = (((a2 * b) % mod) * b) % mod
@@ -147,11 +147,8 @@ def getFile(task, userId):
             j = 1
         N2 = N2 * pow(N1, pow(2, i, mod) * j, mod) % mod
         data.append([str(i), str(b), str(c), str(d), str(j), str(N2)])
-        # print(str(i) + '\t' + str(b) + '\t' + str(c) + '\t' + str(d) + '\t' + str(j) + '\t' + str(N2))
 
     x = a1 * N2 % mod
     data.append(['x = +- ' + str(x) + ' (mod ' + str(mod) + ')'])
-    # print(x)
-    # print(data)
 
     return createPDFFile(data, userId), True, None
