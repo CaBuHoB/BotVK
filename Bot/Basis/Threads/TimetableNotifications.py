@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime as dt
-import json
-import os
 from argparse import Namespace
 from threading import Thread
 
@@ -9,13 +7,12 @@ import time
 
 from Bot.Basis.Functions.workWithDataBase import getSubscribedUsers, getAllUsers
 from Bot.Basis.Functions.getButtons import get_default_buttons
-from Bot.Basis.Functions.getSchedule import getDate, getTimetableByDay, getTimetableDict
+from Bot.Basis.Functions.getSchedule import getTimetableByDay, getTimetableDict
 
 
-def send_day_timetable(vk):
+def send_day_timetable(vk, timetable_dict):
     users = getAllUsers()
 
-    timetable_dict = getTimetableDict()
     is_upper = True if (dt.datetime.now().isocalendar()[1] % 2 == 0) else False
 
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
@@ -34,10 +31,9 @@ def send_day_timetable(vk):
                          keyboard=get_default_buttons(Namespace(users=users), users_id=user))
 
 
-def send_subject_notification(vk, subject):
+def send_subject_notification(vk, subject, timetable_dict):
     users = getAllUsers()
 
-    timetable_dict = getTimetableDict()
     is_upper = True if (dt.datetime.now().isocalendar()[1] % 2 == 0) else False
 
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
@@ -63,7 +59,7 @@ def send_subject_notification(vk, subject):
 
 class TimetableNotifications(Thread):
 
-    def __init__(self, vk):
+    def __init__(self, vk, timetableDict):
         Thread.__init__(self)
         self.vk = vk
         self.timeList = {'1 пара (9:00-10:30)': [8, 45],
@@ -72,6 +68,7 @@ class TimetableNotifications(Thread):
                          '4 пара (14:10-15:40)': [13, 55],
                          '5 пара (15:50-17:20)': [15, 35],
                          '6 пара (17:30-19:00)': [17, 15]}
+        self.timetableDict = timetableDict
 
     def run(self):
         while True:
@@ -86,7 +83,7 @@ class TimetableNotifications(Thread):
                 else:
                     if difference >= 0:  # если это время еще не прошло и нужно ждать
                         time.sleep(difference)  # Сон до следующего предмета
-                    send_subject_notification(self.vk, sub)
+                    send_subject_notification(self.vk, sub, self.timetableDict)
 
             # Вечерняя рассылка
             now = dt.datetime.now()
@@ -94,12 +91,13 @@ class TimetableNotifications(Thread):
             difference = (then - now).total_seconds()
 
             if difference < 0:  # если в этом дне время рассылки прошло
-                                  # заснуть до 0:01, начать цикл заново
+                # заснуть до 0:01, начать цикл заново
                 now += dt.timedelta(1)
                 then = dt.datetime(now.timetuple()[0], now.timetuple()[1], now.timetuple()[2], 0, 1)
                 now -= dt.timedelta(1)
                 time.sleep((then - now).total_seconds())  # Сон до 00:01
+                self.timetableDict = getTimetableDict()
             else:
                 if difference >= 0:
                     time.sleep(difference)
-                send_day_timetable(self.vk)
+                send_day_timetable(self.vk, self.timetableDict)

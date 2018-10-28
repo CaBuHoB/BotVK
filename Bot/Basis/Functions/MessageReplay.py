@@ -93,7 +93,7 @@ def get_answer(values):
     return message, attachment, key
 
 
-class MessageReplay():
+class MessageReplay:
 
     def __init__(self, values):
         self.values = values

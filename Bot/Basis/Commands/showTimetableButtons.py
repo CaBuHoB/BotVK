@@ -1,5 +1,4 @@
 from Bot.Basis import command_system
-from Bot.Basis.Functions.workWithDataBase import getSubscribedUsers
 from Bot.Basis.Functions.getButtons import get_timetable_menu_buttons
 
 

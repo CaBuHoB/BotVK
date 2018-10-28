@@ -36,22 +36,20 @@ def get_default_buttons(values, users_id=None):
 
     surname = values.users[user_id]['surname']
     if (surname == 'Савинов') or (surname == 'Ялышев') or \
-        (surname == 'Патерикина') or (surname == 'Борисова') or \
-         (surname == 'Мусикян') or (surname == 'Наумов'):
+            (surname == 'Патерикина') or (surname == 'Борисова') or \
+            (surname == 'Мусикян') or (surname == 'Наумов'):
         queue_buttons.append(get_button('Создать', 'createQueue', Color.WHITE))
         queue_buttons.append(get_button('Удалить', 'deleteQueue', Color.WHITE))
 
         info_message_button = [get_button('Рассылка сообщений', 'infoMessage', Color.WHITE)]
 
-    buttons_list = []
-    buttons_list.append([
+    buttons_list = [[
         get_button('Лабы и материалы', 'materialsMenu', Color.WHITE),
-        get_button('Алгоритмы', 'kroukMenu', Color.WHITE)
-    ])
-    buttons_list.append(queue_buttons)
-    buttons_list.append([get_button('Расписание', 'showTimetableButtons', Color.WHITE),
-                         get_button('Погода', 'погода', Color.WHITE),
-                         get_button('Подписки', 'subscribes', Color.WHITE)])
+        get_button('Алгоритмы', 'kroukMenu', Color.WHITE)],
+        queue_buttons,
+        [get_button('Расписание', 'showTimetableButtons', Color.WHITE),
+         get_button('Погода', 'погода', Color.WHITE),
+         get_button('Подписки', 'subscribes', Color.WHITE)]]
     buttons_list.append(info_message_button) if info_message_button is not None else None
     buttons_list.append([get_button('?', 'help', Color.GREEN)])
 
@@ -151,7 +149,7 @@ def queue_removing_buttons(queue):
     }, ensure_ascii=False)
 
 
-def get_queue_names_buttons(group):
+def get_queue_names_buttons():
     queue_list = []
     for queue in getQueueNames():
         now = datetime.now()
@@ -338,7 +336,7 @@ def get_groups_for_queue_creation_buttons(date, values):
     }, ensure_ascii=False)
 
 
-def get_subjects_for_queue_creation_buttons(values, tail_of_queue_name):
+def get_subjects_for_queue_creation_buttons(tail_of_queue_name):
     buttons_list = []
     two_buttons_pack = []
     for sub in getSubjects():

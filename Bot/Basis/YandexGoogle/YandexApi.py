@@ -1,4 +1,5 @@
 import requests
+import os
 import xml.etree.ElementTree as XmlElementTree
 
 headers = {
@@ -6,8 +7,8 @@ headers = {
 }
 
 params = (
-    ('uuid', '01ae13cb744628b88fb536d496daa1e6'),
-    ('key', 'cd9555c4-e103-4ae6-af8a-6537785e762f'),
+    ('uuid', os.environ['YANDEX_UUID']),
+    ('key', os.environ['YANDEX_UUID']),
     ('topic', 'queries'),
 )
 

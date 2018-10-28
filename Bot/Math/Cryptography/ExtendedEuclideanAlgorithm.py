@@ -33,7 +33,7 @@ def createFileExtendedEuclideanAlgorithm(task, userID):
     latex = latex + getCases(["r_{0}=" + str(r[1]), "x_{0}=" + str(x[1]), "y_{0}=" + str(y[1]), "k_{0}=" + str(k[1])])
 
     i = 2
-    while (True):
+    while True:
         r.append(r[i - 2] - (r[i - 1] * k[i - 1]))
         x.append(x[i - 2] - (x[i - 1] * k[i - 1]))
         y.append(y[i - 2] - (y[i - 1] * k[i - 1]))

@@ -8,6 +8,7 @@ from Bot.Math.Cryptography import TableOfQuadraticComp as tableKr
 
 lock = Lock()
 
+
 def krouk(values):
     lock.acquire()
 

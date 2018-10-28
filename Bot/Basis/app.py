@@ -1,11 +1,10 @@
-import os
 from datetime import datetime
 from argparse import Namespace
 
 from flask import Flask, request, json
 
 from Bot.Basis.Functions import MessageReplay
-from Bot.Basis.Functions.getSchedule import getDate, getTimetableDict
+from Bot.Basis.Functions.getSchedule import getTimetableDict
 from Bot.Basis.Configs import confirmation_token, timetableDict, api
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
@@ -18,12 +17,6 @@ app = Flask(__name__)
 def hello_world():
     now = datetime.now().timetuple()
     if now[3] == 0 and now[4] == 1:
-
-        # path = os.path.split(os.path.abspath(__file__))[0]
-        # with open(path + '/Threads/timetable.json', 'r') as f:
-        #     Configs.timetableDict.update(json.load(f))
-        # Configs.isUpper = getDate()['isUpper']
-
         Configs.timetableDict.update(getTimetableDict())
         Configs.isUpper = True if (datetime.now().isocalendar()[1] % 2 == 0) else False
 

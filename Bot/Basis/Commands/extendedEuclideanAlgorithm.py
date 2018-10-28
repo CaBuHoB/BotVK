@@ -15,7 +15,7 @@ def krouk(values):
     try:
         message = 'Держи решение!\n'
         mes, filepath = createFileExtendedEuclideanAlgorithm(values.item['text'].split(' ')[1:],
-                                                                 values.item['from_id'])
+                                                             values.item['from_id'])
         if filepath is not None:
             file = upload_file(filepath, values.item['from_id'], values.item['text'] + '.pdf', values.vkApi)
             os.remove(filepath)

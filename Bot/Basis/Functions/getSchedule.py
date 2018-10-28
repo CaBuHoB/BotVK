@@ -1,36 +1,4 @@
-import requests
-import json
-from bs4 import BeautifulSoup
-
 from Bot.Basis.YandexGoogle.GoogleTables import getTimetableFromGoogle
-
-
-def getUrlGroups(groupList):
-    url = 'http://rasp.guap.ru'
-    r = requests.get(url)
-
-    soup = BeautifulSoup(r.text, features="lxml")
-    groupDict = soup.find_all('span')[1]
-    groupDict = groupDict.find_all('option')
-    groupDict = {group.text: group['value'] for group in groupDict}
-
-    urlDict = {}
-    for group in groupList:
-        urlDict[str(group)] = 'http://rasp.guap.ru' + '/?g=' + groupDict[str(group)]
-
-    return urlDict
-
-
-def getDate():
-    url = 'http://rasp.guap.ru'
-    r = requests.get(url)
-
-    soup = BeautifulSoup(r.text, features="lxml")
-    date = soup.find_all('p')[0].text.split(' ')
-    dayWeek = date[2].replace(',', '')
-    isUpper = False if date[7] == 'нижняя' else True
-
-    return {'dayWeek': dayWeek, 'isUpper': isUpper}
 
 
 def getTimetableDict():

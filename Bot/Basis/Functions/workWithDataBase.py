@@ -1,24 +1,12 @@
 # -*- coding: utf-8 -*-
 
 import psycopg2
+import os
 
 
 def getConnect():
-    dbname = 'd83jm6venn88s5'
-    user = 'uniyqmorkhqebp'
-    password = '49fc88f50aa5ab5769aef22fbc2313bb56f8b14ed38e3dc08b5157f5c35c9d9e'
-    host = 'ec2-54-217-250-0.eu-west-1.compute.amazonaws.com'
-    port = 5432
-
-    con = psycopg2.connect(
-        dbname=dbname,
-        user=user,
-        password=password,
-        host=host,
-        port=port
-    )
-
-    return con
+    # TODO: исправить, когда вернемся к основному серверу DATABASE_URL
+    return psycopg2.connect(os.environ['DATABASE'])
 
 
 def getAllUsers():
@@ -42,11 +30,11 @@ def getAllUsers():
     return users
 
 
-def addPersonToDB(id, name, surname, group):
+def addPersonToDB(personID, name, surname, group):
     connect = getConnect()
     cursor = connect.cursor()
 
-    cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s)', [id, name, surname, group])
+    cursor.execute('INSERT INTO users VALUES (%s, %s, %s, %s)', [personID, name, surname, group])
     cursor.close()
     connect.commit()
     connect.close()
@@ -94,11 +82,11 @@ def getDateDeletedTables():
     return nameDate
 
 
-def addTableInDateDeleteTable(name, date, id):
+def addTableInDateDeleteTable(name, date, ID):
     connect = getConnect()
     cursor = connect.cursor()
 
-    cursor.execute('INSERT INTO public."date deleted tables" VALUES (%s, %s, %s)', [name, date, id])
+    cursor.execute('INSERT INTO public."date deleted tables" VALUES (%s, %s, %s)', [name, date, ID])
     cursor.close()
     connect.commit()
     connect.close()
@@ -150,27 +138,27 @@ def getSubjects():
     return subjectsList
 
 
-def removeFromQueueInDB(queue, id):
+def removeFromQueueInDB(queue, userId):
     connect = getConnect()
     cursor = connect.cursor()
 
-    cursor.execute('DELETE FROM queue.{} WHERE id = {}'.format(queue, id))
+    cursor.execute('DELETE FROM queue.{} WHERE id = {}'.format(queue, userId))
     cursor.close()
     connect.commit()
     connect.close()
 
 
-def setToQueue(queue, id, name):
+def setToQueue(queue, userId, name):
     connect = getConnect()
     cursor = connect.cursor()
 
-    cursor.execute('SELECT * FROM queue.{} WHERE id = {}'.format(queue, id))
+    cursor.execute('SELECT * FROM queue.{} WHERE id = {}'.format(queue, userId))
     if len(cursor.fetchall()) != 0:
-        cursor.execute('DELETE FROM queue.{} WHERE id = {}'.format(queue, id))
+        cursor.execute('DELETE FROM queue.{} WHERE id = {}'.format(queue, userId))
         connect.commit()
-        cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [id, name])
+        cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [userId, name])
     else:
-        cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [id, name])
+        cursor.execute('INSERT INTO queue.{} VALUES (%s, %s)'.format(queue), [userId, name])
 
     cursor.close()
     connect.commit()
@@ -204,7 +192,7 @@ def getSubscribedUsers():
     cursor = connect.cursor()
 
     cursor.execute('SELECT id FROM public.subscribers')
-    subscribers = [id[0] for id in cursor]
+    subscribers = [userId[0] for userId in cursor]
     cursor.close()
     connect.close()
 
@@ -236,7 +224,7 @@ def getSubscribedUsersWeather():
     cursor = connect.cursor()
 
     cursor.execute("SELECT id FROM public.\"subscribers weather\"")
-    subscribers = [id[0] for id in cursor]
+    subscribers = [userId[0] for userId in cursor]
     cursor.close()
     connect.close()
 
@@ -266,7 +254,7 @@ def deleteDictWithMessageFromAdmin(userId):
     connect.close()
 
 
-def setDictWithMessageFromAdmin(userId, dict):
+def setDictWithMessageFromAdmin(userId, dictMes):
     connect = getConnect()
     cursor = connect.cursor()
 
@@ -274,7 +262,7 @@ def setDictWithMessageFromAdmin(userId, dict):
     if len(cursor.fetchall()) != 0:
         cursor.execute("DELETE FROM public.\"message from admin\" WHERE id = {}".format(userId))
         connect.commit()
-    cursor.execute("INSERT INTO public.\"message from admin\" VALUES (%s, %s)", [userId, dict])
+    cursor.execute("INSERT INTO public.\"message from admin\" VALUES (%s, %s)", [userId, dictMes])
 
     cursor.close()
     connect.commit()

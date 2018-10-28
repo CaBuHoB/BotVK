@@ -4,10 +4,16 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 def getGoogleAccess():
-    scope = ['https://spreadsheets.google.com/feeds',
-             'https://www.googleapis.com/auth/drive']
-    dir = os.path.split(os.path.abspath(__file__))[0]
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(dir + '/keys.json', scope)
+    keys = {"access_token": None, "client_id": "108396352402276263785", "client_secret": None, "refresh_token": None,
+            "token_expiry": None, "token_uri": "https://accounts.google.com/o/oauth2/token", "user_agent": None,
+            "revoke_uri": "https://oauth2.googleapis.com/revoke", "id_token": None, "id_token_jwt": None,
+            "token_response": None, "scopes": [], "token_info_uri": None, "invalid": False, "assertion_type": None,
+            "_service_account_email": "bot56-333@bot56-209721.iam.gserviceaccount.com",
+            "_scopes": "https://spreadsheets.google.com/feeds https://www.googleapis.com/auth/drive",
+            "_private_key_id": os.environ['GOOGLE_PRIVATE_KEY_ID'], "_user_agent": None, "_kwargs": {},
+            "_private_key_pkcs8_pem": os.environ['GOOGLE_PRIVATE_KEY'].replace('\\n', '\n'),
+            "_class": "ServiceAccountCredentials", "_module": "oauth2client.service_account"}
+    credentials = ServiceAccountCredentials.from_json(keys)
     return gspread.authorize(credentials)
 
 
@@ -72,8 +78,8 @@ def getTimetableFromGoogle():
             lessons_list = worksheet.col_values(worksheet.find(nameOfDay).col)[1:]
 
             for lesson in lessons_list:
-                timename, isUpper, type, name, hall, teacher, groups = lesson.split('\n')
-                
+                timename, isUpper, typeSubject, name, hall, teacher, groups = lesson.split('\n')
+
                 groups = groups.split()
                 if isUpper == 'true':
                     isUpper = True
@@ -87,7 +93,7 @@ def getTimetableFromGoogle():
 
                 timetableForGroup[nameOfDay][timename].append({
                     "isUpper": isUpper,
-                    "type": type,
+                    "type": typeSubject,
                     "name": name,
                     "lecture hall": hall,
                     "teacher": teacher,

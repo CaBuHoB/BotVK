@@ -9,7 +9,6 @@ def getWeather():
 
     # погода текущая
     weatherNow = soup.find('div', attrs={'class': ['today_nowcard-main'], 'style': ''})
-    caption = weatherNow.find('header')
     city = weatherNow.find('span').text
     weather = city + '\n\n'
     temp = weatherNow.find('div', attrs={'class': ['today_nowcard-temp']}).text

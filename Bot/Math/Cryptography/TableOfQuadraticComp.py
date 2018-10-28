@@ -7,7 +7,7 @@ from reportlab.lib.enums import TA_JUSTIFY
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle
-from fractions import gcd
+from math import gcd
 
 from Bot.Math.Cryptography import LegendreSymbol
 
@@ -64,10 +64,10 @@ def createPDFFile(data, userId):
 
 def toBinary(n):
     r = []
-    while (n > 0):
+    while n > 0:
         r.append(n % 2)
         n = n / 2
-        return r
+    return r
 
 
 def MillerRabin(n, s=50):
@@ -118,7 +118,6 @@ def getFile(task, userId):
     a2 = powMinusFirst(a, mod)
     N1 = pow(N, h, mod)
     N2 = 1
-    j = 0
 
     data.append(['i', 'b', 'c', 'd', 'j', 'N2'])
 

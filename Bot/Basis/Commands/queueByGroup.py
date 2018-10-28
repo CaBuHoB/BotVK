@@ -8,7 +8,7 @@ def queueByGroup(values):
     date_str = ' '.join(date)
     tail_of_queue_name = groups + '_' + date_str
     message = 'Выбери предмет'
-    keyboard = get_subjects_for_queue_creation_buttons(values, tail_of_queue_name)
+    keyboard = get_subjects_for_queue_creation_buttons(tail_of_queue_name)
 
     return message, None, keyboard
 
