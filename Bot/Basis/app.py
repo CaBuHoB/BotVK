@@ -8,8 +8,10 @@ from Bot.Basis.Functions.getSchedule import getTimetableDict
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
+from Bot.Basis.Threads import startThreadsQueueTimetable
 
 app = Flask(__name__)
+startThreadsQueueTimetable.start(Configs.getTimetableDict())
 
 
 @app.route('/')
