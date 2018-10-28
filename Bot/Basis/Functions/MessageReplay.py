@@ -9,7 +9,6 @@ import requests
 from Bot.Basis.Functions.getButtons import get_choose_group_buttons, get_default_buttons, \
     get_asking_if_send_message_buttons
 from Bot.Basis.Functions.workWithDataBase import getDictWithMessageFromAdmin, setDictWithMessageFromAdmin
-from Bot.Basis.Threads import startThreadsQueueTimetable
 from Bot.Basis.YandexGoogle.YandexApi import voice_processing
 from Bot.Basis.command_system import command_list
 
