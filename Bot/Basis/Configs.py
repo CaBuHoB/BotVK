@@ -22,7 +22,7 @@ api = vk.API(session, v=5.85)
 
 with threading.Lock():
     threadsName = [thread.name for thread in threading.enumerate()]
-    print(threadsName)
+    print('Before ' + str(threadsName))
     if os.environ['START_THREADS'] == 'true' and 'TimetableNotifications' not in threadsName:
         notifications_thread = TimetableNotifications.TimetableNotifications(api, timetableDict)
         notifications_thread.name = 'TimetableNotifications'
@@ -37,3 +37,4 @@ with threading.Lock():
         api.messages.send(user_id=38081883, message='Бот обновился (:')
         api.messages.send(user_id=88195126, message='Бот обновился :)')
         os.environ['START_THREADS'] = 'false'
+    print('After ' + str(threadsName))
