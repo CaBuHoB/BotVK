@@ -16,3 +16,5 @@ gspread
 oauth2client
 datetime
 lxml
+yandex-translater
+latex

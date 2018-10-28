@@ -3,10 +3,7 @@ from Bot.Basis.Functions.getButtons import get_asking_week_buttons
 
 
 def askTheWeek(values):
-    message = 'Расписание какой недели прислать?'
-    keyboard = get_asking_week_buttons()
-
-    return message, None, keyboard
+    return 'Расписание какой недели прислать?', None, get_asking_week_buttons()
 
 
 command = command_system.Command()

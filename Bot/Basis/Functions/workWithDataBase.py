@@ -249,7 +249,7 @@ def getDictWithMessageFromAdmin(userId):
 
     cursor.execute("SELECT dict FROM public.\"message from admin\" WHERE id = {}".format(userId))
     dictUser = cursor.fetchone()
-    dictUser = "{}" if dictUser is None else dictUser[0]
+    dictUser = dictUser[0] if dictUser is not None else None
     cursor.close()
     connect.close()
 

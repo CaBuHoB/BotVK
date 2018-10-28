@@ -50,13 +50,35 @@ def get_default_buttons(values, users_id=None):
     ])
     buttons_list.append(queue_buttons)
     buttons_list.append([get_button('Расписание', 'showTimetableButtons', Color.WHITE),
-                         get_button('Погода', 'погода', Color.WHITE)])
+                         get_button('Погода', 'погода', Color.WHITE),
+                         get_button('Подписки', 'subscribes', Color.WHITE)])
     buttons_list.append(info_message_button) if info_message_button is not None else None
     buttons_list.append([get_button('?', 'help', Color.GREEN)])
 
     return json.dumps({
         "one_time": False,
         "buttons": buttons_list
+    }, ensure_ascii=False)
+
+
+def get_sub_buttons(values):
+    list_of_buttons = []
+
+    if values.item['from_id'] not in getSubscribedUsers():
+        list_of_buttons.append([get_button('Подписаться на рассылку расписания', 'timetableSending sub', Color.GREEN)])
+    else:
+        list_of_buttons.append([get_button('Отписаться от рассылки расписания', 'timetableSending unsub', Color.WHITE)])
+
+    if values.item['from_id'] not in getSubscribedUsersWeather():
+        list_of_buttons.append([get_button('Подписаться на рассылку погоды', 'weatherSending sub', Color.GREEN)])
+    else:
+        list_of_buttons.append([get_button('Отписаться от рассылки погоды', 'weatherSending unsub', Color.WHITE)])
+
+    list_of_buttons.append([get_button('⟵ Назад', 'backToDefaultKeyboard', Color.BLUE)])
+
+    return json.dumps({
+        "one_time": False,
+        "buttons": list_of_buttons,
     }, ensure_ascii=False)
 
 
@@ -392,11 +414,6 @@ def get_message_cancel_button():
 def get_timetable_menu_buttons(values):
     group = values.users[values.item['from_id']]['group']
 
-    if values.item['from_id'] not in getSubscribedUsers():
-        subscription_button = [get_button('Подписаться на рассылку', 'timetableSending sub', Color.GREEN)]
-    else:
-        subscription_button = [get_button('Отписаться от рассылки', 'timetableSending unsub', Color.RED)]
-
     days_dict = {'Понедельник': 'пн',
                  'Вторник': 'вт',
                  'Среда': 'ср',
@@ -427,7 +444,6 @@ def get_timetable_menu_buttons(values):
                                 for day in days_list])
 
     list_of_buttons.append([get_button('На всю неделю', 'askTheWeek', Color.WHITE)])
-    list_of_buttons.append(subscription_button)
     list_of_buttons.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
 
     return json.dumps({
@@ -456,20 +472,4 @@ def get_asking_week_buttons():
                 get_button('⟵ в главное меню', 'backToDefaultKeyboard', Color.BLUE)
             ]
         ]
-    }, ensure_ascii=False)
-
-
-def get_weather_menu_buttons(values):
-    if values.item['from_id'] not in getSubscribedUsersWeather():
-        subscription_button = [get_button('Подписаться на рассылку', 'weatherSending sub', Color.GREEN)]
-    else:
-        subscription_button = [get_button('Отписаться от рассылки', 'weatherSending unsub', Color.RED)]
-
-    list_of_buttons = []
-    list_of_buttons.append(subscription_button)
-    list_of_buttons.append([get_button('⟵ главное меню', 'backToDefaultKeyboard', Color.BLUE)])
-
-    return json.dumps({
-        "one_time": False,
-        "buttons": list_of_buttons
     }, ensure_ascii=False)

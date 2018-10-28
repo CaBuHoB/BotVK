@@ -14,13 +14,13 @@ from Bot.Basis.Functions.getSchedule import getDate, getTimetableByDay, getTimet
 
 def send_day_timetable(vk):
     users = getAllUsers()
-    path = os.path.split(os.path.abspath(__file__))[0]
-    with open(path + '/timetable.json', 'r') as f:
-        timetable_dict = json.load(f)
-    is_upper = getDate()['isUpper']
+
+    timetable_dict = getTimetableDict()
+    is_upper = True if (dt.datetime.now().isocalendar()[1] % 2 == 0) else False
 
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
     day_number = (dt.datetime.weekday(dt.datetime.now()) + 1) % 7
+
     if day_number == 0:
         is_upper = not is_upper
 
@@ -36,10 +36,10 @@ def send_day_timetable(vk):
 
 def send_subject_notification(vk, subject):
     users = getAllUsers()
-    path = os.path.split(os.path.abspath(__file__))[0]
-    with open(path + '/timetable.json', 'r') as f:
-        timetable_dict = json.load(f)
-    is_upper = getDate()['isUpper']
+
+    timetable_dict = getTimetableDict()
+    is_upper = True if (dt.datetime.now().isocalendar()[1] % 2 == 0) else False
+
     week = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье']
     day_number = dt.datetime.weekday(dt.datetime.now())
 

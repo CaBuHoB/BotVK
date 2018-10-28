@@ -94,8 +94,11 @@ def getFile(task, userId):
 
     data = []
 
-    a = int(task[1])
     mod = int(task[2])
+    if mod > 1000000:
+        return 'Сомневаюсь, что ты правильно записал числа из задания. Иначе сочувствую, над тобой' \
+               'издеваются. Я не смогу прислать решение такого сравнения (', False, None
+    a = int(task[1]) % mod
 
     if mod <= 2 or MillerRabin(mod):
         return 'mod должен быть простым и больше двух )', False, None
