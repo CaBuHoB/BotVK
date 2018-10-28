@@ -19,7 +19,7 @@ def hello_world():
         Configs.timetableDict.update(getTimetableDict())
         Configs.isUpper = True if (datetime.now().isocalendar()[1] % 2 == 0) else False
 
-        api.messages.send(user_id=38081883, message='Все норм, я обновил расписание:)')
+        Configs.api.messages.send(user_id=38081883, message='Все норм, я обновил расписание:)')
     if now[4] % 5 == 0:
         Configs.weatherForecast = getWeather()
     return 'Hello, World!'

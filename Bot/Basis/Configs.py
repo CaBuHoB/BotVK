@@ -21,8 +21,8 @@ session = vk.Session(token)
 api = vk.API(session, v=5.85)
 
 with threading.Lock():
-    if os.environ['START_THREADS'] == 'true' and 'TimetableNotifications' not in [thread.name for thread in
-                                                                                  threading.enumerate()]:
+    threadsName = [thread.name for thread in threading.enumerate()]
+    if os.environ['START_THREADS'] == 'true' and 'TimetableNotifications' not in threadsName:
         notifications_thread = TimetableNotifications.TimetableNotifications(api, timetableDict)
         notifications_thread.name = 'TimetableNotifications'
         notifications_thread.start()
