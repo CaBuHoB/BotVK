@@ -97,3 +97,7 @@ def getTimetableFromGoogle():
         timetableDict[str(group)] = timetableForGroup
 
     return timetableDict
+
+l = getNamesListFromGoogle('5622')
+a = 0
+b = 1
