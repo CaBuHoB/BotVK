@@ -11,7 +11,7 @@ from Bot.Basis.Threads import TimetableNotifications, QueueThread, WeatherThread
 token = os.environ['TOKEN']
 confirmation_token = os.environ['CONFIRMATION_TOKEN']
 
-weatherForecast = {} # getWeather()
+weatherForecast = getWeather()
 path = os.path.split(os.path.abspath(__file__))[0]
 
 timetableDict = getTimetableDict()
@@ -19,9 +19,6 @@ isUpper = True if (datetime.now().isocalendar()[1] % 2 == 0) else False
 
 session = vk.Session(token)
 api = vk.API(session, v=5.85)
-
-api.messages.send(user_id=38081883, message='Бот обновился (:')
-api.messages.send(user_id=88195126, message='Бот обновился :)')
 
 with threading.Lock():
     if os.environ['START_THREADS'] == 'true':
@@ -34,4 +31,6 @@ with threading.Lock():
         weather_thread = WeatherThread.WeatherThread(api)
         weather_thread.start()
 
+        api.messages.send(user_id=38081883, message='Бот обновился (:')
+        api.messages.send(user_id=88195126, message='Бот обновился :)')
         os.environ['test'] = 'false'
