@@ -101,8 +101,8 @@ def getTimetableFromGoogle():
                     "teacher": teacher,
                     "group": groups
                 })
+            time.sleep(1)
 
         timetableDict[str(group)] = timetableForGroup
-        time.sleep(1)
 
     return timetableDict
