@@ -33,4 +33,4 @@ with threading.Lock():
 
         api.messages.send(user_id=38081883, message='Бот обновился (:')
         api.messages.send(user_id=88195126, message='Бот обновился :)')
-        os.environ['test'] = 'false'
+        os.environ['START_THREADS'] = 'false'
