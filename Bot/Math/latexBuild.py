@@ -17,7 +17,7 @@ def getPreamble():
             r"\usepackage{makeidx}"
             r"\usepackage{graphicx}"
             r"\usepackage{multicol}"
-            r"\usepackage[english,russianb]{babel}"
+            r"\usepackage[english,russian]{babel}"
             r""
             r"\begin{document}")
 
