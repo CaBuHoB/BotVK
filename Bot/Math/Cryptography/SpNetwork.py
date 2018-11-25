@@ -17,26 +17,54 @@ def powMinusFirst(a, mod):
     return int(res)
 
 
-def encodeCharWithAffineCipher(alf, char, keyA, keyB):
+def encodeCharWithAffineCipher(num, keyA, keyB):
+    alf = getAlphabet()
     A = powMinusFirst(keyA, len(alf))
-    num = (A * (alf.index(char) - keyB)) % len(alf)
-    return alf[num]
+    number = (A * (num - keyB)) % len(alf)
+    return number
+
+
+def mesToInt(messages):
+    alf = getAlphabet()
+    messagesInt = [[alf.index(char) for char in mes] for mes in messages]
+
+    return messagesInt
+
+
+def permutationFunc(mes, permutation):
+    return [mes[i] for i in permutation]
+
+
+def spNetwork(message, keyA, keyB, permutation):
+    message = permutationFunc(message, permutation)
+    for i in range(len(message)):
+        message[i] = encodeCharWithAffineCipher(message[i], keyA, keyB)
+
+    return message
+
+
+def messagesIntToStr(messages):
+    alf = getAlphabet()
+    text = ""
+    for mes in messages:
+        for index in mes:
+            text = text + alf[index]
+
+    return text
 
 
 def decoderSpNetwork(message, keyA, keyB, permutation):
-    decryptedText = ""
-    permutation = [int(x) for x in permutation]
-    alf = getAlphabet()
-    chunks, chunk_size = len(message), len(permutation)
-    messages = [message[i:i + chunk_size] for i in range(0, chunks, chunk_size)]
-    for mes in messages:
-        newMes = "".zfill(len(permutation))
-        for i in range(2):
-            for j in range(len(mes)):
-                char = encodeCharWithAffineCipher(alf, mes[j], keyA, keyB)
-                mes = mes[:j] + char + mes[j + 1:]
-                newMes = newMes[:permutation[j]] + char + newMes[permutation[j] + 1:]
+    permutation = [abs(int(num) - 4) for num in permutation]
+    permutation.reverse()
+    blockLength = len(permutation)
 
-        decryptedText = decryptedText + newMes
+    messages = [list(message[i:i + blockLength]) for i in range(0, len(message), blockLength)]
+    messages = mesToInt(messages)
 
-    return decryptedText
+    for i in range(len(messages)):
+        for j in range(2):
+            messages[i] = spNetwork(messages[i], keyA, keyB, permutation)
+
+    message = messagesIntToStr(messages)
+
+    return message

@@ -5,39 +5,60 @@ def getAlphabet():
     return "абвгдежзийклмнопрстуфхцчшщъыьэюя+-,.!?:\"vin()0123456789"
 
 
-def fFunc(x, key, permutation):
-    s = "".zfill(len(x))
+def mesToInt(messages):
     alf = getAlphabet()
-    for i in range(len(x)):
-        index = (alf.index(x[i]) * key) % len(alf)
-        s = s[:permutation[i]] + alf[index] + s[permutation[i] + 1:]
+    messagesInt = [[alf.index(char) for char in mes] for mes in messages]
 
-    return s
+    return messagesInt
+
+
+def permutationFunc(mes, permutation):
+    return [mes[i] for i in permutation]
+
+
+def messagesIntToStr(messages):
+    alf = getAlphabet()
+    text = ""
+    for mes in messages:
+        for index in mes:
+            text = text + alf[index]
+
+    return text
+
+
+def fFunc(mes, key, permutation):
+    lenAlf = len(getAlphabet())
+    fMes = [(m * key) % lenAlf for m in mes]
+    fMes = permutationFunc(fMes, permutation)
+
+    return fMes
+
+
+def feistelCipher(message, key, permutation):
+    halfMessageLength = int(len(message)/2)
+    mes = [message[:halfMessageLength], message[halfMessageLength:]]
+    R = mes[0]
+    L = mes[1]
+    fMas = fFunc(R, key, permutation)
+    for i in range(halfMessageLength):
+        L[i] = (L[i] - fMas[i]) % 55
+
+    return L + R
 
 
 def decoderFeistelCipher(message, keys, permutation):
-    decryptedText = ""
     permutation = [int(x) for x in permutation]
     keys.reverse()
-    alf = getAlphabet()
-    chunks, chunk_size = len(message), len(permutation) * 2
-    messages = [message[i:i + chunk_size] for i in range(0, chunks, chunk_size)]
-    for mes in messages:
-        chunks, chunk_size = len(mes), int(len(mes) / 2)
-        mes = [mes[i:i + chunk_size] for i in range(0, chunks, chunk_size)]
-        mes.reverse()
-        for i in range(3):
-            L = mes[1]
-            R = "".zfill(len(mes[0]))
-            f = fFunc(L, keys[i], permutation)
-            for j in range(len(mes[0])):
-                index = (alf.index(mes[0][j]) + alf.index(f[j])) % len(alf)
-                R = R[:j] + alf[index] + R[j + 1:]
-            mes[0], mes[1] = L, R
 
-        decryptedText = decryptedText + mes[0] + mes[1]
+    blockLength = len(permutation) * 2
 
-    return decryptedText
+    messages = [list(message[i:i + blockLength]) for i in range(0, len(message), blockLength)]
+    messages = mesToInt(messages)
 
+    for i in range(len(messages)):
+        for j in range(3):
+            messages[i] = feistelCipher(messages[i], keys[j], permutation)
 
-print(decoderFeistelCipher(".гпщ0лнмп-д6е\"щх", [12, 40, 18], "0123"))
+    message = messagesIntToStr(messages)
+
+    return message
