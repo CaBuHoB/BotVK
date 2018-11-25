@@ -41,7 +41,7 @@ def feistelCipher(message, keys, permutation, index, latex):
     halfMessageLength = int(len(message)/2)
     mes = [message[:halfMessageLength], message[halfMessageLength:]]
     latex = latex + r"$L_" + str(3 - index) + ":" + str(mes[0])
-    latex = latex + r"~~R_" + str(3 - index) + str(mes[1]) + r"$ ~\\"
+    latex = latex + r"~~R_" + str(3 - index) + ":" + str(mes[1]) + r"$ ~\\"
     R = mes[0]
     L = mes[1]
     latex = latex + r"$R_" + str(2 - index) + "=" + r"L_" + str(3 - index) + "=" + str(R) + r"$ \\"
