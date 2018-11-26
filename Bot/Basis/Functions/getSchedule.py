@@ -1,8 +1,14 @@
-from Bot.Basis.YandexGoogle.GoogleTables import getTimetableFromGoogle
+import json
+
+import os
 
 
 def getTimetableDict():
-    return getTimetableFromGoogle()
+    path = os.path.dirname(__file__)
+    with open(os.path.join(path, 'timetable.json'), 'r', encoding='utf-8') as file:
+        data = json.load(file)
+
+    return data
 
 
 def getTimetableByDay(timetableDict, group, day, isUpper):
@@ -40,3 +46,5 @@ def getTimetableByWeek(timetableDict, group, isUpper):
 def getDaysForGroup(timetableDict, group):
     timetable = timetableDict[str(group)]
     return [day for day in timetable]
+
+getTimetableDict()
