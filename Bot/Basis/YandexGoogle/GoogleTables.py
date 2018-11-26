@@ -1,3 +1,5 @@
+import time
+
 import gspread
 import os
 from oauth2client.service_account import ServiceAccountCredentials
@@ -99,6 +101,7 @@ def getTimetableFromGoogle():
                     "teacher": teacher,
                     "group": groups
                 })
+            time.sleep(1)
 
         timetableDict[str(group)] = timetableForGroup
 
