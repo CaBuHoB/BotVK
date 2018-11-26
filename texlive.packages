@@ -1,5 +1,5 @@
 babel-russian
-collection-langgerman
 collection-latexrecommended
 collection-fontsrecommended
-cyrillic
+ascii-cyrillic
+texlive-lang-cyrillic
