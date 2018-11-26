@@ -3,10 +3,8 @@ from argparse import Namespace
 
 from flask import Flask, request, json
 
-import os
 from Bot.Basis.Functions import MessageReplay
 from Bot.Basis.Functions.getSchedule import getTimetableDict
-from Bot.Basis.Configs import confirmation_token, timetableDict, api
 from Bot.Basis import Configs
 from Bot.Basis.Functions.getWeatherForecast import getWeather
 from Bot.Basis.Functions.workWithDataBase import getAllUsers
@@ -21,7 +19,7 @@ def hello_world():
         Configs.timetableDict.update(getTimetableDict())
         Configs.isUpper = True if (datetime.now().isocalendar()[1] % 2 == 0) else False
 
-        api.messages.send(user_id=38081883, message='Все норм, я обновил расписание:)')
+        Configs.api.messages.send(user_id=38081883, message='Все норм, я обновил расписание:)')
     if now[4] % 5 == 0:
         Configs.weatherForecast = getWeather()
     return 'Hello, World!'
@@ -33,16 +31,17 @@ def processing():
     if 'type' not in data.keys():
         return 'not vk'
     if data['type'] == 'confirmation':
-        return confirmation_token
+        return Configs.confirmation_token
     if data['type'] == 'message_typing_state':
         return 'ok'
     if data['type'] == 'message_reply':
         return 'ok'
     elif data['type'] == 'message_new':
         users = getAllUsers()
-        api.messages.markAsRead(peer_id=data['object']['peer_id'])
-        values = Namespace(vkApi=api, item=data['object'], users=users,
-                           timetableDict=timetableDict, isUpper=Configs.isUpper, weather=Configs.weatherForecast)
+        Configs.api.messages.markAsRead(peer_id=data['object']['peer_id'])
+        values = Namespace(vkApi=Configs.api, item=data['object'], users=users,
+                           timetableDict=Configs.timetableDict, isUpper=Configs.isUpper,
+                           weather=Configs.weatherForecast)
         mr = MessageReplay.MessageReplay(values)
         mr.run()
         return 'ok'
