@@ -61,8 +61,8 @@ def messagesIntToStr(messages):
 
 def decoderSpNetwork(message, keyA, keyB, permutation, fromID):
     latex = getPreamble()
-    permutation = [abs(int(num) - 4) for num in permutation]
-    permutation.reverse()
+    permutation = [int(num) for num in permutation]
+    permutation = [permutation.index(num) for num in range(len(permutation))]
     blockLength = len(permutation)
 
     latex = latex + r"~\\Шифртекст: " + message + r"\\"

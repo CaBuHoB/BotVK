@@ -310,23 +310,14 @@ def get_groups_for_queue_creation_buttons(date, values):
     group = values.users[values.item['from_id']]['group']
     group_button = get_button(group, 'queueByGroup ' + date, Color.BLUE)
 
-    groups_buttons = []
-    if group in [5621, 5622]:
-        groups_buttons.append(get_button('5621 5622', 'queueByGroup ' + date, Color.BLUE))
-    if group in [5622, 5623]:
-        groups_buttons.append(get_button('5622 5623', 'queueByGroup ' + date, Color.BLUE))
-    if group in [5621, 5623]:
-        groups_buttons.append(get_button('5621 5623', 'queueByGroup ' + date, Color.BLUE))
-
     return json.dumps({
         "one_time": False,
         "buttons": [
             [
                 group_button
             ],
-            groups_buttons,
             [
-                get_button('5621 5622 5623', 'queueByGroup ' + date, Color.BLUE)
+                get_button('5621 5623', 'queueByGroup ' + date, Color.BLUE)
             ],
             [
                 get_button('⟵ к выбору даты', 'createQueue', Color.RED),

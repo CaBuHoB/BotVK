@@ -63,7 +63,7 @@ def decoderFeistelCipher(message, keys, permutation, fromID):
 
     latex = latex + r"~\\Шифртекст: " + message + r"\\"
     latex = latex + r"Длина блока " + str(blockLength) + r"\\"
-    latex = latex + r"$key1:" + str(keys[1]) + r";~key2:" + str(keys[1]) + r";~key3:" + str(keys[2]) + r"$ \\ \\"
+    latex = latex + r"$key1:" + str(keys[0]) + r";~key2:" + str(keys[1]) + r";~key3:" + str(keys[2]) + r"$ \\ \\"
 
     messages = [list(message[i:i + blockLength]) for i in range(0, len(message), blockLength)]
     messagesInt = mesToInt(messages)
