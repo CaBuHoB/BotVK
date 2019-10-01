@@ -36,8 +36,7 @@ def get_default_buttons(values, users_id=None):
 
     surname = values.users[user_id]['surname']
     if (surname == 'Савинов') or (surname == 'Ялышев') or \
-            (surname == 'Патерикина') or (surname == 'Борисова') or \
-            (surname == 'Мусикян') or (surname == 'Наумов'):
+            (surname == 'Патерикина') or (surname == 'Борисова'):
         queue_buttons.append(get_button('Создать', 'createQueue', Color.WHITE))
         queue_buttons.append(get_button('Удалить', 'deleteQueue', Color.WHITE))
 
