@@ -357,16 +357,10 @@ def get_groups_for_message_buttons():
         "buttons": [
             [
                 get_button('5621', 'infoByGroup', Color.BLUE),
-                get_button('5622', 'infoByGroup', Color.BLUE),
                 get_button('5623', 'infoByGroup', Color.BLUE)
             ],
             [
-                get_button('5621 5622', 'infoByGroup', Color.BLUE),
-                get_button('5621 5623', 'infoByGroup', Color.BLUE),
-                get_button('5622 5623', 'infoByGroup', Color.BLUE)
-            ],
-            [
-                get_button('5621 5622 5623', 'infoByGroup', Color.BLUE)
+                get_button('5621 5623', 'infoByGroup', Color.BLUE)
             ],
             [
                 get_button('⟵ Отмена', 'backToDefaultKeyboard', Color.RED)
