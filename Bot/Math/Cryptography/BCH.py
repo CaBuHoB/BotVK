@@ -185,7 +185,9 @@ def search_error(v_str, GF_step=4, use_latex=True):
     degree_of_symbol_x_pd = pd.DataFrame(degree_of_symbol_x, columns=['Mult', 'Ans', 'Bin'])
     if use_latex:
         string += "\\noindent\n\\begin{minipage}[c]{60mm}\n\\parindent=3em"
-        string += degree_of_symbol_x_pd.to_latex(index=False, escape=False)
+        table = degree_of_symbol_x_pd.to_latex(index=False, escape=False)
+        table = table.replace('toprule', 'hline').replace('midrule', 'hline').replace('bottomrule', 'hline')
+        string += table
         string += "\n\\end{minipage}"
         string += "\\hfill"
     else:
@@ -195,7 +197,9 @@ def search_error(v_str, GF_step=4, use_latex=True):
     log_table_pd = pd.DataFrame(log_table, columns=['a', 'log(a)'])
     if use_latex:
         string += "\n\\begin{minipage}[c]{30mm}\n"
-        string += log_table_pd.to_latex(index=False, escape=False)
+        table = log_table_pd.to_latex(index=False, escape=False)
+        table = table.replace('toprule', 'hline').replace('midrule', 'hline').replace('bottomrule', 'hline')
+        string += table
         string += "\n\\end{minipage}"
         string += "\\hfill"
     else:
@@ -205,7 +209,9 @@ def search_error(v_str, GF_step=4, use_latex=True):
     exp_table_pd = pd.DataFrame(exp_table, columns=['k', r'$\alpha^k$'])
     if use_latex:
         string += "\n\\begin{minipage}[c]{30mm}\n"
-        string += exp_table_pd.to_latex(index=False, escape=False)
+        table = exp_table_pd.to_latex(index=False, escape=False)
+        table = table.replace('toprule', 'hline').replace('midrule', 'hline').replace('bottomrule', 'hline')
+        string += table
         string += "\n\\end{minipage}"
         string += "\\hfill"
         string += '\n'
