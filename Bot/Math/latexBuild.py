@@ -18,6 +18,7 @@ def getPreamble():
             r"\usepackage{graphicx}"
             r"\usepackage{multicol}"
             r"\usepackage[english,russian]{babel}"
+            r"\usepackage{booktabs}"
             r""
             r"\begin{document}")
 
